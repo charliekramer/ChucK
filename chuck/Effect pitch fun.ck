@@ -11,7 +11,7 @@ filtCycle*1.5 => e.delay;
 e=>e;
 0.5 => e.gain;
 0.2 => e.mix;
-2::second => dur panCycle;
+12::second => dur panCycle;
 .5 => float panFreq;
 
 //0 => pan.pan;
