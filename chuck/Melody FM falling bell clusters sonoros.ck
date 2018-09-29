@@ -7,27 +7,29 @@
 
 70 => int midiBase; //base note in midi format
 Std.mtof(midiBase) => float baseFreq; //* 1.5 interesting
-[0, 2, 5, 7, 9, 12] @=> int notes[];
+[-24, -12, 0, 12, 24] @=> int notes[];
 
-5./7. => float ratio; //13./3. interesting, 1/1
+5./7. => flo?at ratio; // 7./5. 13./3. interesting, 1/1
 
 6::second => dur decay;
 
 int nBells;
 float bellFreq;
 
-while( true ) {
-    Std.rand2(2,5) => nBells;
+now + 10::minute => time future;
+
+while( now < future ) {
+    Std.rand2(2,3) => nBells;
     
     for (1 => int i; i <= nBells; i++) {
        	
 	    Std.mtof(midiBase+notes[Std.rand2(0,notes.size()-1)]) => bellFreq;
         spork~bellStrike(bellFreq);
-        Std.rand2f(.25,1.1)::second => now;
+        Std.rand2f(1,4.2)::second => now;
 		
     }
     <<< "n", nBells >>>;
-    Std.rand2f(6.,8.)::second => now;
+    Std.rand2f(4.,8.)::second => now;
 }
 
 
@@ -55,7 +57,7 @@ imax*m.freq()=> m.gain;
 2 => c.sync;
 
 .9 => float bendSize; //as proportion of initial freq. .9 for waver, .1 for dive
-4. => float bendTime; // how long bend lasts, as proportion of envelope defined above; short for vibrato
+4 => float bendTime; // how long bend lasts, as proportion of envelope defined above; short for vibrato
 
 inFreq => float startFreq; //default is bend down
 inFreq*bendSize => float endFreq;
