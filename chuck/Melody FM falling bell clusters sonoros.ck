@@ -7,9 +7,9 @@
 
 70 => int midiBase; //base note in midi format
 Std.mtof(midiBase) => float baseFreq; //* 1.5 interesting
-[-24, -12, 0, 12, 24] @=> int notes[];
+[-24, -12, -10, -8, -5, -3,  0, 2, 4, 7, 9, 12, 24] @=> int notes[];
 
-5./7. => flo?at ratio; // 7./5. 13./3. interesting, 1/1
+5./7. => float ratio; // 7./5. 13./3. interesting, 1/1
 
 6::second => dur decay;
 
