@@ -1,23 +1,30 @@
 // Melody FM falling bell clusters
 // ping randomly-sized clusters of bells with falling (or rising) pitch
+// this version--gentle fall in pitch and choose from pentatonic scale (no third)
 
 //from Dodge and Jerse chapter 4
 // basic FM synthesis using SinOsc (2 => .sync; also see fm3.ck)
 
-Std.mtof(58) => float baseFreq; //* 1.5 interesting
+70 => int midiBase; //base note in midi format
+Std.mtof(midiBase) => float baseFreq; //* 1.5 interesting
+[0, 2, 5, 7, 9, 12] @=> int notes[];
+
 5./7. => float ratio; //13./3. interesting, 1/1
 
-4::second => dur decay;
+6::second => dur decay;
 
 int nBells;
+float bellFreq;
 
 while( true ) {
     Std.rand2(2,5) => nBells;
     
     for (1 => int i; i <= nBells; i++) {
-       
-        spork~bellStrike(baseFreq*Std.rand2f(.8,1.5));
+       	
+	    Std.mtof(midiBase+notes[Std.rand2(0,notes.size()-1)]) => bellFreq;
+        spork~bellStrike(bellFreq);
         Std.rand2f(.25,1.1)::second => now;
+		
     }
     <<< "n", nBells >>>;
     Std.rand2f(6.,8.)::second => now;
@@ -33,22 +40,21 @@ SinOsc m => SinOsc c =>  ResonZ b => ADSR env => PRCRev rev => Pan2 pan => dac;
 
 // bell
 
-
 // carrier frequency
-inFreq*1.5 => c.freq; //try multiplying by 1.5, dividing by 1.5
+inFreq => c.freq; //try multiplying by 1.5, dividing by 1.5
 // modulator frequency
-c.freq()*2.5 => b.freq;
+2.5*c.freq() => b.freq;
 10 => b.Q;
 
 c.freq()*ratio => m.freq; 
 // index of modulation
-.2 => float imax; // max 10 lower = softer 
+.7 => float imax; // max 10 lower = softer 
 imax*m.freq()=> m.gain; 
 
 // phase modulation is FM synthesis (sync is 2)
 2 => c.sync;
 
-2 => float bendSize; //as proportion of initial freq. .9 for waver, .1 for dive
+.9 => float bendSize; //as proportion of initial freq. .9 for waver, .1 for dive
 4. => float bendTime; // how long bend lasts, as proportion of envelope defined above; short for vibrato
 
 inFreq => float startFreq; //default is bend down
@@ -74,7 +80,7 @@ else {
     
     1 => env.keyOn;
     
-    Std.rand2f(-.25,.25) => pan.pan;
+    Std.rand2f(-.95,.95) => pan.pan;
     .1::second => now;    
     1 => env.keyOff;
     
