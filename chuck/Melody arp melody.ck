@@ -9,24 +9,24 @@ beat - (now % beat) => now;
 
 //soundchain
 Moog moog => Gain g => Echo e => Pan2 p => dac;
-.5 => moog.filterQ;
+.7 => moog.filterQ;
 .9 => moog.filterSweepRate;
 0 => moog.vibratoFreq;
 .0 => moog.vibratoGain;
-0.5 => moog.afterTouch;
+0.9 => moog.afterTouch;
 
 .9 => g.gain;
 0 => p.pan;
 
 10::second => e.max;
-beat*1.5*2. => e.delay;
-.9 => e.gain;
-.2 => e.mix;
+beat*2. => e.delay;
+.5 => e.gain;
+.5 => e.mix;
 e => e;
 
 // scale and base note 
  [0, 4, 5, 9, 12, 24] @=> int notes[];
-58-36 => int baseNote;
+58-24 => int baseNote;
   
  0 => int randOctave; // randomly insert octaves
  0 => int randDirection; // randomly switch direction
@@ -45,13 +45,15 @@ e => e;
          Std.mtof(baseNote+notes[i]+randOctave*12*Std.rand2(0,1)) => moog.freq;
          1.0 => moog.noteOn;
          if (panSwitching == 1) -1.*p.pan() => p.pan;
-         beat/speed => now;
+         beat/speed*.5 => now;
          if (double !=0) {
              1.0 => moog.noteOn;
              beat/speed => now;
          }
          if (i == notes.cap()-1)  -1 => i;
          i++;
+		 1 => moog.noteOff;
+		 beat/speed*.5 => now;
      }
  }
      
@@ -64,13 +66,16 @@ e => e;
              Std.mtof(baseNote+notes[i]+randOctave*12*Std.rand2(0,1)) => moog.freq;
              1.0 => moog.noteOn;
              if (panSwitching == 1) -1.*p.pan() => p.pan;
-             beat/speed => now;
+             beat/speed*.5 => now;
              if (double !=0) {
                  1.0 => moog.noteOn;
                  beat/speed => now;
              }
              if (i == 0)  notes.cap() => i;
              i--;
+			 1 => moog.noteOff;
+		     beat/speed*.5 => now;
+
          }
      }
      else {
@@ -80,7 +85,7 @@ e => e;
           Std.mtof(baseNote+notes[i]+randOctave*12*Std.rand2(0,1)) => moog.freq;
           1.0 => moog.noteOn;
           if (panSwitching == 1) -1.*p.pan() => p.pan;
-          beat/speed => now;
+          beat/speed*.5 => now;
           if (double !=0) {
               1.0 => moog.noteOn;
               beat/speed => now;
@@ -90,6 +95,9 @@ e => e;
           }
           if ((delta == 1 && i == notes.cap()-1) || (delta == -1 && i == 0)) -1*delta => delta;
           i + delta => i;
+		  1 => moog.noteOff;
+		  beat/speed*.5 => now;
+
       }
      
  }

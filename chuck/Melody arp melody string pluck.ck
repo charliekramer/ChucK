@@ -13,11 +13,13 @@ StifKarp moog => Gain g => Echo e => Pan2 p => dac;
 .1 => moog.sustain;
 .1 => moog.stretch;
 
-.9 => g.gain;
+.2 => moog.gain;
+
+.5 => g.gain;
 0 => p.pan;
 
 10::second => e.max;
-beat*1.5 => e.delay;
+beat*.3 => e.delay;
 .9 => e.gain;
 .2 => e.mix;
 e => e;
@@ -31,6 +33,7 @@ e => e;
  0 => int double; // double each note
  0 => int panSwitching; // switch pan on each note (or note pair if doubled)
  if (panSwitching == 1) -1.0 => p.pan;
+ 1 => int noteOff; //to cut notes off
  
  0 => int i;  // don't change this, array index initialize
  1 => int delta; // don't change this, direction initialize
@@ -43,13 +46,27 @@ e => e;
          Std.mtof(baseNote+notes[i]+randOctave*12*Std.rand2(0,1)) => moog.freq;
          1.0 => moog.noteOn;
          if (panSwitching == 1) -1.*p.pan() => p.pan;
-         beat/speed => now;
+		 if (noteOff == 1 ) {
+		 	
+		 	beat/speed*.5 => now;
+	 	 }
+	 	 else {
+		    beat/speed => now;
+		 }
+
+		 	
          if (double !=0) {
              1.0 => moog.noteOn;
              beat/speed => now;
          }
          if (i == notes.cap()-1)  -1 => i;
          i++;
+		 if (noteOff == 1) {
+		 	
+		     1 => moog.noteOff;
+		     beat/speed*.5 => now;
+		 }
+
      }
  }
      
@@ -62,13 +79,26 @@ e => e;
              Std.mtof(baseNote+notes[i]+randOctave*12*Std.rand2(0,1)) => moog.freq;
              1.0 => moog.noteOn;
              if (panSwitching == 1) -1.*p.pan() => p.pan;
-             beat/speed => now;
+			 if (noteOff == 1 ) {
+			 	
+			 	beat/speed*.5 => now;
+		 	 }
+		 	 else {
+		 		beat/speed => now;
+	 		 }
+	 		
              if (double !=0) {
                  1.0 => moog.noteOn;
                  beat/speed => now;
              }
              if (i == 0)  notes.cap() => i;
              i--;
+			 if (noteOff == 1) {
+			 	
+			 	1 => moog.noteOff;
+			 	beat/speed*.5 => now;
+		 	 }
+		 	
          }
      }
      else {
@@ -78,7 +108,14 @@ e => e;
           Std.mtof(baseNote+notes[i]+randOctave*12*Std.rand2(0,1)) => moog.freq;
           1.0 => moog.noteOn;
           if (panSwitching == 1) -1.*p.pan() => p.pan;
-          beat/speed => now;
+		  if (noteOff == 1 ) {
+		  	
+		  	beat/speed*.5 => now;
+	  	  }
+	  	  else {
+	  		beat/speed => now;
+  		  }
+  		
           if (double !=0) {
               1.0 => moog.noteOn;
               beat/speed => now;
@@ -88,6 +125,12 @@ e => e;
           }
           if ((delta == 1 && i == notes.cap()-1) || (delta == -1 && i == 0)) -1*delta => delta;
           i + delta => i;
+		  if (noteOff == 1) {
+		  	
+		  	1 => moog.noteOff;
+		  	beat/speed*.5 => now;
+	  	}
+	  	
       }
      
  }
