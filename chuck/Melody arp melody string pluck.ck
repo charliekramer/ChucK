@@ -8,18 +8,16 @@ beat - (now % beat) => now;
 4. => float speed; //beat divisions
 
 //soundchain
-Moog moog => Gain g => Echo e => Pan2 p => dac;
-.5 => moog.filterQ;
-.9 => moog.filterSweepRate;
-0 => moog.vibratoFreq;
-.0 => moog.vibratoGain;
-0.5 => moog.afterTouch;
+StifKarp moog => Gain g => Echo e => Pan2 p => dac;
+0.5 => moog.pickupPosition; 
+.1 => moog.sustain;
+.1 => moog.stretch;
 
 .9 => g.gain;
 0 => p.pan;
 
 10::second => e.max;
-beat*1.5*2. => e.delay;
+beat*1.5 => e.delay;
 .9 => e.gain;
 .2 => e.mix;
 e => e;
