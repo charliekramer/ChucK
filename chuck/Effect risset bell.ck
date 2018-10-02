@@ -4,11 +4,14 @@ SinOsc s[12]; // only requires 11 but dispensing with [0] to make translation ea
 ADSR env[12];
 NRev rev[12];
 Pan2 pan[12];
+Gain g;
+
+1 =>g.gain;
 
 s[0] => blackhole; // not gonna use it
 
 for (1 => int i; i < 12; i++) {
-     s[i] => env[i]=> rev[i] => pan[i] => dac;
+     s[i] => env[i]=> rev[i] => pan[i] => g => dac;
      0.5 => rev[i].mix;
      env[i].set(10::ms, 8::ms, .9, 5000::ms);
 }
@@ -22,7 +25,7 @@ for (1 => int i; i < 12; i++) {
 
 0.2 => float baseAmp;
 15::second => dur baseDur;
-440.*2. => float baseFreq;
+Std.mtof(58)*4.=> float baseFreq;
 
 0 => int panBell; // switch for evenly spread panning. 
 

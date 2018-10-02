@@ -8,7 +8,7 @@ Noise n =>  ResonZ f => Envelope env => echo => NRev rev => g => dac;
 .4 => rev.mix;
 10 => f.Q;
 
-.2 => g.gain;
+.01 => g.gain;
 
 10::second => echo.max;
 

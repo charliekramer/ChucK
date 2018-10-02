@@ -13,9 +13,9 @@ StifKarp moog => Gain g => Echo e => Pan2 p => dac;
 .1 => moog.sustain;
 .1 => moog.stretch;
 
-.2 => moog.gain;
+.9 => moog.gain;
 
-.5 => g.gain;
+1 => g.gain;
 0 => p.pan;
 
 10::second => e.max;

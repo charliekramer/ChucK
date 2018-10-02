@@ -27,18 +27,21 @@ while( true ) {
 fun void bellStrike(float inFreq) {
     
     
-SinOsc m => SinOsc c =>  ResonZ b => ADSR env => PRCRev rev => Pan2 pan => dac;
+SinOsc m => SinOsc c =>  ADSR env => PRCRev rev => Gain g => Pan2 pan => dac;
+
+1 => g.gain;
 
 0.3 => rev.mix;
 
 // bell
 
-
 // carrier frequency
 inFreq*1.5 => c.freq; //try multiplying by 1.5, dividing by 1.5
 // modulator frequency
-c.freq()*2.5 => b.freq;
-10 => b.Q;
+
+// filter--now disabled: was ResonZ but kills volume
+//c.freq()*2.5 => b.freq;
+//1 => b.Q;
 
 c.freq()*ratio => m.freq; 
 // index of modulation
