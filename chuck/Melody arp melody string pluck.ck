@@ -13,7 +13,7 @@ StifKarp moog => Gain g => Echo e => Pan2 p => dac;
 .1 => moog.sustain;
 .1 => moog.stretch;
 
-.9 => moog.gain;
+.15 => moog.gain;
 
 1 => g.gain;
 0 => p.pan;

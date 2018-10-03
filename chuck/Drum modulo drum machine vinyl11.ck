@@ -29,7 +29,7 @@ h.Q(10);
 snaregain => snare.gain;
 
 // gain settings
-0.04 => g.gain; //0.5
+0.005 => g.gain; //0.5
 1.0 => kickG.gain; //1.0
 0.2 => hatG.gain; //0.2
 0.9 => crashG.gain; //0.2

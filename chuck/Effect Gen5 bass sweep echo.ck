@@ -1,13 +1,13 @@
 // based on gen5 example: exponential line segment table generator
 // 
-Phasor p => Gen5 g5 => LPF f => Echo echo => Chorus c => NRev rev => Gain g=> dac;;
+Phasor p => Gen5 g5 => LPF f => LPF f2 => Echo echo => Chorus c => NRev rev => Gain g=> dac;;
 
 60./94. => float beattime;
 beattime::second => dur beat;
 
 beat - (now % beat) => now;
 
-.8 => g.gain;
+.05 => g.gain;
 
 .0 => rev.mix;
 
@@ -21,14 +21,14 @@ echo=>echo;
 .5 => c.modDepth;
 .0 => c.mix;
 
-Std.mtof(58-36) => p.freq;
+Std.mtof(58-12) => p.freq;
 p.freq() => float baseFreq;
-p.freq()*1.5=> f.freq;
+p.freq()*1.5=> f.freq => f2.freq;
 
 f.freq() => float minFreq;
 2400. => float maxFreq;
 
-10 => f.Q;
+50 => f.Q;
 
 
 
@@ -54,7 +54,7 @@ e.keyOn();
 // loop
 while (true)
 {
-   f.freq()+10*diff => f.freq;
+   f.freq()+10*diff => f.freq => f2.freq;
    Std.rand2(1,6)*baseFreq => p.freq;// top value of 6, 7, 8, 9 sound cool
     // advance time
     beat*.125 => now; //also 10::ms

@@ -9,8 +9,9 @@ beat - (now % beat) => now;
 
 //soundchain
 Moog moog => Gain g => Echo e => Pan2 p => dac;
-.7 => moog.filterQ;
-.9 => moog.filterSweepRate;
+2 => moog.gain;
+.01 => moog.filterQ;
+1. => moog.filterSweepRate;
 0 => moog.vibratoFreq;
 .0 => moog.vibratoGain;
 0.9 => moog.afterTouch;

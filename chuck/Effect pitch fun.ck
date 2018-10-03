@@ -4,14 +4,17 @@ SawOsc s => LPF f => Echo e => Pan2 pan => dac;
 
 .2 => s.gain;
 
-1::second => dur freqCycle;
-.25::second => dur filtCycle;
+60./94. => float beatSec;
+beatSec::second => dur beat;
+
+beat*4 => dur freqCycle;
+beat=> dur filtCycle;
 10::second => e.max;
 filtCycle*1.5 => e.delay;
 e=>e;
 0.5 => e.gain;
 0.2 => e.mix;
-12::second => dur panCycle;
+beat*16 => dur panCycle;
 .5 => float panFreq;
 
 //0 => pan.pan;
@@ -71,6 +74,10 @@ spork~freqF(f);
 spork~autoPan(pan);
 
 
-400::second => now;
+40::second => now;
+
+0 => s.gain;
+
+10::second => now;
     
     

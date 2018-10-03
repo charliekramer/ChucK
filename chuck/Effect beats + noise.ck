@@ -17,11 +17,16 @@ Noise n =>  ResonZ f => Envelope env => echo => NRev rev => g => dac;
 .5 => echo.mix;
 echo => echo;
 
-220 => s.freq;
-220 => t.freq;
+Std.mtof(58) => float baseFreq => s.freq;
+baseFreq => t.freq;
 
-while (t.freq() < 440.) {
-	.1::second => now;
+.1::second => dur rate;
+
+while (true) {
+	baseFreq => t.freq;
+
+while (t.freq() < 2*baseFreq) {
+	rate => now;
 	t.freq()+ .1 => t.freq;
 	t.freq()*Std.rand2f(.1,6.) => f.freq;
 	
@@ -31,5 +36,6 @@ while (t.freq() < 440.) {
 	else {
 		1 => env.keyOff;
 	}
-	1 => t.gain => s.gain;
+	1=>s.gain => t.gain;
+}
 }
