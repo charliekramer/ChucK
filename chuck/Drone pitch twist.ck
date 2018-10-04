@@ -4,7 +4,7 @@ BeeThree s => NRev rev => Gain g => dac;
 BeeThree t => rev => g => dac;
 HevyMetl m => Chorus c => rev => g =>  dac;
 
-.1 => g.gain; .5 => m.gain; .7=> s.gain; .7 => t.gain;
+.05 => g.gain; .5 => m.gain; .7=> s.gain; .7 => t.gain;
 
 .3 => rev.mix;
 
