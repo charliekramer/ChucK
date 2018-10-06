@@ -1,13 +1,13 @@
 // based on gen5 example: exponential line segment table generator
 // 
-Phasor p => Gen5 g5 => LPF f => LPF f2 => Echo echo => Chorus c => NRev rev => Gain g=> dac;;
+Phasor p => Gen5 g5 => LPF f => LPF f2 => Echo echo => Chorus c => NRev rev => Dyno dyn => Gain g=> dac;;
 
 60./94. => float beattime;
 beattime::second => dur beat;
 
 beat - (now % beat) => now;
 
-.03 => g.gain;
+.05 => g.gain;
 
 .0 => rev.mix;
 
