@@ -3,6 +3,7 @@
 // two filters
 // try sqr and tri for LFO
 
+// fuzz bass ChuGen by Esteban Betancur https://github.com/essteban/chuckEFXs/tree/master/DigitalDistortion
 // ChuGen
 // Create new UGens by performing audio-rate processing in ChucK
 
