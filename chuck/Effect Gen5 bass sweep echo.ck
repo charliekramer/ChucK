@@ -7,7 +7,7 @@ beattime::second => dur beat;
 
 beat - (now % beat) => now;
 
-.05 => g.gain;
+.03 => g.gain;
 
 .0 => rev.mix;
 
@@ -28,7 +28,7 @@ p.freq()*1.5=> f.freq => f2.freq;
 f.freq() => float minFreq;
 2400. => float maxFreq;
 
-50 => f.Q;
+20 => f.Q => f2.Q;
 
 
 
@@ -51,7 +51,7 @@ e.keyOn();
 
 1 => int diff;
 
-now + 256*beat => time future;
+now + 128*beat => time future;
 
 // loop
 while (now < future)
