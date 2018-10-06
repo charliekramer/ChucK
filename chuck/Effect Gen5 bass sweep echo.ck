@@ -51,8 +51,10 @@ e.keyOn();
 
 1 => int diff;
 
+now + 256*beat => time future;
+
 // loop
-while (true)
+while (now < future)
 {
    f.freq()+10*diff => f.freq => f2.freq;
    Std.rand2(1,6)*baseFreq => p.freq;// top value of 6, 7, 8, 9 sound cool

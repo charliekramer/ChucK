@@ -17,7 +17,7 @@ env.set(4::second, .75::second, .9, 8::second);
 .3 => echo.gain;
 echo => echo;
 
-59-12 => int midiBase;
+58-12 => int midiBase;
 [0, 3, 5, 7] @=> int notes1[];
 [2, 6, 6, 8] @=> int notes2[];
 
