@@ -36,7 +36,9 @@ while( now < future ) {
 fun void bellStrike(float inFreq) {
     
     
-SinOsc m => SinOsc c => ADSR env => PRCRev rev => Pan2 pan => dac;
+SinOsc m => SinOsc c => ADSR env => PRCRev rev => Pan2 pan => Gain g => dac;
+
+.2 => g.gain;
 
 0.3 => rev.mix;
 

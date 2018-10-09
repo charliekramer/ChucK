@@ -29,7 +29,7 @@ fun void bellStrike(float inFreq) {
     
 SinOsc m => SinOsc c =>  ADSR env => PRCRev rev => Gain g => Pan2 pan => dac;
 
-1 => g.gain;
+.3 => g.gain;
 
 0.3 => rev.mix;
 
