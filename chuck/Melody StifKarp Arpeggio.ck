@@ -1,10 +1,16 @@
 StifKarp stk => Chorus chorus => Echo echo => NRev rev => Gain gain => dac;
 
+.3 => stk.pickupPosition;
+.1 => stk.sustain;
+//1. => stk.stretch;
+
  .5 => chorus.modFreq;
  .2 => chorus.modDepth;
- .5 => chorus.mix;
+ .1 => chorus.mix;
 
-.2::second => dur noteDur;
+60./94. => float noteTime;
+
+noteTime::second/4. => dur noteDur;
 
 noteDur - (now % noteDur) => now;
 
@@ -16,7 +22,7 @@ noteDur*1.5 => echo.delay;
 .2 => echo.mix;
 echo => echo;
 
-57-24 => int midiNote;
+57-12 => int midiNote;
 
 now + 100::second => time future;
 
