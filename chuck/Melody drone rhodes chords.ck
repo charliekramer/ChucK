@@ -2,7 +2,7 @@
 
 Rhodey rhodes[4] => BPF f =>  DelayA d => NRev rev => Chorus c => Dyno dyn => dac;
 
-57 => int baseNote;
+58 => int baseNote;
 
 10::second => dur chordTime;
 

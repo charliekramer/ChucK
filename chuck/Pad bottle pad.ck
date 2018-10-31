@@ -1,7 +1,7 @@
 // bottle pad
 
-BlowBotl bottleLeft[4] ;
-BlowBotl bottleRight[4] ;
+BlowBotl bottleLeft[2] ;
+BlowBotl bottleRight[2] ;
 
 bottleLeft[0] => NRev rev => Echo e => dac.left;
 bottleRight[0] =>  rev =>  e => dac.right;
@@ -9,24 +9,24 @@ bottleRight[0] =>  rev =>  e => dac.right;
 
 // add blowbotl paramaters
 
-0.1 => float noiseGain;
+0.5 => float noiseGain;
 .1 => float vibFreq;
-0.1 => float vibGain;
+0.9 => float vibGain;
 .1 => float rate;
 
 
 // gain - effects;
 
-0.05 => float allGain;
-0.2 => rev.mix;
+0.25 => float allGain;
+0.05 => rev.mix;
 0.1 => e.mix;
 
 1::second => e.delay;
 
-57 => int midiBase;
+58 => int midiBase;
 Std.mtof(midiBase+12) => float baseFreq;
 [0, 3, 5, 12] @=> int notes[];
-.01 => float freqDelta;
+10 => float freqDelta;
 
 
 for (0 => int i; i < bottleLeft.cap()-1; i++) {

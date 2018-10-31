@@ -1,19 +1,19 @@
 // pad with 3 oscillators and 4 chord tones
 // frequency spreading, BFP, reverb
 
-SawOsc s[4];
-SawOsc t[4]; // doubling
-SinOsc u[4]; // tripling--middle freq;
+SawOsc s[2];
+SawOsc t[2]; // doubling
+SinOsc u[2]; // tripling--middle freq;
 s[0] => BPF h => ADSR adsr => NRev rev =>  Gain g => Dyno d => Chorus c => dac;
 t[0] => h => adsr => rev => g => dac;
 u[0] => h => adsr => rev => g => dac;
 
 .009/12 => s[0].gain => t[0].gain => u[0].gain ;
-0.05/20 => g.gain;
+0.09/12 => g.gain;
 
 [0, 4, 7, 12] @=> int notes[];
-57 => int baseFreq;
-0.003 => float freqSpread; // in percent of the original frequency;
+58 => int baseFreq;
+0.002 => float freqSpread; // in percent of the original frequency;
 
 Std.mtof(baseFreq)*1.0 => h.freq;
 2. => h.Q;

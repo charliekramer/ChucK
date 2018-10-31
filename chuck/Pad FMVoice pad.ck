@@ -1,4 +1,4 @@
-// FM voide pad based on FMv pad
+// FM voice pad based on FMv pad
 
 FMVoices FMvLeft[4] ;
 FMVoices FMvRight[4] ;
@@ -16,23 +16,23 @@ FMvRight[0] => Chorus cR => NRev revR => Echo eR => Dyno dR => dac.right;
 
 // add FMv paramaters
 
-0.2 => float vowel;
-0.09 => float specTilt;
+0.85 => float vowel;
+0.29 => float specTilt;
 0.1 => float adsr;
 
 // gain - effects;
 
-0.005/2 => float allGain;
-0.8 => revL.mix;
+0.005/3 => float allGain;
+0.5 => revL.mix;
 0.1 => eL.mix;
-0.8 => revR.mix;
+0.5 => revR.mix;
 0.1 => eR.mix;
 
 1::second => eL.delay;
 1.5::second => eR.delay;
 
-57 => int midiBase;
-[0, 3, 5, 12] @=> int notes[];
+58-12 => int midiBase;
+[0, 4, 5, 12] @=> int notes[];
 .005 => float freqDelta; // in percentage difference
 
 
