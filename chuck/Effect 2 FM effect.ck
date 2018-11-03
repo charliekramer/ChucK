@@ -1,7 +1,7 @@
 // FM with two modulators
 // to add: filter sweep; SinOsc phase shift
 
-60./154. => float beattime;
+60./94.*.5 => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -12,7 +12,7 @@ SqrOsc lfo1 => blackhole;
 SqrOsc lfo2 => blackhole;
 
 55 => s.freq => float sFreqBase;
-0.5 => s.gain;
+0.1 => s.gain;
 0.05 => p.shift;
 .8 => p.mix;
 

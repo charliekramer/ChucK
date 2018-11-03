@@ -2,7 +2,7 @@ SinOsc s => Chorus c => Envelope e => Dyno d => dac;
 Noise n => LPF l => Envelope ne=> d => dac;
 660=>float basefreq;
 basefreq=>l.freq;
-.2=>n.gain => s.gain;
+.1=>n.gain => s.gain;
 1::second => now;
 660.=> float sfreq;
 while (true) {

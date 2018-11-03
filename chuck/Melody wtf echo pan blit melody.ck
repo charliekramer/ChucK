@@ -1,7 +1,7 @@
 // parallel vs series echoes
 
 //synch
-60./154./2 => float beattime;
+60./94./2 => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -42,7 +42,7 @@ beat - (now % beat) => now;
 
 // blit frequency
 
-110 => b.freq;
+Std.mtof(58+12) => b.freq;
 
 //set up harmonics cycle; start point and diff over cycle
 2=> int harm; 

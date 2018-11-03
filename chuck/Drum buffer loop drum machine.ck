@@ -1,7 +1,7 @@
 // buffer looping drum machine with reverb and echo on snare
 
 //0.4 => float beatsec; //sets both beat and loopFrequency
-60./154. => float beatsec; //sets both beat and loopFrequency
+60./94. => float beatsec; //sets both beat and loopFrequency
 
 
 //when changing beat change 1/beat below to the same number
@@ -26,8 +26,9 @@ h.Q(1);
 0.1 => g.gain;
 
 //snare effect parameters
+10::second => e.max;
 beat/4 => e.delay;
-0.2 => e.mix;
+0.4 => e.mix;
 0.2 => rev.mix;
 
 //read files
@@ -38,6 +39,7 @@ me.dir(-1)+"chuck/audio/hihat_01.wav" => hat.read;
 0.3=> hat.gain;
 1=> kick.gain;
 1=> snare.gain;
+
 
 //loop kick, 2x/second
 1 => kick.loop;

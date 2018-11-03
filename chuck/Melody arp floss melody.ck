@@ -2,21 +2,22 @@
 // chuck floss manual
 // modified to A base note and different arp + echo and synch to 'beat'
 // 
-60./154 => float beattime;
+60./94 => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
-9 => float baseFreq; // base note in MIDI (A)
+58-48 => float baseFreq; // base note in MIDI (A)
 
 SawOsc saw => LPF lowPass => ADSR adsr => Echo e => Gain g => dac;
 
-1.5::second => e.delay;
+1.5*beat => e.delay;
 
 lowPass.Q(8);
 g.gain(0.3);
 
-//[0,5,0,3,9,8] @=> int arp[]; // array of MIDI notes (original)
-[0,4,0,5,0,7,12,14,16,19] @=> int arp[]; // array of MIDI notes (mod)
+[0,2,0,4,0,8,0,10] @=> int arp[]; // whole tone scale
+//[0,5,0,3,9,8,0] @=> int arp[]; // array of MIDI notes 
+//[0,4,0,5,0,7,12,14,16,19] @=> int arp[]; // array of MIDI notes (mod)
 beat/4 => dur duration; // arpeggio rate (main loop)
 adsr.set(duration*0.1, duration*0.2, 0.7, duration*0.1); // adsr parameters in accord with duration
 48 => int octaveOffset;  // offset to apply to MIDI notes

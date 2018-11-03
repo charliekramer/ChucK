@@ -1,9 +1,12 @@
 // FM synthesis by hand
+// arhythmic 
 
 // carrier
 SinOsc c => dac;
 // modulator
 SinOsc m => blackhole;
+
+0.2 => c.gain;
 
 // carrier frequency
 220 => float cf;

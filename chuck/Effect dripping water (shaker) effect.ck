@@ -1,11 +1,13 @@
 Shakers shak => NRev r => dac;
 
 0.2=>r.mix;
-1.=> shak.energy;
-.5=> shak.gain;
+2.=> shak.energy;
+2=> shak.gain;
 0.5=>shak.decay;
 4=>shak.preset;
-5000=> shak.freq;
+7000=> shak.freq;
+ 
+3 => shak.gain;
 
 while (true) {
     1=>shak.noteOn;

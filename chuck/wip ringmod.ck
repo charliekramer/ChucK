@@ -17,7 +17,7 @@ Blit minus => modGain => dac;
 .1 => float freqMult;
 .05 => float freqDelta;
 
-.05 => modGain.gain;
+.2 => modGain.gain;
 
 while (true)
 {
@@ -30,7 +30,7 @@ carrier.freq()-modulator.freq() => minus.freq;
 Std.rand2(1,6) => plus.harmonics;
 Std.rand2(1,6) => minus.harmonics;
 
-beat/4. => now;
+beat/4 => now;
 
 freqMult + freqDelta => freqMult;
 

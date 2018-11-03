@@ -22,11 +22,11 @@ FMvRight[0] => Chorus cR => NRev revR => Echo eR => Dyno dR => dac.right;
 
 // gain - effects;
 
-0.005/3 => float allGain;
+0.005/6 => float allGain;
 0.5 => revL.mix;
-0.1 => eL.mix;
+0.4 => eL.mix;
 0.5 => revR.mix;
-0.1 => eR.mix;
+0.4 => eR.mix;
 
 1::second => eL.delay;
 1.5::second => eR.delay;
@@ -71,7 +71,7 @@ while (true) {
         
     }
     
-       .1::second => now;
+       1::second => now;
     
 }
 

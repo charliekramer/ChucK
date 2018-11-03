@@ -8,7 +8,7 @@ Echo echo;
 Pan2 pan[2];
 Dyno dyn;
 
-0.01 => s[0].gain => s[1].gain => s[2].gain => s[3].gain;
+0.01/10. => s[0].gain => s[1].gain => s[2].gain => s[3].gain;
 
 
 env.set(4::second, .75::second, .9, 8::second);

@@ -23,16 +23,16 @@ Moog s2 => Envelope e2 => NRev r2 => Echo echo22 => Echo echo222 => dac;
 
 [1., 1.25, 1.3333, 1.40, 1.5, 1.6666, 1.875, 2.0] @=> float scalepick[];
 
-440=> float basefreq;
+Std.mtof(58-12)=> float basefreq;
 
 
 0 => int index;
 
 1=>e.keyOn;
-1=>s.gain;
+.5=>s.gain;
 
 1=>e2.keyOn;
-1=>s2.gain;
+.5=>s2.gain;
 
 
 while (true) {

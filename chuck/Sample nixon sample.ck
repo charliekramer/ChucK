@@ -3,13 +3,13 @@
 // soundchain for nixon
 SndBuf nixon => PitShift pitch => NRev rev => Gain g => Pan2 pan => dac;
 
-1.5 => g.gain;
-0.0 => rev.mix; // turn down gain
+1.0 => g.gain;
+0.1 => rev.mix; // turn down gain
 0.2 => rev.gain; //
 1.0 => pitch.mix;
 
 // synch code
-60./154 => float beattime;
+60./94 => float beattime;
 beattime::second => dur beat;
 beat - (now % beat) => now;
 
@@ -20,7 +20,7 @@ beat - (now % beat) => now;
 
 [110000,4000000,4100000,4950000,7350000] @=> int marks[];
 /* 
-// 0. outrageous viscious distorted reporting (8 beat)
+// 0. outrageous viscious distorted reporting (6 beat)
 // 1. perjury is a serious crime (4 beat)
 // 2.obstruction of justice is a serious crime (8 beat)
 // 3. an impeachable crime (4 beat)
@@ -46,11 +46,12 @@ beat - (now % beat) => now;
 
 while (true) {
        
-    marks[1] => nixon.pos;
-    1.0 => nixon.rate;
-    1.0 => pitch.shift;
+    marks[0] => nixon.pos;
+    1 => nixon.rate;
+    1 => pitch.shift;
    -1*pan.pan()=> pan.pan;
-    beat*8 =>  now;   
+    beat*1 =>  now;  
+//	g.gain()*.9 => g.gain; use to fade
 }
 
 

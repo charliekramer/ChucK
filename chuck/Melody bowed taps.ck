@@ -1,5 +1,5 @@
 // notes for taps on bowed instrument
-// two minute limit
+// four minute limit
 
 Bowed bow => ADSR adsr => Echo echo => PRCRev rev => Gain g => Pan2 p => dac;
 
@@ -27,7 +27,7 @@ baseNote + 4 => int thirdNote;
 
 [fifthNote,baseNote,thirdNote] @=> int notes[];
 
-now + 10::second => time future;
+now + 240::second => time future;
 
 while (now < future) {
 	

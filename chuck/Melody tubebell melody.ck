@@ -1,23 +1,24 @@
 // tube bell melody
 
-60./154. => float beattime; 
+60./94. => float beattime; 
 beattime::second => dur beat; 
 beat - (now % beat) => now;
 
-TubeBell bellL => NRev revL => Echo eL => dac.left;
-TubeBell bellR => NRev revR => Echo eR => dac.right;
+TubeBell bellL => Echo eL => NRev revL =>dac.left;
+TubeBell bellR =>  Echo eR => NRev revR => dac.right;
 
-0.5 => bellL.gain;
-0.5 => bellR.gain;
+0.1 => bellL.gain;
+0.1 => bellR.gain;
 
-Std.mtof(57+12) => bellL.freq;
-Std.mtof(57+7) => bellR.freq;
+Std.mtof(58+12) => bellL.freq;
+Std.mtof(58+7) => bellR.freq;
 
 0.5 => revL.mix;
 0.5 => revR.mix;
 
-1::second => eL.delay;
-1.5::second => eR.delay;
+10::second => eL.max => eR.max;
+beat*1.5 => eL.delay;
+beat*.75 => eR.delay;
 
 0.3 => eL.mix;
 0.3 => eR.mix;

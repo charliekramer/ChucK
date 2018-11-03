@@ -12,11 +12,11 @@ Blit s => NRev rev => dac;
 Std.mtof(58) => s.freq;
 //220 => s.freq;
 //55 => s.freq;
-.2=>s.gain;
+.1=>s.gain;
 
 int x;
 while (beat/4 => now)
 {
-    Std.ftoi((1+Math.sin(x % 7))*8) => s.harmonics;
+    Std.ftoi((1+Math.sin(x % 7))*4) => s.harmonics;
     x++;  
 } 

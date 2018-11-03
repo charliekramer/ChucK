@@ -1,7 +1,7 @@
 // stereo echo bleep with random filter
 
 //synch code
-60./154. => float beattime;
+60./94. => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -18,7 +18,7 @@ f => env => Echo e => Echo e2 => Pan2 p2 => dac;
 beat/4 => e.delay => e2.delay;
 
 //set up base frequencies for blit and filter
-110 => float baseBFreq;
+Std.mtof(58+12)=> float baseBFreq;
 baseBFreq => b.freq;
 baseBFreq*1.1 => float baseFFreq;
 baseFFreq => f.freq;
@@ -33,5 +33,5 @@ while (true)
     beat => now;
     1 => env.keyOff;
     // make this half the previous time for cool effects
-    .125::second=> now;
+    beat => now;
 }

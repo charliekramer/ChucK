@@ -1,9 +1,13 @@
-SinOsc m => SinOsc c => Echo e => PRCRev rev => Dyno d => dac;
-m => SinOsc t =>  e =>  rev => d => dac;
+// weird grindy noise as secondary FM carrier changes freq and FM ratio moves
+
+SinOsc m => SinOsc c => Echo e => PRCRev rev => Dyno d => Gain g => dac;
+m => SinOsc t =>  e =>  rev => d => g => dac;
 
 0.2 => rev.mix;
 
-.2 => c.gain => t.gain;
+.05 => c.gain => t.gain;
+
+.07 => g.gain;
 
 2 => m.sync =>t.sync;
 

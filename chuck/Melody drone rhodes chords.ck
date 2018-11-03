@@ -1,4 +1,4 @@
-// rhodey chords
+// rhodey chords spooky
 
 Rhodey rhodes[4] => BPF f =>  DelayA d => NRev rev => Chorus c => Dyno dyn => dac;
 
@@ -9,7 +9,7 @@ Rhodey rhodes[4] => BPF f =>  DelayA d => NRev rev => Chorus c => Dyno dyn => da
 Std.mtof(baseNote)*1 => f.freq;
 1 => f.Q;
 
-0.005/4. => float rhodesGain;
+0.005/5. => float rhodesGain;
 0.7 => rev.mix;
 10::second => d.max;
 1.5::second => d.delay;

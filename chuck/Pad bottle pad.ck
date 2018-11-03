@@ -17,7 +17,7 @@ bottleRight[0] =>  rev =>  e => dac.right;
 
 // gain - effects;
 
-0.25 => float allGain;
+0.10 => float allGain;
 0.05 => rev.mix;
 0.1 => e.mix;
 

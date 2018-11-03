@@ -1,5 +1,7 @@
 StifKarp stk => Chorus chorus => Echo echo => NRev rev => Gain gain => dac;
 
+.3 => gain.gain;
+
 .3 => stk.pickupPosition;
 .1 => stk.sustain;
 //1. => stk.stretch;
@@ -8,7 +10,7 @@ StifKarp stk => Chorus chorus => Echo echo => NRev rev => Gain gain => dac;
  .2 => chorus.modDepth;
  .1 => chorus.mix;
 
-60./94. => float noteTime;
+60./94.*2. => float noteTime;
 
 noteTime::second/4. => dur noteDur;
 
@@ -22,7 +24,7 @@ noteDur*1.5 => echo.delay;
 .2 => echo.mix;
 echo => echo;
 
-57-12 => int midiNote;
+58-12 => int midiNote;
 
 now + 100::second => time future;
 
@@ -32,11 +34,11 @@ for (1 => int i; i <4; i++ ) {
 	
    playNote (noteDur, midiNote);
    noteDur => now;
-   playNote (noteDur, midiNote+5);
+   playNote (noteDur, midiNote+7);
    noteDur => now;
     playNote (noteDur, midiNote+12);
    noteDur => now;
-    playNote (noteDur, midiNote+5);
+    playNote (noteDur, midiNote+7);
    noteDur => now;
 }
    playNote (noteDur, midiNote+10);
@@ -45,7 +47,7 @@ for (1 => int i; i <4; i++ ) {
    noteDur => now;
    playNote (noteDur, midiNote+7);
    noteDur => now;
-   playNote (noteDur, midiNote+5);
+   playNote (noteDur, midiNote+4);
    noteDur => now;
 
 }

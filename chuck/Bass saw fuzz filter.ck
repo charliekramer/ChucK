@@ -35,7 +35,7 @@ s[0] => LPF filtLP =>  Fuzz f =>  Dyno d => Gain g => dac;
 s[1] => HPF filtHP => f => d => g => dac;
 s[2] => BPF filtBP => f => d => g => dac;
 
-0. => s[1].gain => s[2].gain;
+0. => s[1].gain => s[2].gain; // pick one, 0 is most normal sounding
 g.gain(.02);
 
 SinOsc t => blackhole;
@@ -43,7 +43,8 @@ SinOsc t => blackhole;
 Std.mtof(58-12-12) => s[0].freq => s[1].freq => s[2].freq;
 10=>filtBP.Q => filtLP.Q => filtHP.Q;
 
-beattime*4 => t.freq;
+//1./beattime*.25=> t.freq;  //for regular sounding cycles
+beattime*4 => t.freq;  //for offset sounding cycles
 
 15 => f.intensity;
 

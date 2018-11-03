@@ -10,7 +10,7 @@ bowed[0] => PRCRev rev => Dyno dyn => dac;
 bowed[1] => rev => dyn => dac;
 bowed[2] => rev => dyn => dac;
 
-.2 => bowed[0].gain => bowed[1].gain => bowed[2].gain;
+.05 => bowed[0].gain => bowed[1].gain => bowed[2].gain;
 
 1 => bowed[0].noteOn => bowed[1].noteOn => bowed[2].noteOn;
 

@@ -7,7 +7,7 @@ beat - (now % beat) => now;
 SqrOsc s => Chorus cL => dac.left;
 s => Echo e => Chorus cR => dac.right;
 
-.1 => s.gain;
+.05 => s.gain;
 
 Std.mtof(58+12) => float baseFreq => s.freq; //layer on this *1.5
 

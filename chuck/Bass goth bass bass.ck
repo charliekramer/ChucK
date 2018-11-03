@@ -1,14 +1,15 @@
 // modified https://www.youtube.com/watch?v=ezmpolryqUE
 
-60./154. => float beatsec;
+60./94. => float beatsec;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
 
 PulseOsc  osc => LPF f => Envelope e => NRev rev => dac;
-220 => f.freq;
-Std.mtof(12+12+12-3) => osc.freq;
 
-.7 => osc.gain;
+Std.mtof(58-24) => osc.freq;
+osc.freq()*4. => f.freq;
+
+.8 => osc.gain;
 .1 => rev.mix;
 
 /*
@@ -37,11 +38,11 @@ spork~widthSweep(osc, 100::ms);
 [3*.25,.25, 3*.25,.25] @=> float beats[];
 
 
-for (0 => int i; true; i++) {
+for (0 => int i; i < 1000000; i++) {
     beats[i % beats.size()] => float beatset;
     beatset::second => e.duration;
-    Std.rand2f(.2,.7)=>osc.width;
-    .9 => e.value;
+    Std.rand2f(.1,.5)=>osc.width;
+    .5 => e.value;
     e.keyOff();
     (beatset*beatsec)::second => now;
 }

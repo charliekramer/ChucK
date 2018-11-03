@@ -9,7 +9,7 @@ Echo e1 => Echo e2 => Echo e3 => NRev rev => Gain g1 => Pan2 pan => dac;
 
 for (0 => int i; i<4; i++) {
     voice[i] => e1 => e2 => e3 => rev => g1 => dac;
-    0.025 => g1.gain;
+    0.01 => g1.gain;
     0.02 => voice[i].gain;
     0.3 => rev.mix;
     1000::ms => e1.max => e2.max => e3.max;

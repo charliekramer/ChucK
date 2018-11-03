@@ -1,4 +1,5 @@
 // pitch/filter/echo/pan mod of sawOsc
+// "wow" sound
 
 SawOsc s => LPF f => Echo e => Pan2 pan => dac;
 

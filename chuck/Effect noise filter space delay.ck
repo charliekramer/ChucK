@@ -1,6 +1,6 @@
 Noise noise => BPF f => Envelope env => Echo echo => NRev rev => Dyno dyn => dac;
 
-10 => noise.gain;
+3 => noise.gain;
 
 .1 => rev.mix;
 

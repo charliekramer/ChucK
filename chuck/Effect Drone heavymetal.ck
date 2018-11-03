@@ -15,10 +15,10 @@ m[2] => Phasor p2 => Chorus c2 => g => dac.right;
 c0.modFreq()*1.1 => c1.modFreq;
 c0.modFreq()*.8 => c2.modFreq;
 
-1 => g.gain;
+.05 => g.gain;
 .1 => m[0].gain =>m[1].gain =>m[2].gain;
 
-44. => float baseFreq;
+Std.mtof(58-36) => float baseFreq;
 1.0001=> float freqSpread; // 1.0001, 1.0005 drone
 
 baseFreq => m[0].freq;

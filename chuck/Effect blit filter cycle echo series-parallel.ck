@@ -2,7 +2,11 @@
 
 //time synch
 
-500::ms - (now % 500::ms) => now;
+60./94. => float beatSec;
+
+beatSec::second => dur beat;
+
+beat - (now % beat) => now;
 
 //SERIES
 //  Blit b => Envelope env => Echo e => Echo e2 => Echo e3 => Gain g => dac;
@@ -10,8 +14,8 @@
 //PARALLEL 
 
 Blit b => Envelope env => Echo e =>  Gain g1 => dac; 
-b => env => Echo e2 => Pan2 p2 => Gain g2 => dac; 
-b => env => Echo e3 => Pan2 p3 => Gain g3 => dac; 
+b => env => Echo e2 => Pan2 p2 => Gain g2 => dac.left; 
+b => env => Echo e3 => Pan2 p3 => Gain g3 => dac.right; 
 // Paralle--pan and gain paramters
 -1.0 => p3.pan;
 1.0 => p3.pan;
@@ -23,11 +27,11 @@ b => env => Echo e3 => Pan2 p3 => Gain g3 => dac;
     
 //echo parameters
 5::second => e.max;
-.75::second => e.delay;
-.5::second/4 => e2.delay;
-.25::second => e3.delay;
+beat*1.5 => e.delay;
+beat*.75 => e2.delay;
+beat/2. => e3.delay;
 
-0.2 => e.mix;
+0.7 => e.mix;
 0.7 => e2.mix;
 0.7 => e3.mix;
 
@@ -35,7 +39,7 @@ b => env => Echo e3 => Pan2 p3 => Gain g3 => dac;
 
 // blit frequency
 
-110 => b.freq;
+Std.mtof(58-12) => b.freq;
 .5=>b.gain;
 
 //set up harmonics cycle; start point and diff over cycle
@@ -47,9 +51,9 @@ b => env => Echo e3 => Pan2 p3 => Gain g3 => dac;
 while (true) {
     harm => b.harmonics;
     1 => env.keyOn;
-    .25::second => now;
+    beat/2 => now;
     1 => env.keyOff;
-    .25::second => now;
+    beat/2 => now;
     harmdiff+harm=>harm;
     if (harm > 20 || harm == 2) -1*=>harmdiff;
 }

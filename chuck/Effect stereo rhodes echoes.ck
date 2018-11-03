@@ -1,3 +1,4 @@
+//beat synched overlapping echoes
 Rhodey rhodesL;
 Rhodey rhodesR;
 Echo echoL;
@@ -14,7 +15,7 @@ beat - (now % beat) => now;
 rhodesL => echoL => dac.left;
 echoR => dac.right;
 
-57-12 => int midiNote;
+58-12 => int midiNote;
 Std.mtof(midiNote) => float baseFreq => rhodesL.freq =>rhodesR.freq;
 
 echoL => echoR => echoL ;;
@@ -35,7 +36,7 @@ echoR.delay()/1.5 => echoR2.delay;
 1 => echoR.mix => echoL.mix;
 1 => echoR2.mix => echoL2.mix;
 
-2. => float freqWobble;
+0. => float freqWobble;
 
 while (true) {
 	

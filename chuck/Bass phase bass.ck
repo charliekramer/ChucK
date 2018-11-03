@@ -1,7 +1,7 @@
 //fat phase bass with filter sweep
 
 //time synch code
-60./154. => float beattime;
+60./94. => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -13,13 +13,13 @@ SinOsc t => Phasor p => l => e => g =>  d => dac;
 
 // set individual sinosc gains and master
 1 => s.gain => t.gain;
-.025 => g.gain;
+.01 => g.gain;
 
 //set Dyno to limiter
 d.limit;
 
 //set oscillator base frequency
-Std.mtof(57-24) => s.freq => t.freq => float baseFreq;
+Std.mtof(58-24) => s.freq => t.freq => float baseFreq;
 
 //frequency spreading
 .5 => float delta;

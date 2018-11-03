@@ -7,7 +7,7 @@ beattime::second => dur beat;
 
 beat - (now % beat) => now;
 
-.05 => g.gain;
+.25 => g.gain;
 
 .0 => rev.mix;
 
