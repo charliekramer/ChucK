@@ -3,9 +3,9 @@
 
 SndBuf2 click => PitShift pitch => NRev rev => Dyno dyn => dac;
 
-4 => click.gain;
+2 => click.gain;
 
-0.1 => rev.mix;
+0.0 => rev.mix;
 
 60./94. => float beatsec;
 94./138. => click.rate;
@@ -20,7 +20,8 @@ beat - (now % beat) => now;
 //"/Users/charleskramer/Desktop/chuck/audio/tyrolean_numberstation.wav" => click.read;
 //"/Users/charleskramer/Desktop/chuck/audio/buzzer_numberstation.wav" => click.read;
 //"/Users/charleskramer/Desktop/chuck/audio/pulse_sample.wav" => click.read;
-"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => click.read;
+//"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => click.read;
+"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => click.read;
 
 
 0 => click.pos;
@@ -61,16 +62,13 @@ fun void grainRandTime (SndBuf inBuf, int startPos) {
 // 5 => random play time between 10 and 50 ms starting from defined position
 
 1 => int chooser;
- 
-//0.3 => pitch.shift;
-//1.0 => pitch.mix;
-//0.5=>click.rate;
 
 int randStartPos;
 
 while (true) {
     
-    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
+    if (chooser == 1) speedBuf (click, 1., beat*164, 1.);
+//    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
     
     else if (chooser == 2) granularize(click,900/4);
     
