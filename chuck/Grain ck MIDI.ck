@@ -15,6 +15,8 @@ SndBuf buf2 => Envelope e => JCRev R => Gain gain => dac;
 
 // load the file
 "/Users/charleskramer/Desktop/chuck/audio/delme.wav" => buf2.read;
+//"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => buf2.read;
+
 
 // number of the device to open (see: chuck --probe)
 1 => int device; //changed from 0 to reflect 
@@ -49,7 +51,7 @@ fun void grain(float duration , int position, float pitch, int randompos, float 
         {
             if( msg.data1 == 176 && msg.data2 == 1 ) //cc
             {
-                msg.data3*150/127 => duration;
+                msg.data3*3000/127 => duration;
                 <<<duration>>>;
             }
             
@@ -80,11 +82,13 @@ fun void grain(float duration , int position, float pitch, int randompos, float 
             if( msg.data1 == 176 && msg.data2 == 6 )
             {
                 msg.data3/127.0 => R.mix;
+				<<< R.mix() >>>;
             }
 			
 			if( msg.data1 == 176 && msg.data2 == 7 )
 			{
 				msg.data3/127.0*4 => gain.gain;
+				<<< gain.gain() >>>;
 			}
         }
         
@@ -92,9 +96,9 @@ fun void grain(float duration , int position, float pitch, int randompos, float 
         Std.rand2(position-randompos,position+randompos) => buf2.pos;
         0.4 => buf2.gain;
         e.keyOn();
-        duration*0.5::ms => now;
+    	duration*0.5::ms => now;
         e.keyOff();
-        duration*0.5::ms => now;
+        50::ms => now;
     }
 }
 
