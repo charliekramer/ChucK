@@ -1,4 +1,4 @@
-120./60. => float beatsec;
+60./120.*4. => float beatsec;
 
 beatsec::second => dur beat;
 
@@ -19,9 +19,13 @@ Std.mtof(midiBase) => bottleL.freq;
 Std.mtof(midiBase)*1.5 => bottleR.freq;
 
 while (true){
-
+	
+	Std.rand2(1,2)*Std.mtof(midiBase) => bottleL.freq;
+    Std.rand2(1,2)*Std.mtof(midiBase)*1.5 => bottleR.freq;
+	
     1 =>bottleL.noteOn;
     Std.rand2f(-1,0)=>panL.pan;
+	
     beat => now;
 	
     1 => bottleL.noteOff;

@@ -1,5 +1,27 @@
+// Drum machine rando dronemetal
+
+class Fuzz extends Chugen
+{
+	1.0/2.0 => float p;
+	
+	2 => intensity;
+	
+	fun float tick(float in)
+	{
+		Math.sgn(in) => float sgn;
+		return Math.pow(Math.fabs(in), p) * sgn;
+	}
+	
+	fun void intensity(float i)
+	{
+		if(i > 1)
+			1.0/i => p;
+	}
+}
+
+
 //synch code
-0.5::second=>dur beat;
+0.125::second=>dur beat;
 beat - (now % beat) => now;
 
 //soundchain
@@ -9,16 +31,27 @@ SndBuf click => NRev r =>  g => dac;
 SndBuf kick  => g => dac;
 SndBuf hat  => g => dac;
 
-//METAL
-HevyMetl metal => dac;
-37=>metal.freq;
-0.3=>metal.gain;
-80=>metal.lfoSpeed;
-1=>metal.lfoDepth;
+1.5 => click.gain;
+2 => kick.gain;
 
+//METAL
+HevyMetl metal => Fuzz fuzz => Gain metalGain => dac;
+HevyMetl metalHarmony => Fuzz fuzz2 => Gain harmonyGain => dac;
+3 => fuzz.intensity;
+3 => fuzz2.intensity;
+.1 => metalGain.gain;
+.1 => harmonyGain.gain;
+37=>metal.freq;
+72 => metalHarmony.freq;
+.08=>metal.gain;
+.08 => metalHarmony.gain;
+80=>metal.lfoSpeed;
+80 => metalHarmony.lfoSpeed;
+1=>metal.lfoDepth;
+1 => metalHarmony.lfoDepth;
 
 //reverb paramter
-.3=>r.mix;
+.1=>r.mix;
 
 //read sound files
 me.dir(-1)+"chuck/audio/kick_01.wav" => kick.read;
@@ -54,12 +87,16 @@ fun void section( float kickArray[], float clickArray[], float hatArray[], float
         } 
         if(kick.pos()==0 || click.pos()==0 || hat.pos()==0) {
             1=>metal.noteOn;
+			1=>metalHarmony.noteOn;
             metal.freq()*Math.random2f(.9,1.1)=>metal.freq;
-            //Meshuggah
+			if(metal.freq() < 20. || metal.freq() > 40) 30 => metal.freq;
+			metal.freq()*(1+Math.random2(0,16)*.25)=>metalHarmony.freq;
+		    //Meshuggah
         }
-    beattime*Math.random2f(0.5,1.5)=>beattime;    
+    beattime*Math.random2f(0.1,1.75)=>beattime;    
     beattime::second=>now; 
     1=>metal.noteOff;
+	1=>metalHarmony.noteOff;
      
     }
 }
@@ -71,4 +108,7 @@ while (true)
  //   section(kick_prob_2,click_prob_2,hat_prob_2,0.25);
 
 }
+
+
+
 

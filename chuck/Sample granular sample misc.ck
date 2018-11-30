@@ -3,12 +3,16 @@
 
 SndBuf2 click => PitShift pitch => NRev rev => Dyno dyn => dac;
 
+SinOsc LFO => blackhole;
+
+.5 => LFO.freq;
+
 2 => click.gain;
 
 0.0 => rev.mix;
 
 60./94. => float beatsec;
-94./138. => click.rate;
+1. => click.rate;
 
 beatsec::second => dur beat;
 
@@ -21,7 +25,9 @@ beat - (now % beat) => now;
 //"/Users/charleskramer/Desktop/chuck/audio/buzzer_numberstation.wav" => click.read;
 //"/Users/charleskramer/Desktop/chuck/audio/pulse_sample.wav" => click.read;
 //"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => click.read;
-"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => click.read;
+//"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => click.read;
+"/Users/charleskramer/Desktop/chuck/audio/nari-lata-vela.wav" => click.read;
+
 
 
 0 => click.pos;
@@ -54,14 +60,17 @@ fun void grainRandTime (SndBuf inBuf, int startPos) {
     startPos =>inBuf.pos;
     Std.rand2(10,500) ::ms => now;
 }
+
 // chooser
 // 1 => speedBuf;
 // 2 => granularize
 // 3 => timed play starting at zero
 // 4 => specify start and end positions;
 // 5 => random play time between 10 and 50 ms starting from defined position
+// 6 => (5) plus random rate (including backwards)
+// 7 => (5) plus rate from LFO
 
-1 => int chooser;
+7 => int chooser;
 
 int randStartPos;
 
@@ -75,19 +84,33 @@ while (true) {
     else if (chooser == 3)
     {
         0 => click.pos;
-        beat*64=> now;
+        beat*12=> now;
     }
     else if (chooser == 4)
     {
         0.6=>click.rate; //backwards changes tone
         1.5 => pitch.shift;
-        grainPlay(click, 500000, 50000);
+        grainPlay(click, click.samples()/4, click.samples()/10);
     }
-    else {
+    else if (chooser == 5)
+    {
 		Std.rand2(0,click.samples()) => randStartPos;
         grainRandTime(click,randStartPos); 
-  //        grainRandTime(click,500); 
 
     }
+	else if (chooser == 6)
+	{
+		Std.rand2(0,click.samples()) => randStartPos;
+		Std.rand2f(-2,2) => click.rate;
+		grainRandTime(click,randStartPos); 
+		
+	}
+	else
+	{
+		Std.rand2(0,click.samples()) => randStartPos;
+		LFO.last()*4 => click.rate;
+		grainRandTime(click,randStartPos); 
+		
+	}
         
 }
