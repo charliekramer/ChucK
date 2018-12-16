@@ -18,15 +18,35 @@ beatsec::second => dur beat;
 
 beat - (now % beat) => now;
 
-//"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;
-//"/Users/charleskramer/Desktop/chuck/audio/wait_wilson.wav" => click.read;
-//"/Users/charleskramer/Desktop/chuck/audio/lincolnshire_numberstation.wav" => click.read;
-//"/Users/charleskramer/Desktop/chuck/audio/tyrolean_numberstation.wav" => click.read;
-//"/Users/charleskramer/Desktop/chuck/audio/buzzer_numberstation.wav" => click.read;
-//"/Users/charleskramer/Desktop/chuck/audio/pulse_sample.wav" => click.read;
-//"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => click.read;
-//"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => click.read;
-"/Users/charleskramer/Desktop/chuck/audio/nari-lata-vela.wav" => click.read;
+13 => int sampleChoose;
+
+    if (sampleChoose == 1) 
+	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
+	else if (sampleChoose == 2) 
+	{"/Users/charleskramer/Desktop/chuck/audio/wait_wilson.wav" => click.read;}
+	else if (sampleChoose == 3)
+	{"/Users/charleskramer/Desktop/chuck/audio/lincolnshire_numberstation.wav" => click.read;}
+	else if (sampleChoose == 4)
+	{"/Users/charleskramer/Desktop/chuck/audio/tyrolean_numberstation.wav" => click.read;}
+	else if (sampleChoose == 5)
+	{"/Users/charleskramer/Desktop/chuck/audio/buzzer_numberstation.wav" => click.read;}
+	else if (sampleChoose == 6)
+	{"/Users/charleskramer/Desktop/chuck/audio/pulse_sample.wav" => click.read;}
+	else if (sampleChoose == 7)
+	{"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => click.read;}
+	else if (sampleChoose == 8)
+	{"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => click.read;}
+	else if (sampleChoose == 9)
+	{"/Users/charleskramer/Desktop/chuck/audio/nari-lata-vela.wav" => click.read;}
+	else if (sampleChoose == 10)
+	{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesAnnouncement.wav" => click.read;}
+	else if (sampleChoose == 11)
+	{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesBackgroundMusic.wav" => click.read;}
+	else if (sampleChoose == 12)
+	{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesLanding.wav" => click.read;}
+	else if (sampleChoose == 13)
+	{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesTakeoff.wav" => click.read;}
+
 
 
 
@@ -70,7 +90,7 @@ fun void grainRandTime (SndBuf inBuf, int startPos) {
 // 6 => (5) plus random rate (including backwards)
 // 7 => (5) plus rate from LFO
 
-7 => int chooser;
+1 => int chooser;
 
 int randStartPos;
 

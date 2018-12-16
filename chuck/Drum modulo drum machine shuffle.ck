@@ -1,7 +1,7 @@
 // added "shuffle" (variable gain depending on where we are in the measure)
 //synch
 //0.4::second=>dur beat;
-60./154 => float beattime;
+60./120 => float beattime;
 beattime::second => dur beat;
 beat - (now % beat) => now;
 
@@ -13,33 +13,24 @@ SndBuf snare  =>  Gain snareG => NRev snareRev => g => h => dac;
 SndBuf hat => Gain hatG => g => h => dac;
 Shakers shak => Gain shakG => g => h => dac;
 
-h.freq(22);
-h.Q(1);
-
-
-//for echo effects
-if (false)
-{
-g => DelayA e  => e => dac;
-.9 => e.gain;
-beat => e.delay;
-}
+h.freq(20);
+h.Q(10);
 
 //default gain setting (for reset use in shuffle code
 0.9 => float snaregain;
 snaregain => snare.gain;
 
 // gain settings
-0.07 => g.gain; //0.5
+0.05 => g.gain; //0.5
 1.0 => kickG.gain; //1.0
 0.2 => hatG.gain; //0.2
 0.1 => shakG.gain; //0.1
-0.9 => snareG.gain;//1.0
+1.5 => snareG.gain;//1.0
 
 0.1 => snareRev.mix;
 
 // use this to drop out all but kick or snare
-//0. => hatG.gain => shakG.gain => snareG.gain; //kick only
+0. => hatG.gain => shakG.gain => snareG.gain; //kick only
 //0. => hatG.gain => shakG.gain => kickG.gain; //snare only
     
     

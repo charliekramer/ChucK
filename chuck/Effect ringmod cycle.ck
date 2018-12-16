@@ -1,6 +1,6 @@
 // simple ring modulator
 
-60./94. => float beatSec;
+60./120.*2 => float beatSec;
 
 beatSec::second => dur beat;
 

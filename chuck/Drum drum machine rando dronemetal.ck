@@ -21,7 +21,8 @@ class Fuzz extends Chugen
 
 
 //synch code
-0.125::second=>dur beat;
+60./120. => float beatSec;
+beatSec::second=>dur beat;
 beat - (now % beat) => now;
 
 //soundchain
@@ -93,8 +94,8 @@ fun void section( float kickArray[], float clickArray[], float hatArray[], float
 			metal.freq()*(1+Math.random2(0,16)*.25)=>metalHarmony.freq;
 		    //Meshuggah
         }
-    beattime*Math.random2f(0.1,1.75)=>beattime;    
-    beattime::second=>now; 
+    beattime/Math.random2(1,2)=>float beattime2;    
+    beattime2::second=>now; 
     1=>metal.noteOff;
 	1=>metalHarmony.noteOff;
      

@@ -148,8 +148,10 @@ control_effects.display();
 
 
 // FM synth chain
-SinOsc m => SinOsc s => Chorus c => Echo e  => dac;
+SinOsc m => SinOsc s => Chorus c => Echo e  => Gain g => dac;
 m => blackhole;
+
+.05 => g.gain;
 
 .5 => c.modFreq;
 .1 => c.modDepth;
@@ -168,7 +170,11 @@ e => e;
 
 0 => int j;
 
-250 => float stepTime;
+60./120. => float beatSec;
+
+beatSec*1000 => float stepTime; // in ms
+
+stepTime::ms - (now % stepTime::ms) => now;
 
 now + 120::second => time future; 
 
