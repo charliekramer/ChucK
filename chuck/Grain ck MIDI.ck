@@ -7,15 +7,51 @@
 // 3 = pitch
 // 4 = randpitch (range)
 // 5 = randpos (range)
-// 6 = reverb
-// 7 = gain
-SndBuf buf2 => Envelope e => JCRev R => Gain gain => dac;
+// 6 = reverb mix
+// 7 = echo mix
+// 8 = gain
+SndBuf buf2 => Envelope e => Echo echo => JCRev R => Gain gain => dac;
+
+5::second => echo.max;
+1.75::second => echo.delay;
+.5 => echo.gain;
+.2 => echo.mix;
+echo => echo;
 
 2 => gain.gain;
 
 // load the file
-"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => buf2.read;
-//"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => buf2.read;
+
+14 => int sampleChoose;
+
+if (sampleChoose == 1) 
+{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => buf2.read;}
+else if (sampleChoose == 2) 
+{"/Users/charleskramer/Desktop/chuck/audio/wait_wilson.wav" => buf2.read;}
+else if (sampleChoose == 3)
+{"/Users/charleskramer/Desktop/chuck/audio/lincolnshire_numberstation.wav" => buf2.read;}
+else if (sampleChoose == 4)
+{"/Users/charleskramer/Desktop/chuck/audio/tyrolean_numberstation.wav" => buf2.read;}
+else if (sampleChoose == 5)
+{"/Users/charleskramer/Desktop/chuck/audio/buzzer_numberstation.wav" => buf2.read;}
+else if (sampleChoose == 6)
+{"/Users/charleskramer/Desktop/chuck/audio/pulse_sample.wav" => buf2.read;}
+else if (sampleChoose == 7)
+{"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => buf2.read;}
+else if (sampleChoose == 8)
+{"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => buf2.read;}
+else if (sampleChoose == 9)
+{"/Users/charleskramer/Desktop/chuck/audio/nari-lata-vela.wav" => buf2.read;}
+else if (sampleChoose == 10)
+{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesAnnouncement.wav" => buf2.read;}
+else if (sampleChoose == 11)
+{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesBackgroundMusic.wav" => buf2.read;}
+else if (sampleChoose == 12)
+{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesLanding.wav" => buf2.read;}
+else if (sampleChoose == 13)
+{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesTakeoff.wav" => buf2.read;}
+else if (sampleChoose == 14)
+{"/Users/charleskramer/Desktop/chuck/audio/Sheriff_2014-12-04.wav" => buf2.read;}
 
 
 // number of the device to open (see: chuck --probe)
@@ -86,6 +122,11 @@ fun void grain(float duration , int position, float pitch, int randompos, float 
             }
 			
 			if( msg.data1 == 176 && msg.data2 == 7 )
+			{
+				msg.data3/127. => echo.mix;
+				<<< echo.mix() >>>;
+			}
+			if( msg.data1 == 176 && msg.data2 == 8 )
 			{
 				msg.data3/127.0*4 => gain.gain;
 				<<< gain.gain() >>>;

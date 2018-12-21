@@ -1,24 +1,28 @@
 //sample manipulator/grandulator
 // miscellaneous samples
 
-SndBuf2 click => PitShift pitch => NRev rev => Dyno dyn => dac;
+SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Dyno dyn => dac;
 
 SinOsc LFO => blackhole;
+
+60./94. => float beatsec;
+1. => click.rate;
+beatsec::second => dur beat;
+beat - (now % beat) => now;
 
 .5 => LFO.freq;
 
 2 => click.gain;
 
-0.0 => rev.mix;
+10*beat => echo.max;
+1.5*beat => echo.delay;
+.3 => echo.mix;
+.5 => echo.gain;
+echo => echo;
 
-60./94. => float beatsec;
-1. => click.rate;
+0.1 => rev.mix;
 
-beatsec::second => dur beat;
-
-beat - (now % beat) => now;
-
-13 => int sampleChoose;
+6 => int sampleChoose;
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -46,9 +50,9 @@ beat - (now % beat) => now;
 	{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesLanding.wav" => click.read;}
 	else if (sampleChoose == 13)
 	{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesTakeoff.wav" => click.read;}
-
-
-
+	else if (sampleChoose == 14)
+	{"/Users/charleskramer/Desktop/chuck/audio/Sheriff_2014-12-04.wav" => click.read;}
+	
 
 0 => click.pos;
 
@@ -90,16 +94,16 @@ fun void grainRandTime (SndBuf inBuf, int startPos) {
 // 6 => (5) plus random rate (including backwards)
 // 7 => (5) plus rate from LFO
 
-1 => int chooser;
+4 => int chooser;
 
 int randStartPos;
 
 while (true) {
     
-    if (chooser == 1) speedBuf (click, 1., beat*164, 1.);
+    if (chooser == 1) speedBuf (click, 1, beat*160, 1.);
 //    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
     
-    else if (chooser == 2) granularize(click,900/4);
+    else if (chooser == 2) granularize(click,900);
     
     else if (chooser == 3)
     {
@@ -108,9 +112,9 @@ while (true) {
     }
     else if (chooser == 4)
     {
-        0.6=>click.rate; //backwards changes tone
-        1.5 => pitch.shift;
-        grainPlay(click, click.samples()/4, click.samples()/10);
+        .1 => click.rate; //backwards changes tone
+        .2 => pitch.shift;
+        grainPlay(click, click.samples()/4+44000/2+2000, 150000);
     }
     else if (chooser == 5)
     {
