@@ -1,4 +1,7 @@
 // 
+
+15::minute => dur runtime;
+
 36 => int midiBase; //base note; 12 or 24 is intense with sax and bowed; 36+ more musical
 [0,2,4,5,7, 9, 11, 12] @=> int degrees[]; // scale degrees
 //[0,4,4,7,7, 12, 12, 12] @=> int degrees[]; // scale degrees
@@ -105,7 +108,9 @@ for (0 => int i; i < times.cap(); i++) {
 player1(notes,times);
 player2(notes,times);
 
-while (true) {
+now + runtime => time end;
+
+while (now < end) {
 	
 shuffle(notes,times);
 player1(notes,times);
@@ -115,5 +120,11 @@ player2(notes,times);
 
 }
 
+Std.mtof(midiBase) => sax.freq => bar1.freq;
+1 => sax.noteOn => bar1.noteOn;
 
-1000::second => now;
+5::second => now;
+
+1 => sax.noteOff => bar1.noteOff;
+
+5::second => now;

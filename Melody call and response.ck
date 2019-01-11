@@ -27,7 +27,7 @@ Bowed bar1 => echo => rev => dyn => master => Pan2 pan2 => dac;
 
 .3 => bar1.gain;
 .025 => sax.gain;
-.5 => master.gain;
+.3 => master.gain;
 
 .3 => pan1.pan;
 -.3 => pan2.pan;
@@ -114,6 +114,8 @@ while (now < end) {
 	
 shuffle(notes,times);
 player1(notes,times);
+
+Std.rand2f(1,4)*beat => now;
 
 shuffle(notes,times);
 player2(notes,times);
