@@ -38,7 +38,7 @@ s[2] => BPF filtBP => f => d => g => dac;
 0. => s[1].gain => s[2].gain; // pick one, 0 is most normal sounding
 g.gain(.02);
 
-SinOsc t => blackhole;
+SinOsc t => blackhole; // try sqr and tri for different patterns
 
 Std.mtof(36) => s[0].freq => s[1].freq => s[2].freq;
 10=>filtBP.Q => filtLP.Q => filtHP.Q;

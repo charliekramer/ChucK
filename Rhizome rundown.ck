@@ -12,7 +12,15 @@ while (true) {
 }
 
 /*
+
+// background; how many coders? how many musicians? electronic musicians? any other live coders?
 //how to use audicle
+
+add shred
+replace
+remove
+VM monitor
+console monitor
 
 1. SinOsc sin => dac;
 

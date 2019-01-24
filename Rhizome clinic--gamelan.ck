@@ -1,4 +1,4 @@
-// "gamelan" ChucK code for Rhizome clinic
+// "gamelan" ChucK code for Rhizome clinic by Charlie Kramer (taos.points@gmail.com)
 // this document includes:
 // 1. very basic ChucK syntax
 // 2. the code
@@ -65,10 +65,8 @@ while (true) { // do the stuff in the brackets forever
     Std.mtof(baseNote+4+12) => float freq3;
     
  
- 3. Move notes around---switch the first and third notes; copy notes--be sure to copy the whole block of 
- 
-    freq3 => bar.freq;
- 
+ 3. Move notes around---switch the first and third notes
+  
     
 4. change the timing --fiddle with beat (try dividing it in half or doubling it)
 --change some of the references to "beat" to "beat/2" or "beat/4"
@@ -85,14 +83,14 @@ control the amount of reverb with this line
  
 7. add echo by replacing the first line with:
  
-ModalBar bar => NRev rev => Echo e => dac;  // connect an instance of the ModalBar unit generator to the digital-audio converter
+ModalBar bar => Echo e =>  NRev rev =>  dac;  // connect an instance of the ModalBar unit generator to the digital-audio converter
 0.2 => rev.mix; // set reverb low to keep from smearing the echoes 
 0.125::second => e.delay; // set echo time; try making this longer and shorter; you can also set it equal to beat or beat/2, say
 0.9 => e.gain; //echo volume
 
  8. move it in the stereo field by adding panning (change the first line to read as follows, then add the second line)
  
-  ModalBar bar => Pan2 pan => dac;
+ModalBar bar => Echo e =>  NRev rev =>  Pan2 pan => dac; 
   -1.0 => pan.pan; // hard left; 1 = hard right, in between gives you middle-ish positions
   
   9. choose a different preset for ModalBar
@@ -110,7 +108,6 @@ ModalBar bar => NRev rev => Echo e => dac;  // connect an instance of the ModalB
          - Clump = 8
   
   10. Pick a random parameter and increase or decrease it until the program either fails or something really cool or awful happens
-
 
 
 */
@@ -131,6 +128,6 @@ http://booki.flossmanuals.net/chuck/   chuck FLOSS manual
 
 https://toplap.org    algorithmic/live coding references/community/events
 
-https://www.youtube.com/channel/UCkrw4sARyqsmFKkyJA_okhQ/videos?view_as=subscriber    Charlie's youtube page with ChucK stuff
+https://bit.ly/2FoDnT9    my youtube page with ChucK stuff
 
 https://www.youtube.com/watch?v=S-T8kcSRLL0&t=3s   cool TED talk by the creator of ChucK

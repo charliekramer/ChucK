@@ -22,10 +22,11 @@ input => del[2] => dac.right;
 for (0 => int i; i < 3; i++) {
     del[i] => del[i];
     0.6 => del[i].gain;
-    (0.8 + i*0.3)::second => del[i].max => del[i].delay;
+ //   (0.8 + i*0.3)::second => del[i].max => del[i].delay;
+     beat*1.5 => del[i].max => del[i].delay;
 }
 
-[0,4,5,7,10,12] @=> int notes[];
+[0,1,4,5,11,12] @=> int notes[];
 60 => int baseNote;
 notes.cap()-1 => int numNotes;
 

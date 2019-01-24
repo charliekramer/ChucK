@@ -1,6 +1,6 @@
 SinOsc sin => Modulate mod => NRev rev => Gain gain => dac;
 
-.1 => gain.gain;
+.02 => gain.gain;
 
 200 => sin.freq; // this doesn't seem to affect anything
 

@@ -1,5 +1,5 @@
 
-60./120. => float beattime;
+60./120.*1.5 => float beattime;
 
 beattime::second=>dur beat;
 beat - (now % beat) => now;
