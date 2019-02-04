@@ -8,7 +8,7 @@ SndBuf buf => NRev rev => Envelope e => PitShift pitch => Gain g => Pan2 p => da
 
 .1 => rev.mix;
 
-0.4 => g.gain;
+2 => g.gain;
 ;
 
 me.dir(-1)+"chuck/audio/SoundsofSaturnClip.wav" => buf.read;
@@ -19,7 +19,7 @@ me.dir(-1)+"chuck/audio/SoundsofSaturnClip.wav" => buf.read;
 			 //  for 2 and 3 make sure note limits on input device are set in 
 			 //    returnNote function
 
-5 => int sampleChoose;
+7 => int sampleChoose;
 
 if (sampleChoose == 1) 
 {"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => buf.read;}
