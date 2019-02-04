@@ -33,6 +33,8 @@ SawOsc st2 => env => Gain gain2 => master => dac;
 
 8 => float divisor; // smaller=>faster. .125, 2, 4, 8
 
+4 => int func; // 1 = multiplicative, 2 = additive, 3 = divided, 4 = sqrt
+
 60 => int midiBase;
 
 [0,0,0,1,1,11,11,12,12,12] @=> int notes[];
@@ -87,7 +89,10 @@ fun void pitchCycle (float rate, float gain, dur pitchTime) {
 	rate*200 => u.freq;
 	rate*310 => v.freq;
 	while (true) {
-		(1+v.last())*(1+u.last())*(1+t.last())/3 => pitch.shift;
+		if (func == 1) (1+v.last())*(1+u.last())*(1+t.last())/3 => pitch.shift;
+		if (func == 2) (1+v.last()+u.last()+t.last())/3 => pitch.shift;
+		if (func == 3) 1/(1+v.last()+u.last()+t.last())/3 => pitch.shift;
+		if (func == 4) Math.sqrt((1+v.last()*u.last()*t.last()))/3 => pitch.shift;
 		pitchTime => now;
 	}
 }
