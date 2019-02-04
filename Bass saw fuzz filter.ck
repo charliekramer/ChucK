@@ -35,10 +35,16 @@ s[0] => LPF filtLP =>  Fuzz f =>  Dyno d => Gain g => dac;
 s[1] => HPF filtHP => f => d => g => dac;
 s[2] => BPF filtBP => f => d => g => dac;
 
-0. => s[1].gain => s[2].gain; // pick one, 0 is most normal sounding
+SinOsc v => FullRect rect => blackhole; // modulate gain of other sinoscs
+(1./beattime)/5. => v.freq;
+2 => v.gain; // 0 for normal-ish sound
+
+.0 => s[1].gain => s[2].gain; // pick one, 0 is most normal sounding
 g.gain(.02);
 
 SinOsc t => blackhole; // try sqr and tri for different patterns
+.1 => t.freq;
+1 => t.gain;
 
 Std.mtof(36) => s[0].freq => s[1].freq => s[2].freq;
 10=>filtBP.Q => filtLP.Q => filtHP.Q;
@@ -52,6 +58,7 @@ Std.mtof(36) => s[0].freq => s[1].freq => s[2].freq;
 now + 128*beat => time future;
 
 while (now < future) {
+	v.last() => s[1].gain => s[2].gain;
 	(4.9+t.last()*4)*(s[0].freq()) => filtLP.freq => filtBP.freq => filtHP.freq;
     beat*.25 => now;
 

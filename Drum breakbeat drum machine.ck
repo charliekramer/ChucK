@@ -31,7 +31,7 @@ hat.samples()=>hat.pos;
 
 //funk option; set to 1 for funky action 
 
-0 => int funkoption; 
+1 => int funkoption; 
 
     for ( 1 => int i; true; i++)
     {
