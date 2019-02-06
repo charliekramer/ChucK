@@ -96,25 +96,29 @@ while (false) { // rate = sin + noise
 
 0 => s2.gain;
 
-while (true) { // bitskipper (forward and backward)
+while (false) { // bitskipper (forward and backward)
 	
 	s.pos()+n => s.pos;
 	1::samp => now;
 }
 
-2 => int nreps;
+3 => int nreps;
 1. => pitch.mix;
-1./7. => pitch.shift;
+0=>s2.gain;
+//Math.log(nreps+1) => pitch.shift;
+1::samp => increment;
 
 while (true) { // bit repeater
 	
 	for (0 => int i; i< nreps; i++) {
-		s.pos()-1 => s.pos;
+		s.pos()-Std.rand2(1,1) => s.pos; // make second number larger
 		increment => now;
 	}
 	
 	increment => now;
 }
+
+
 
 
 
