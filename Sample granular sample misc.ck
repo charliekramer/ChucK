@@ -32,11 +32,13 @@ echo => echo;
 // 7 => (5) plus rate from LFO
 // 8 => grain skipper
 
-8 => int chooser;
+4 => int chooser;
 1.0/1.0 => pitch.shift;
 .7 => pitch.mix;
+1 => click.loop;
 
-16 => int sampleChoose;
+17 => int sampleChoose;
+
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -70,6 +72,11 @@ echo => echo;
 	{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => click.read;}
 	else if (sampleChoose == 16)
 	{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano_edit.wav" => click.read;}
+	else if (sampleChoose == 17)
+	{"/Users/charleskramer/Desktop/chuck/audio/voicemail_goodbye.wav" => click.read;}
+	else if (sampleChoose == 18)
+	{"/Users/charleskramer/Desktop/chuck/audio/voicemail_unsecured_dad.wav" => click.read;}
+	
 	
 
 
@@ -119,7 +126,7 @@ int randStartPos;
 
 while (true) {
     
-    if (chooser == 1) speedBuf (click, 1, beat*160, 1.);
+    if (chooser == 1) speedBuf (click, 1., beat*4, 1.);
 //    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
     
     else if (chooser == 2) granularize(click,900);
@@ -131,9 +138,9 @@ while (true) {
     }
     else if (chooser == 4)
     {
-        .1 => click.rate; //backwards changes tone
-        .2 => pitch.shift;
-        grainPlay(click, click.samples()/4+44000/2+2000, 150000);
+        .3 => click.rate; //backwards changes tone
+        1.1 => pitch.shift;
+        grainPlay(click, click.samples()/4,click.samples()/2);
     }
     else if (chooser == 5)
     {

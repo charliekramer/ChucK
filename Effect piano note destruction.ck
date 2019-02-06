@@ -1,9 +1,25 @@
 // single piano note, at each sample or bunch of samples randomly modify rate
 // from uniform distribution. add a copy whose rate is the same (per sample) 
 // times a second distribution. 
+// updated to include rate = MA(3) and sin+noise options
+// 
 
-SndBuf2 s =>  Gain g => dac;
-SndBuf2 s2 => g =>dac;
+SndBuf2 s => PitShift pitch => Echo echo => PRCRev rev => Gain g => dac;
+SndBuf2 s2 => echo => rev => g =>dac;
+
+1 => pitch.shift;
+0 => pitch.mix;
+
+.0 => rev.mix;
+
+60./120.*2 => float beatSec;
+beatSec::second => dur beat;
+
+10*beat => echo.max;
+1.5*beat => echo.delay;
+.5 => echo.gain;
+.0 => echo.mix;
+echo => echo;
 
 .3 => g.gain;
 
@@ -18,22 +34,90 @@ SndBuf2 s2 => g =>dac;
 1 => s.loop;
 1 => s2.loop;
 
-.5 => float mu; //center of distribution for rate of main sample
+1. => float mu; //center of distribution for rate of main sample
 0.5 => float delta1; //width of distribution for rate of main sample (set by sin after first go)
 0.5 => float delta2; // width of distribution for rate of secondary sample (relative to width of first)
 
-SinOsc v => blackhole;
+SinOsc v => blackhole; // v modulates mu
 
 .1 => v.freq;
-.1 => v.gain;
+1 => v.gain;
+
+1::samp => dur increment;
 
 
-while (true) {
+while (false) { // true = unsmoothed version
 	
-	1::samp => now; // default one samp; 100 sounds like explosion w/ v freq and gain at .1
-//	Std.rand2f(-1,2) => s.rate; //doom
+	increment => now; // default one samp; 100 sounds like explosion w/ v freq and gain at .1
+	//	Std.rand2f(-1,2) => s.rate; //doom
 	Std.rand2f(mu-delta1,mu+delta1) => s.rate; 
 	Std.rand2f(1-delta2,1+delta2)*s.rate()=>s2.rate;
 	v.last()=>delta1;
 	
 }
+
+
+
+1. => float srate_1 => float srate_2 => float srate_3;
+
+while (false) { // true = smoothed MA(3)
+	
+	increment => now; // default one samp; 100 sounds like explosion w/ v freq and gain at .1
+//	Std.rand2f(-1,2) => s.rate; //doom
+
+	srate_2 => srate_3;
+	srate_1 => srate_2;
+	s.rate() => srate_1;
+	(Std.rand2f(mu-delta1,mu+delta1)+srate_1+srate_2+srate_3)/4 => s.rate; 
+	Std.rand2f(1-delta2,1+delta2)*s.rate()=>s2.rate;
+	v.last()=>delta1;
+	
+}
+
+SinOsc u => blackhole; // rate is random shock plus u;
+
+.5 => u.freq;
+.02 => u.gain;
+
+
+while (false) { // rate = sin + noise
+	
+	increment => now; // default one samp; 100 sounds like explosion w/ v freq and gain at .1
+	//	Std.rand2f(-1,2) => s.rate; //doom
+	
+	Std.rand2f(mu-delta1,mu+delta1)+u.last() => s.rate; 
+	Std.rand2f(1-delta2,1+delta2)*s.rate()=>s2.rate;
+	v.last()=>delta1;
+	
+}
+
+
+-2=> int n; // skip size
+
+0 => s2.gain;
+
+while (true) { // bitskipper (forward and backward)
+	
+	s.pos()+n => s.pos;
+	1::samp => now;
+}
+
+2 => int nreps;
+1. => pitch.mix;
+1./7. => pitch.shift;
+
+while (true) { // bit repeater
+	
+	for (0 => int i; i< nreps; i++) {
+		s.pos()-1 => s.pos;
+		increment => now;
+	}
+	
+	increment => now;
+}
+
+
+
+	
+	
+
