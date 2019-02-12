@@ -10,8 +10,8 @@ buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =
 
 
 0.02 => inGain.gain;
-0.2 => outGain.gain;
-0.1 => loopGain.gain;
+0.8 => outGain.gain;
+0.3 => loopGain.gain;
 
 60./120. => float beatsec;
 beatsec::second => dur beat;

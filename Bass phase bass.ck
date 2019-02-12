@@ -5,7 +5,7 @@
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
-4. => float beatdiv; //beat division
+4. => float beatdiv; //beat division, 4, 16, 32 hip
 
 // soundchain with two sinosc, lpf, envelope, and phase on one sinosc
 SinOsc s => LPF l => ADSR e  => Gain g => Dyno d => dac;
