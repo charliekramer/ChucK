@@ -1,5 +1,5 @@
 // disquiet0371 concrete ambience
-SndBuf concrete[5];
+SndBuf2 concrete[5];
 HPF hpf[5];
 Pan2 pan[5];
 NRev rev;
@@ -9,7 +9,7 @@ Gain master;
 
 for (0 => int i; i< concrete.cap(); i++) {
 	concrete[i] => hpf[i] => master => rev => pan[i] => dac;
-	Math.pow(-1,i) => pan[i].pan;
+	Math.pow(-1.0,1.*i) => pan[i].pan;
 	0=> concrete[i].loop;
 	.2 => rev.mix;
 	440*i => hpf[i].freq;
@@ -28,8 +28,7 @@ for (0 => int i; i< concrete.cap(); i++) {
 	<<< "pos", concrete[i].pos() >>>;
 }
 
-
-60./120.*4 => float beatSec;
+60./120.*1 => float beatSec;
 beatSec::second => dur beat;
 
 now + 48*beat => time future;

@@ -21,7 +21,7 @@ SndBuf tom2 => tomG => g => h => dac;
 SndBuf tom3 => tomG => g => h => dac;
 Shakers shak => Gain shakG => g => h => dac;
 
-h.freq(20);
+h.freq(44);
 h.Q(10);
 
 //default gain setting (for reset use in shuffle code
@@ -50,7 +50,7 @@ dank => kick.rate => hat.rate => hatOpen.rate => crash.rate => snare.rate;
 0.05 => snareRev.mix;
 
 // use this to drop out all but kick or snare
-//0. => hatG.gain => crashG.gain => shakG.gain => snareG.gain; //kick only
+0. => hatG.gain => crashG.gain => shakG.gain => snareG.gain; //kick only
 //0. => hatG.gain => crashG.gain => shakG.gain => kickG.gain; //snare only
     
     

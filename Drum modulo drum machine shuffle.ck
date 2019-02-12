@@ -31,7 +31,7 @@ snareGain => snare.gain;
 kickGain => kick.gain;
 
 // gain settings
-0.05 => g.gain; //0.5
+0.03 => g.gain; //0.5
 1.0 => kickG.gain; //1.0
 0.05 => hatG.gain; //0.2
 0.1 => shakG.gain; //0.1

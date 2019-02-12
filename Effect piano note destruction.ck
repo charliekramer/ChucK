@@ -21,7 +21,7 @@ beatSec::second => dur beat;
 .0 => echo.mix;
 echo => echo;
 
-.3 => g.gain;
+.1 => g.gain;
 
 "/Users/charleskramer/Desktop/chuck/audio/disquiet_piano_edit.wav" => s.read;
 
@@ -41,7 +41,7 @@ echo => echo;
 SinOsc v => blackhole; // v modulates mu
 
 .1 => v.freq;
-1 => v.gain;
+.5 => v.gain;
 
 1::samp => dur increment;
 
@@ -60,9 +60,9 @@ while (false) { // true = unsmoothed version
 
 1. => float srate_1 => float srate_2 => float srate_3;
 
-while (false) { // true = smoothed MA(3)
+while (true) { // true = smoothed MA(3)
 	
-	increment => now; // default one samp; 100 sounds like explosion w/ v freq and gain at .1
+	1*increment => now; // default one samp; 100 sounds like explosion w/ v freq and gain at .1
 //	Std.rand2f(-1,2) => s.rate; //doom
 
 	srate_2 => srate_3;
@@ -92,7 +92,7 @@ while (false) { // rate = sin + noise
 }
 
 
--2=> int n; // skip size
+2=> int n; // skip size
 
 0 => s2.gain;
 
@@ -108,14 +108,29 @@ while (false) { // bitskipper (forward and backward)
 //Math.log(nreps+1) => pitch.shift;
 1::samp => increment;
 
-while (true) { // bit repeater
+while (false) { // bit repeater
 	
 	for (0 => int i; i< nreps; i++) {
 		s.pos()-Std.rand2(1,1) => s.pos; // make second number larger
-		increment => now;
+		1*increment => now;
 	}
 	
-	increment => now;
+	1*increment => now;
+}
+
+1.0005 => float gamma1;
+gamma1 => float gamma;
+.9 => s.rate;
+
+1=> s2.gain;
+
+while (true) { // warped chorusy thing
+
+	
+	10::ms => now;
+	s.rate()*gamma => s.rate;
+	if (s.rate() > 1.03) 1./gamma1 => gamma;
+	if (s.rate()<.97) gamma1=> gamma;
 }
 
 
