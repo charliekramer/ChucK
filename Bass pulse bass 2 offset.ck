@@ -14,7 +14,7 @@ osc.freq()*2. => f.freq;
 
 [.25, .125, (1.-(.5+.125)),.25] @=> float beats[];
 
-1 => osc.gain;
+.5 => osc.gain;
 
 
 for (0 => int i; true; i++) {

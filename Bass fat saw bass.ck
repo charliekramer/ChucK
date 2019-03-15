@@ -16,7 +16,7 @@ s[2] => l => Pan2 pan2 => dac;
 
 .1 => float diff; // frequency differential across oscillators
 
-Std.mtof(58-24)=> s[0].freq; //this is the base frequency
+Std.mtof(60-24)=> s[0].freq; //this is the base frequency
 s[0].freq() + diff => s[1].freq; //spread around base frequency
 s[0].freq() - diff => s[2].freq;
 

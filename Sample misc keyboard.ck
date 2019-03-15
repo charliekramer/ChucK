@@ -11,13 +11,13 @@ SndBuf buf => NRev rev => Envelope e => PitShift pitch => Gain g => Pan2 p => da
 
 .1 => rev.mix;
 
-0.1 => g.gain;
+0.5 => g.gain;
 ;
 
 me.dir(-1)+"chuck/audio/SoundsofSaturnClip.wav" => buf.read;
 
 
-15 => int sampleChoose;
+8 => int sampleChoose;
 
 if (sampleChoose == 1) 
 {"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => buf.read;}
@@ -54,7 +54,7 @@ else if (sampleChoose == 15)
 
 MidiIn min;
 
-1 => int port;
+0 => int port;
 
 if (!min.open(port) )
 {
