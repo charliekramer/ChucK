@@ -1,4 +1,4 @@
-SinOsc x[20][20]; // 6,6 [20 is pretty cool; need to reduce b to 1
+SinOsc x[8][8]; // 6,6 [20 is pretty cool; need to reduce b to 1
 
 Gain master;
 
@@ -14,7 +14,7 @@ for (0 => int i; i <= x.cap()-1; i++) {
 10::ms => dur loop2Dur; // 10::ms, 1::ms  resetting frequencies
 
 440 => float a; // a*i+b*j => x[i][j].freq;
-1 => float b; // 440,50
+50 => float b; // 440,50
 110 => float baseFreq; // reset frequency 110
 
 while (true) {
