@@ -61,7 +61,7 @@ spork~play2(notesCopy,beatsNew);
 if (synch == 1) beat - (now % beat) => now;
 
 <<< "duo notes2">>>;
-noteRep(notesNew,notesCopy,2);
+noteRep(notesNew,notesCopy,1);
 spork~play(notesNew,beatsNew);
 spork~play2(notesCopy,beatsNew);
 4*beat => now;
