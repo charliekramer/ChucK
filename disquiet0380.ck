@@ -24,18 +24,18 @@ for (0 => int i; i < harmonic.cap(); i++) {
 beatSec::second => dur beat;
 
 [Std.mtof(58)/Std.mtof(60), Std.mtof(57)/Std.mtof(60), Std.mtof(56)/Std.mtof(60), Std.mtof(65)/Std.mtof(60), 1] @=> float fraction[];
-/*
+
 for (0 => int i; i < fraction.cap(); i++) {
-	spork~play(0,1,8*beat);
-	beat*4 => now;
-	spork~play(1,fraction[i],8*beat);
-	beat*4 => now;
-	spork~play(2,Math.pow(fraction[i],2),8*beat);
-	beat*4 => now;
-	spork~play(3,Math.pow(fraction[i],3),8*beat);
-	beat*4 => now;
+ 	spork~play(0,1,8*beat);
+ 	beat*4 => now;
+ 	spork~play(1,fraction[i],8*beat);
+ 	beat*4 => now;
+ 	spork~play(2,Math.pow(fraction[i],2),8*beat);
+ 	beat*4 => now;
+ 	spork~play(3,Math.pow(fraction[i],3),8*beat);
+ 	beat*4 => now;
 }
-*/
+
 for (0 => int i; i <= 10; i++) {
 	
 	spork~revPlus(0,.1);
