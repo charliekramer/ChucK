@@ -3,10 +3,15 @@
 // try continuous and short sounds, try modifying rate and pitch of
 // modulator
 
-SndBuf bufCarry=> dac; 
-SinOsc sinCarry => dac;
+SndBuf bufCarry=> Gain g => dac; 
+SinOsc sinCarry => g => dac;
 SndBuf bufMod => blackhole; 
 SinOsc sinMod  => blackhole;
+Noise noise => blackhole; 
+
+.15 => g.gain;
+
+120::second => dur lengthTime;
 
 1 => bufCarry.rate;
 1 => bufMod.rate;
@@ -20,18 +25,20 @@ SinOsc sinMod  => blackhole;
 
 
 //"/Users/charleskramer/Desktop/chuck/audio/nixon_compilation.wav" => bufCarry.read;
-"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano_edit.wav" => bufCarry.read;
+"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => bufCarry.read;
 "/Users/charleskramer/Desktop/chuck/audio/nixon_farewell.wav" => bufMod.read;
 
 
 220 => sinCarry.freq;
 55 => sinMod.freq;
 
-1 => int chooser;
+4 => int chooser;
 
 // 1 2buf
 // 2 buf2sin
-// 3 (or other) sin2buf
+// 3 sin2buf
+// 4 noise2buf
+
 
 if (chooser == 1) {
 	0 => sinCarry.gain;
@@ -43,13 +50,20 @@ else if (chooser == 2) {
 	spork~fmbuf2sin(bufMod, sinCarry, 10, 1800);
 }
 
+else if (chooser == 3) {
+	
+	0 => sinCarry.gain;
+	spork~fmsin2buf(sinMod, bufCarry, .01, 3./2.); //.5, 3/2 cylons w/ nixon
+}
+
 else {
 	
 	0 => sinCarry.gain;
-	spork~fmsin2buf(sinMod, bufCarry, .01, 3./2.);
+	spork~fmnoise2buf(noise,bufCarry, .9, 3);
+
 }
 
-15::second => now;
+lengthTime => now;
 
 fun void fm2buf (SndBuf mod, SndBuf carry, float baseFreq, float index) { // carrier = buf
 	while( true )
@@ -77,6 +91,17 @@ fun void fmbuf2sin (SndBuf mod, SinOsc carry, float baseFreq, float index) { // 
 
 
 fun void fmsin2buf (SinOsc mod, SndBuf carry, float baseFreq, float index) { // carrier = sin
+	while( true )
+	{
+		// modulate
+		baseFreq+(index * mod.last()) => carry.rate;
+		// advance time by 1 samp
+		timeIncrement => now;
+	}
+	
+}
+
+fun void fmnoise2buf (Noise mod, SndBuf carry, float baseFreq, float index) { // carrier = sin
 	while( true )
 	{
 		// modulate

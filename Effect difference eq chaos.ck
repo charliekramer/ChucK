@@ -16,6 +16,8 @@ x = 0 is stable for r < 1
 x = 1 - 1/r is stable for 1 < r < 3
 */
 
+.1 => float gainSet;
+
 3.58 => float r; 
 .01 => float deltaR;
 3.0 => float rMin;
@@ -26,6 +28,8 @@ Std.rand2f(0, 1.0 - 1.0/r) => float x;
 
 PulseOsc sinX => Echo echo => dac.left;
 sinX => dac.right;
+
+gainSet => sinX.gain;
 
 2::second => echo.max;
 1.75::second => echo.delay;
@@ -39,7 +43,9 @@ echo => echo;
 
 minWidth => sinX.width;
 
-while (true) {
+now + 120::second => time future;
+
+while (now < future) {
 	
 	sinX.width()+widthDelta => sinX.width;
 	if (sinX.width() >= maxWidth || sinX.width() <= minWidth) -1.*widthDelta => widthDelta;
@@ -49,7 +55,11 @@ while (true) {
 	r*x*(1-x) => x;
 //	<<< "x ", x, "r", r>>>;
 	(220.*x) => sinX.freq;
-//	.1::second => now; // really cool with 1,.1, 0.01 second
+//	.1::second => now; // really cool with 1,.1, 0.01 second; or change below
     Std.rand2f(.09,.11)::second => now;
 	
 }
+
+0 => sinX.gain;
+
+10::second => now;
