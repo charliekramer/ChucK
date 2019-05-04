@@ -5,19 +5,23 @@ buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =
 
 "/Users/charleskramer/Desktop/chuck/audio/apache_break_editor.wav" => buffer.read;
 
-20 => l.freq;
+22 => l.freq;
 10 => l.Q;
 
+buffer.samples()=>buffer.pos; // so it doesn't play during the synch
+
+
+208.8*.5 => float BPM; // set this to fix below
+
+60./BPM => float beatsec;
+beatsec::second => dur beat;
+beat - (now % beat) => now;
 
 0.02 => inGain.gain;
 0.8 => outGain.gain;
 0.3 => loopGain.gain;
 
-60./120. => float beatsec;
-beatsec::second => dur beat;
-beat - (now % beat) => now;
-
-120./138. => buffer.rate;
+BPM/138. => buffer.rate; // 138 is native speed of loop
 
 [.25,.5,1., 2.] @=> float glitchArray[];
 
@@ -38,7 +42,7 @@ int numLoops;
 
 spork~loopit(beat*4);
 
-now + 360::second => time future;
+now + 120::second => time future;
 
 int numBeats;
 
