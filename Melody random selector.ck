@@ -4,7 +4,7 @@ StifKarp karp => rev => gain => dac;
 
 4 => bar.preset;
 
-.2 => gain.gain;
+.05 => gain.gain;
 
 .5 => sin.gain;
  1 => bar.gain;
@@ -24,14 +24,6 @@ beatSec::second => dur beat;
 beat - (now % beat) => now;
 
 0 => bar.modeGain;
-
-for (0 => int i; i < 10; i++) {
-	1 => bar.noteOn;
-	<<< "mode", bar.modeRadius() >>>;
-	beat => now;
-	1 => bar.noteOff;
-	bar.modeGain() + .1 => bar.modeGain;
-}
 
 now + 64*beat => time future;
 

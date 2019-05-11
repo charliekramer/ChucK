@@ -1,7 +1,7 @@
 Flute flute => PoleZero f => Echo echo => NRev rev => Pan2 pan => dac;
 flute => f => Echo echo2 => NRev rev2 => Pan2 pan2 => dac;
 
-.99 => f.blockZero;
+.99 => f.blockZero; // closer to 1 less grindy
 
 .1 => flute.gain;
 
@@ -15,8 +15,8 @@ beatSec::second => dur beat;
 beat - (now % beat) => now;
 
 3.5 => float beat1; // length of first beat; second = beatMeasure - beat1; 
-                   // 0.5,1.5
-4.0 => float beatMeasure; // total number of beats (on plus off)
+                   // 0.5,1.5, 3.5
+4.0 => float beatMeasure; // total number of beats (on plus off) 4 or 8
 
 if (beatMeasure < beat1 ) <<< "error beatMeasure < beat1">>>;
 
