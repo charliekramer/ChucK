@@ -9,20 +9,24 @@ TriOsc TriLFO => blackhole;
 SqrOsc SqrLFO => blackhole;
 PulseOsc PulseLFO => blackhole;
 
+
 .1 => float masterGain;
 
 masterGain => flute1.gain => flute2.gain => flute3.gain => flute4.gain => flute5.gain;
 
-57 => float midiBase;
+// 0 => flute2.gain => flute3.gain => flute4.gain => flute5.gain;
+// 0 => SinLFO.gain => TriLFO.gain => SqrLFO.gain => PulseLFO.gain;
 
-120./94. => float beatSec;
+57 => float midiBase; //57
+   
+120./94. => float beatSec; // 120./94.
 beatSec::second => dur beat;
 
-1/beatSec *13 => SinLFO.freq;
-1/beatSec *7 => TriLFO.freq;
-1/beatSec *11 => SqrLFO.freq;
-1/beatSec *8.1 => PulseLFO.freq;
-.75 => PulseLFO.width;
+1/beatSec *1 => SinLFO.freq;//*1
+1/beatSec *7 => TriLFO.freq; //*7
+1/beatSec *11 => SqrLFO.freq; //*11
+1/beatSec *8.1 => PulseLFO.freq; //*8.1
+.75 => PulseLFO.width; //.75
 
 beat - (now % beat) => now;
 
