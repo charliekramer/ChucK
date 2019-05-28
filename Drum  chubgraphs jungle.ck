@@ -28,10 +28,11 @@ fun void filtFreq (float filtFreqTemp) {
 	filtFreqTemp => filt.freq;
 }
 /*
-fun void gain (float gainTemp) {
+fun float gain (float gainTemp) {
 	gainTemp => kick.gain;
 }
 */
+
 
 }
 
@@ -74,12 +75,12 @@ class SnareDrum extends Chubgraph {
 		filtFreqTemp => filt.freq;
 	}
 	
-	/*
-	fun void gain (float gainTemp) {
+	/*	
+	fun float gain (float gainTemp) {
 		gainTemp => snareSin.gain;
 		gainTemp => snareNoise.gain;
 	}
-	*/
+	*/	
 	
 }
 
@@ -94,7 +95,7 @@ KickDrum kick => Echo echo => NRev rev  => Dyno dyn1 => dac;
 KickDrum tom => echo => rev => Dyno dyn2 => dac;
 SnareDrum snare => echo => rev => Dyno dyn3 => dac;
 
-masterGain => kick.gain => tom.gain => snare.gain;
+masterGain => kick.gain => tom.gain => snare.gain => kick.gain;
 
 .01 => rev.mix;
 
@@ -103,6 +104,8 @@ beat*1.5 => echo.delay; //1.5; 1.75 cool; 2.25
 .5 => echo.gain;
 .5 => echo.mix;
 echo => echo;
+
+1 => kick.pitch;
 
 2 => tom.pitch;
 
@@ -130,3 +133,4 @@ while (true) {
 	.25*beat => now;
 	
 }
+

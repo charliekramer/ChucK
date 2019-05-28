@@ -1,22 +1,27 @@
 //sample manipulator/grandulator
 // miscellaneous samples
+// stops at time "future"
+
+2 => float gainSet;
 
 SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Dyno dyn => dac;
 
 SinOsc LFO => blackhole;
 
-60./120. => float beatsec;
-1. => click.rate;
+60./94.*2 => float beatsec;
+.7 => click.rate;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
 
-.5 => LFO.freq;
+now + 15::second => time future;
 
-2 => click.gain;
+.1 => LFO.freq;
+
+gainSet => click.gain;
 
 10*beat => echo.max;
 1.5*beat => echo.delay;
-.1 => echo.mix;
+.3 => echo.mix;
 .5 => echo.gain;
 echo => echo;
 
@@ -26,19 +31,19 @@ echo => echo;
 // 1 => speedBuf;
 // 2 => granularize
 // 3 => timed play starting at zero
-// 4 => specify start and end positions;
+// 4 => specify start and end positions; (currently randomized length, speed, pitch)
 // 5 => random play time between 10 and 50 ms starting from defined position
 // 6 => (5) plus random rate (including backwards)
 // 7 => (5) plus rate from LFO
-// 8 => grain skipper
+// 8 => chord
+// 9 => grain skipper
 
-4 => int chooser;
-1.0/1.0 => pitch.shift;
-.7 => pitch.mix;
+8 => int chooser;
+1./1.0 => pitch.shift;
+0.9 => pitch.mix;
 1 => click.loop;
 
-17 => int sampleChoose;
-
+21 => int sampleChoose;
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -76,6 +81,12 @@ echo => echo;
 	{"/Users/charleskramer/Desktop/chuck/audio/voicemail_goodbye.wav" => click.read;}
 	else if (sampleChoose == 18)
 	{"/Users/charleskramer/Desktop/chuck/audio/voicemail_unsecured_dad.wav" => click.read;}
+	else if (sampleChoose == 19)
+	{"/Users/charleskramer/Desktop/chuck/audio/glitchvector.wav" => click.read;}
+	else if (sampleChoose == 20)
+	{"/Users/charleskramer/Desktop/chuck/audio/countdown.wav" => click.read;}
+	else if (sampleChoose == 21)
+	{"/Users/charleskramer/Desktop/chuck/audio/mower_edit.wav" => click.read;}
 	
 	
 
@@ -124,7 +135,8 @@ fun void grainSkipper (SndBuf inBuf, int skip, int length, int repeater) {
 
 int randStartPos;
 
-while (true) {
+
+while (now < future) {
     
     if (chooser == 1) speedBuf (click, 1., beat*4, 1.);
 //    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
@@ -138,9 +150,9 @@ while (true) {
     }
     else if (chooser == 4)
     {
-        .3 => click.rate; //backwards changes tone
-        1.1 => pitch.shift;
-        grainPlay(click, click.samples()/4,click.samples()/2);
+        Std.rand2f(.1,.3) => click.rate; //backwards changes tone
+        Std.rand2f(.5,.7) => pitch.shift;
+        grainPlay(click, click.samples()/2,Std.rand2(5000,10000));
     }
     else if (chooser == 5)
     {
@@ -158,8 +170,19 @@ while (true) {
 	else if(chooser == 7) 
 	{
 		Std.rand2(0,click.samples()) => randStartPos;
-		LFO.last()*4 => click.rate;
+		LFO.last()*2 => click.rate;
 		grainRandTime(click,randStartPos); 
+		
+	}
+	else if(chooser == 8) 
+	{
+		1 => float factor;
+		while (now < future) {
+		spork~speedBuf (click, .5/factor, beat*4*factor, 1.);
+		spork~speedBuf (click, .5/factor, beat*4*factor, 1.33);
+		spork~speedBuf (click, .5/factor, beat*4*factor, 1.5);
+		beat*4*factor => now;
+	    }
 		
 	}
 	else 
@@ -169,3 +192,7 @@ while (true) {
 	}
         
 }
+// outro
+0 => click.loop;
+click.samples() => click.pos;
+5::second => now;
