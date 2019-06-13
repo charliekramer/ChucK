@@ -1,10 +1,11 @@
 // added "shuffle" (variable gain depending on where we are in the measure)
 //synch
 //0.4::second=>dur beat;
-60./120 => float beattime;
+60./94. => float beattime;
 beattime::second => dur beat;
 beat - (now % beat) => now;
 
+0.02 => float gainSet;
 
 //soundchain
 Gain g => dac;
@@ -20,7 +21,7 @@ h.Q(10);
 0 => int shuffle;
 0 => int snareRoll;
 0 => int kickRoll;
-1 => int kickSolo;
+0 => int kickSolo;
 0 => int snareSolo;
 
 
@@ -31,7 +32,7 @@ snareGain => snare.gain;
 kickGain => kick.gain;
 
 // gain settings
-0.03 => g.gain; //0.5
+gainSet => g.gain; //0.5
 1.0 => kickG.gain; //1.0
 0.05 => hatG.gain; //0.2
 0.1 => shakG.gain; //0.1

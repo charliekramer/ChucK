@@ -1,5 +1,5 @@
 // bass with panned echo and filter
-3 => int n;// pretty normal for n =2 or 3, grindy above that
+3 => int n;// pretty normal for n =2 or 3, grindy above that (watch out, gets loud)
 
 SawOsc bass[n];
 Pan2 panL;
@@ -30,7 +30,7 @@ for (0 => int i; i< bass.cap(); i++) {
 
 }
 
-60./120. => float beatSec;
+60./94. => float beatSec;
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;

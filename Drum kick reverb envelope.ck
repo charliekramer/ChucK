@@ -1,6 +1,8 @@
 // based on kick break fuzz chorus reverb
 
-60./120. => float beattime;
+.05 => float masterGain;
+
+60./94. => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -9,16 +11,16 @@ SndBuf kick  =>  LPF f => NRev rev => JCRev revplus => ADSR envelope => Gain g =
 SndBuf kick2 =>  f => JCRev rev2 => NRev rev2plus => ADSR envelope2 => Gain g2 => dac.right;
 
 5 => f.Q;
-440 => f.freq;
+44 => f.freq; //44 for low roar
 
 (6*beat, .1*beat, .5, 4*beat) => envelope.set;
 (6*beat, .1*beat, .5, 4*beat) => envelope2.set;
 
-.01 => g.gain;
-.01 => g2.gain;
+masterGain => g.gain => g2.gain;
 
-.1 => kick.rate;
-.2 => kick2.rate;
+
+.1*4 => kick.rate;
+.2*4 => kick2.rate;
 
 1 => rev.mix;
 1 => revplus.mix;

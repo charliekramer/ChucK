@@ -4,7 +4,7 @@ StifKarp karp => rev => gain => dac;
 
 4 => bar.preset;
 
-.05 => gain.gain;
+.01 => gain.gain;
 
 .5 => sin.gain;
  1 => bar.gain;
@@ -12,7 +12,7 @@ StifKarp karp => rev => gain => dac;
 
 .4 => rev.mix;
 
-44 => float midiBase;
+58 - 12 => float midiBase;
 
 Std.mtof(midiBase) => sin.freq;
 Std.mtof(midiBase) => bar.freq;

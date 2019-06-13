@@ -2,14 +2,14 @@ class KickDrum extends Chubgraph {
 	
 SinOsc kick => ADSR env => PitShift pit => HPF filt => Dyno dyn => outlet;
 
-(1::samp, 100::ms, .0, 3::second) => env.set;
+(100::samp, 75::ms, .0, 3::second) => env.set;
 
-1 => pit.shift;
+.7 => pit.shift;
 1 => pit.mix;
 
-40 => kick.freq;
-80 => filt.freq;
-2 => filt.Q;
+44 => kick.freq;
+35 => filt.freq;
+3 => filt.Q; // crank it up for resonant bass
 
 fun void noteOn (int noteTemp) {
 	noteTemp => env.keyOn;
@@ -84,9 +84,9 @@ class SnareDrum extends Chubgraph {
 	
 }
 
-.1 => float masterGain;
+.02 => float masterGain;
 
-120./94.*.25 => float beatSec; // *.25  // half time for rolls
+120./94*.25 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -100,7 +100,7 @@ masterGain => kick.gain => tom.gain => snare.gain => kick.gain;
 .01 => rev.mix;
 
 5*beat=> echo.max;
-beat*1.5 => echo.delay; //1.5; 1.75 cool; 2.25
+beat*1.5 => echo.delay; //1.5; 1.75 cool; 2.25 // .75*.5 =f time = *1;
 .5 => echo.gain;
 .5 => echo.mix;
 echo => echo;

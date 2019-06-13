@@ -37,7 +37,9 @@ if (beatMeasure < beat1 ) <<< "error beatMeasure < beat1">>>;
 echo => echo2 => echo;
 echo2 => echo => echo2;
 
-Std.mtof(100-60) => flute.freq; //90, 59
+58 -12 -12 => float midiBase;
+
+Std.mtof(midiBase) => flute.freq; //90, 59
 
 1.0/beatSec*.25*.125*.1 => LFO.freq;
 1.0 => LFO.gain;

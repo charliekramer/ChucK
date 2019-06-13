@@ -22,8 +22,10 @@ Gain gain[10];
 sv.cap()-1 => int nDrum; // how big a drum set to use; this is the whole set
 //4 => nDrum; // this is a more basic set, use for a more standard beat
 
-60./120*.5 => float beatsec; // .5 multiplier seems to work well
+60./94*.5 => float beatsec; // .5 multiplier seems to work well
 beatsec::second => dur beat;
+
+.5 => float masterGain;
 
 beat - (now % beat) => now;
 
@@ -33,7 +35,7 @@ beat - (now % beat) => now;
 
 for (0 => int i; i < sv.cap(); i++) {
 	sv[i] => echo[i] => rev[i] => gain[i]=> dac;
-	.9 => gain[i].gain;
+	masterGain => gain[i].gain;
 	.1 => rev[i].mix;
 	.3 => echo[i].mix;
 	.4 => echo[i].gain;

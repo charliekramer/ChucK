@@ -1,10 +1,10 @@
 TubeBell bell => Echo echo1 => Echo echo2 => Echo echo3 => Gain g => dac;
 
-.2 => g.gain;
+.07 => g.gain;
 
-Std.mtof(57) => bell.freq;
+Std.mtof(58) => bell.freq;
 
-60./95. => float beatSec;
+60./94. => float beatSec;
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -18,7 +18,7 @@ echo2 => echo2;.5 => echo2.gain;
 echo3 => echo3; .3 => echo2.gain;
 
 .25 => float b; // delay = a + b*Std.rand2(0,n)
-.5 => float a; // .25, .5 good for a, b
+.25 => float a; // .25, .5 good for a, b // small (.01,.05) for grindy effects
 3 => int n; // 2, 3
 64 => int nBeats; // how long to play
 

@@ -5,7 +5,7 @@
 SinOsc sin => ADSR env => NRev rev => dac.left; // change oscillator
 env => NRev rev2 => dac.right;
 
-.08 => sin.gain;
+.02 => sin.gain;
 
 SinOsc LFO => blackhole; // to modulate RHS reverb mix
 
@@ -19,7 +19,9 @@ b + revMin => float a;
 .0 => rev.mix;
 revMin => rev2.mix;
 
-880/Math.pow(1.5,0) => sin.freq; // divide by 1.5
+58 => float midiBase;
+
+Std.mtof(midiBase)/Math.pow(1.5,1) => sin.freq; // divide by 1.5
 
 60./94. => float beatSec;
 

@@ -1,29 +1,35 @@
 Rhodey rhodes => BPF filt => Echo echo  => NRev rev => dac;
+// cool with Flute too
 echo => Echo echo2 => PitShift pitch => dac;
+
+.8 => rhodes.gain;
 
 SqrOsc PitchLFO => blackhole;
 SinOsc DelayLFO => blackhole;
 
-(60-3) -36  => int midiBase;
+(58) - 36   => int midiBase; //60 -3 - 36
 
 Std.mtof(midiBase) => rhodes.freq;
 
 Std.mtof(midiBase) => filt.freq;
 2 => filt.Q;
 
-120./94.*.25 => float beatSec;
+120./94.*.25 => float beatSec; // 120./94.*.25
 beatSec::second => dur beat;
 
-//spork~LFOPitch(4., .5, 1/beatSec*.125); // a, b, LFO freq (a+b*LFO.last => pitch) // 4, .5, .125
+spork~LFOPitch(4., .5, 1/beatSec*.125/16); // a, b, LFO freq (a+b*LFO.last => pitch) // 4, .5, .125
+                                           // divide freq for interesting textures (4, 16; default 1)
 
-spork~LFODelay(.5, .25, 1/beatSec*.125*25, 1); // a, b, LFO freq (a+b*LFO.last => pitch) 
+spork~LFODelay(1, .5, 1/beatSec*.125/16, 3); // a, b, LFO freq (a+b*LFO.last => pitch) 
                                                // 1, .5, .125;
 											   // last = chooser
 											   // 1 = echo
 											   // 2 = echo2
 											   // other = both;
-
+                                           // divide freq for interesting textures (4, 16; default 1)
 beat - (now % beat) => now;
+
+.2 => rev.mix;
 
 5*beat => echo.max;
 1.5*beat => echo.delay;
@@ -37,7 +43,7 @@ echo.delay()*.75 => echo2.delay;
 .9 => echo2.gain; // turn up to get more LFO effect
 echo2 => echo2;
 
-now + 30::second => time future;
+now + 120::second => time future;
 
 while (now < future) {
 	1 => rhodes.noteOn;

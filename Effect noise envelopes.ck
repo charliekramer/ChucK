@@ -4,6 +4,9 @@ Noise noise1 => ADSR envelope1 => LPF filter1 => Echo echo1 => NRev rev1 => Gain
 Noise noise2 => LPF filter2 => NRev rev2 => ADSR envelope2 => Echo echo2 => Gain gain2 => dac;
 Noise noise3 => LPF filter3 => Echo echo3 => NRev rev3 => ADSR envelope3 => Gain gain3 => dac;
 
+.5 => float masterGain;
+masterGain => noise1.gain => noise2.gain => noise3.gain;
+
 .0 => gain1.gain;// envelope => echo => reverb
 .5 => gain2.gain;// reverb  => envelope => echo 
 .0 => gain3.gain;// echo => reverb => envelope 
