@@ -86,7 +86,11 @@ class SnareDrum extends Chubgraph {
 
 .02 => float masterGain;
 
-120./94*.25 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
+float d1, d2; //beat divisors; for drums and echo
+
+2 => d1; .125 => d2; // (.25, 1), (.25, 3) (.5, .5) (2,.125)
+
+120./94*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -100,7 +104,7 @@ masterGain => kick.gain => tom.gain => snare.gain => kick.gain;
 .01 => rev.mix;
 
 5*beat=> echo.max;
-beat*1.5 => echo.delay; //1.5; 1.75 cool; 2.25 // .75*.5 =f time = *1;
+beat*1.5*d2 => echo.delay; //1.5; 1.75 cool; 2.25 // .75*.5 =f time = *1;
 .5 => echo.gain;
 .5 => echo.mix;
 echo => echo;

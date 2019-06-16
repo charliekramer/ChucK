@@ -1,8 +1,10 @@
 TubeBell bell => Echo echo1 => Echo echo2 => Echo echo3 => Gain g => dac;
 
-.07 => g.gain;
+.1 => g.gain;
 
-Std.mtof(58) => bell.freq;
+58+12 => float midiBase;
+
+Std.mtof(midiBase) => bell.freq;
 
 60./94. => float beatSec;
 beatSec::second => dur beat;
@@ -18,7 +20,7 @@ echo2 => echo2;.5 => echo2.gain;
 echo3 => echo3; .3 => echo2.gain;
 
 .25 => float b; // delay = a + b*Std.rand2(0,n)
-.25 => float a; // .25, .5 good for a, b // small (.01,.05) for grindy effects
+.5 => float a; // .25, .5 good for a, b // small (.01,.05) for grindy effects
 3 => int n; // 2, 3
 64 => int nBeats; // how long to play
 

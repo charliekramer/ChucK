@@ -15,14 +15,14 @@ SndBuf buf2 => Envelope e => Echo echo => JCRev R => Gain gain => dac;
 5::second => echo.max;
 1.75::second => echo.delay;
 .5 => echo.gain;
-.2 => echo.mix;
+.5 => echo.mix;
 echo => echo;
 
-2 => gain.gain;
+8 => float baseGain;
 
 // load the file
 
-14 => int sampleChoose;
+22 => int sampleChoose;
 
 if (sampleChoose == 1) 
 {"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => buf2.read;}
@@ -53,18 +53,26 @@ else if (sampleChoose == 13)
 else if (sampleChoose == 14)
 {"/Users/charleskramer/Desktop/chuck/audio/Sheriff_2014-12-04.wav" => buf2.read;}
 else if (sampleChoose == 15)
-{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => click.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => buf2.read;}
 else if (sampleChoose == 16)
-{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano_edit.wav" => click.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano_edit.wav" => buf2.read;}
 else if (sampleChoose == 17)
-{"/Users/charleskramer/Desktop/chuck/audio/voicemail_goodbye.wav" => click.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/voicemail_goodbye.wav" => buf2.read;}
 else if (sampleChoose == 18)
-{"/Users/charleskramer/Desktop/chuck/audio/voicemail_unsecured_dad.wav" => click.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/voicemail_unsecured_dad.wav" => buf2.read;}
+else if (sampleChoose == 19)
+{"/Users/charleskramer/Desktop/chuck/audio/glitchvector.wav" => buf2.read;}
+else if (sampleChoose == 20)
+{"/Users/charleskramer/Desktop/chuck/audio/countdown.wav" => buf2.read;}
+else if (sampleChoose == 21)
+{"/Users/charleskramer/Desktop/chuck/audio/mower_edit.wav" => buf2.read;}
+else if (sampleChoose == 22)
+{"/Users/charleskramer/Desktop/chuck/audio/cartoons.wav" => buf2.read;}
 
 
 
 // number of the device to open (see: chuck --probe)
-1 => int device; //changed from 0 to reflect 
+2 => int device; //changed from 0 to reflect 
 // get command line
 if( me.args() ) me.arg(0) => Std.atoi => device;
 
@@ -88,7 +96,7 @@ fun void grain(float duration , int position, float pitch, int randompos, float 
     
     // can be changed to acheive a more varying
     // asynchronous envelope for each grain duration
-    duration*Std.rand2f(0.45,0.5)::ms => e.duration;
+   duration*Std.rand2f(0.45,0.5)::ms => e.duration;
     float freq;
     while( true )
     {   
@@ -137,7 +145,7 @@ fun void grain(float duration , int position, float pitch, int randompos, float 
 			}
 			if( msg.data1 == 176 && msg.data2 == 8 )
 			{
-				msg.data3/127.0*4 => gain.gain;
+				msg.data3/127.0*baseGain => gain.gain;
 				<<< gain.gain() >>>;
 			}
         }

@@ -1,4 +1,5 @@
-StifKarp stk => Chorus chorus => Echo echo => NRev rev => Gain gain => dac;
+StifKarp stk => PitShift pit =>Chorus chorus => Echo echo => NRev rev => Gain gain => dac;
+SinOsc LFO => blackhole;
 
 .3 => gain.gain;
 
@@ -10,11 +11,17 @@ StifKarp stk => Chorus chorus => Echo echo => NRev rev => Gain gain => dac;
  .2 => chorus.modDepth;
  .1 => chorus.mix;
 
-60./120.*2. => float noteTime;
+60./94.*2. => float noteTime;
 
 noteTime::second/4. => dur noteDur;
 
 noteDur - (now % noteDur) => now;
+
+1 => pit.shift;
+
+1 => pit.mix;
+
+spork~pitch(.0125,10.0); // freq, gain; .125,.0125 good freqs
 
 .3 => rev.mix;
 
@@ -24,7 +31,7 @@ noteDur*1.5 => echo.delay;
 .2 => echo.mix;
 echo => echo;
 
-60-12 => int midiNote;
+58-12-12 => int midiNote;
 
 now + 100::second => time future;
 
@@ -62,3 +69,14 @@ fun void playNote (dur noteDur, int midiNote) {
 	noteDur => now;
 	1 => stk.noteOff;
 }
+
+fun void pitch(float freq, float gain) {
+	freq => LFO.freq;
+	gain => LFO.gain;
+	
+	while (true) {
+		LFO.last() => pit.shift;
+		1::ms => now;
+	}
+}
+	

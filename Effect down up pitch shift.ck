@@ -1,6 +1,6 @@
 SawOsc saw => PitShift pitch => NRev rev => Echo echo => Gain master => dac;
 
-60./120. => float beatSec;
+60./94. => float beatSec;
 beatSec::second => dur beat;
 0 => master.gain; // avoid initial beep
 beat - (now % beat) => now;
@@ -9,12 +9,12 @@ beat - (now % beat) => now;
 
 
 
-(60-24) => float midiBase; // *1.1 for cool overlaps
+(60-36) => float midiBase; // *1.1 for cool overlaps
 Std.mtof(midiBase) => saw.freq;
 
 .2 => rev.mix;
 
-.3 => echo.mix;
+.5 => echo.mix;
 .5 => echo.gain;
 10*beat => echo.max;
 1.5*beat => echo.delay;
