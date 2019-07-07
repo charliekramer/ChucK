@@ -1,7 +1,11 @@
 // FM voice pad based on FMv pad
 
+0.005/6 => float allGain;
+10 => int iterations;
+
 FMVoices FMvLeft[4] ;
 FMVoices FMvRight[4] ;
+
 
 FMvLeft[0] => Chorus cL => NRev revL => Echo eL => Dyno dL => dac.left;
 FMvRight[0] => Chorus cR => NRev revR => Echo eR => Dyno dR => dac.right;
@@ -22,16 +26,19 @@ FMvRight[0] => Chorus cR => NRev revR => Echo eR => Dyno dR => dac.right;
 
 // gain - effects;
 
-0.005/6 => float allGain;
+
 0.5 => revL.mix;
 0.4 => eL.mix;
 0.5 => revR.mix;
 0.4 => eR.mix;
 
+5::second => eL.max;
+5::second => eR.max;
+
 1::second => eL.delay;
 1.5::second => eR.delay;
 
-58-12 => int midiBase;
+55-12-24 => int midiBase;
 [0, 4, 5, 12] @=> int notes[];
 .005 => float freqDelta; // in percentage difference
 
@@ -52,8 +59,11 @@ for (0 => int i; i < FMvLeft.cap()-1; i++) {
        
 }
 
+0 => int j;
     
-while (true) {
+while (j < iterations) {
+	
+	j++;
     
     for (0 => int i; i < FMvLeft.cap()-1; i++) {
      
@@ -75,6 +85,7 @@ while (true) {
     
 }
 
+5::second => now;
    
         
     

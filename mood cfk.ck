@@ -10,7 +10,7 @@ g1 => Echo echo => Gain echoGain => Gain masterR => dac.right;
 500 => m.vibratoFreq;
 .1 => m.vibratoGain;
 1 =>m.afterTouch;
-Std.mtof(60+12) => m.freq;
+Std.mtof(55+12) => m.freq;
 
 60./94.*.25=> float beatSec;
 

@@ -28,14 +28,14 @@ BlowBotl botl => Fuzz fuzz => BPF bpf => Echo echo =>  PitShift pitch => PRCRev 
 
 2 => fuzz.intensity;
 
-5 => gain.gain;
+.5 => gain.gain;
 
 
-60 => int midiBase;
+55 => int midiBase;
 
 [0,0,0,1,1,11,11,12,12,12] @=> int notes[];
 
-60./120. => float beatSec;
+60./94. => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat ) => now;
 

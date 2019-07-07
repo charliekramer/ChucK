@@ -4,6 +4,8 @@
 // updated to include rate = MA(3) and sin+noise options
 // 
 
+.1 => float gainSet;
+
 SndBuf2 s => PitShift pitch => Echo echo => PRCRev rev => Gain g => dac;
 SndBuf2 s2 => echo => rev => g =>dac;
 
@@ -12,7 +14,7 @@ SndBuf2 s2 => echo => rev => g =>dac;
 
 .0 => rev.mix;
 
-60./120.*2 => float beatSec;
+60./94.*2 => float beatSec;
 beatSec::second => dur beat;
 
 10*beat => echo.max;
@@ -21,7 +23,7 @@ beatSec::second => dur beat;
 .0 => echo.mix;
 echo => echo;
 
-.1 => g.gain;
+gainSet => g.gain;
 
 "/Users/charleskramer/Desktop/chuck/audio/disquiet_piano_edit.wav" => s.read;
 
@@ -34,9 +36,9 @@ echo => echo;
 1 => s.loop;
 1 => s2.loop;
 
-1. => float mu; //center of distribution for rate of main sample
-0.5 => float delta1; //width of distribution for rate of main sample (set by sin after first go)
-0.5 => float delta2; // width of distribution for rate of secondary sample (relative to width of first)
+.75 => float mu; //center of distribution for rate of main sample
+0.7 => float delta1; //width of distribution for rate of main sample (set by sin after first go)
+0.7 => float delta2; // width of distribution for rate of secondary sample (relative to width of first)
 
 SinOsc v => blackhole; // v modulates mu
 
@@ -60,7 +62,7 @@ while (false) { // true = unsmoothed version
 
 1. => float srate_1 => float srate_2 => float srate_3;
 
-while (true) { // true = smoothed MA(3)
+while (false) { // true = smoothed MA(3)
 	
 	1*increment => now; // default one samp; 100 sounds like explosion w/ v freq and gain at .1
 //	Std.rand2f(-1,2) => s.rate; //doom
@@ -77,7 +79,7 @@ while (true) { // true = smoothed MA(3)
 SinOsc u => blackhole; // rate is random shock plus u;
 
 .5 => u.freq;
-.02 => u.gain;
+.2 => u.gain;
 
 
 while (false) { // rate = sin + noise
@@ -92,7 +94,7 @@ while (false) { // rate = sin + noise
 }
 
 
-2=> int n; // skip size
+1=> int n; // skip size
 
 0 => s2.gain;
 

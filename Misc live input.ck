@@ -6,14 +6,16 @@ SinOsc EchoLFO => blackhole;
 .25 => chorus.modFreq;
 .2 => chorus.modDepth;
 
-10::second => echo1.max;
-1.5::second => echo1.delay;
+1.5::second*4. => dur echoLength;
+
+10*echoLength => echo1.max;
+echoLength => echo1.delay;
 .5 => echo1.mix;
 .5 => echo1.gain;
 echo1 => echo1;
 
-10::second => echo2.max;
-.7::second => echo2.delay;
+10*echoLength => echo2.max;
+.45*echoLength => echo2.delay;
 .5 => echo2.mix;
 .5 => echo2.gain;
 echo2 => echo2;

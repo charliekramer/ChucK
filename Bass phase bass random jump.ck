@@ -1,16 +1,18 @@
 Phasor p => SawOsc s => Gain g => dac;
 SawOsc v => g => dac;
 
-60./120. => float beatSec;
+.005 => float gainSet;
+
+60./94. => float beatSec;
 beatSec::second => dur beat;
 
 0 => g.gain; // zero out so you don't get an immediate burst of 440
 
 beat - (now % beat) => now;
 
-0.025 => g.gain;
+gainSet => g.gain;
 
-Std.mtof(60-24)*1. => s.freq => float baseFreq;
+Std.mtof(55-24)*1. => s.freq => float baseFreq;
 s.freq() => v.freq;
 
 .1 => p.freq;

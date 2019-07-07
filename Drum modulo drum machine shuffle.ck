@@ -21,7 +21,7 @@ h.Q(10);
 0 => int shuffle;
 0 => int snareRoll;
 0 => int kickRoll;
-0 => int kickSolo;
+1 => int kickSolo;
 0 => int snareSolo;
 
 

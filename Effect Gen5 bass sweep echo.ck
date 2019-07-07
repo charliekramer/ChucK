@@ -2,7 +2,7 @@
 // 
 Phasor p => Gen5 g5 => LPF f => LPF f2 => Echo echo => Chorus c => NRev rev => Dyno dyn => Gain g=> dac;;
 
-60./120. => float beattime;
+60./94.*2 => float beattime;
 beattime::second => dur beat;
 
 beat - (now % beat) => now;
@@ -21,7 +21,7 @@ echo=>echo;
 .5 => c.modDepth;
 .0 => c.mix;
 
-Std.mtof(60-12) => p.freq;
+Std.mtof(55-12) => p.freq;
 p.freq() => float baseFreq;
 p.freq()*1.5=> f.freq => f2.freq;
 

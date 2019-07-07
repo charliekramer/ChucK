@@ -9,7 +9,7 @@ SndBuf bufMod => blackhole;
 SinOsc sinMod  => blackhole;
 Noise noise => blackhole; 
 
-.15 => g.gain;
+.05 => g.gain;
 
 120::second => dur lengthTime;
 
@@ -53,7 +53,7 @@ else if (chooser == 2) {
 else if (chooser == 3) {
 	
 	0 => sinCarry.gain;
-	spork~fmsin2buf(sinMod, bufCarry, .01, 3./2.); //.5, 3/2 cylons w/ nixon
+	spork~fmsin2buf(sinMod, bufCarry, .5, 3./2.); //.5, 3/2 cylons w/ nixon
 }
 
 else {

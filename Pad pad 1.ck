@@ -1,6 +1,9 @@
 // pad with 3 oscillators and 4 chord tones
 // frequency spreading, BFP, reverb
 
+.09/12 => float gainSet;
+20 => int iterations;
+
 SawOsc s[2];
 SawOsc t[2]; // doubling
 SinOsc u[2]; // tripling--middle freq;
@@ -9,10 +12,10 @@ t[0] => h => adsr => rev => g => dac;
 u[0] => h => adsr => rev => g => dac;
 
 .009/12 => s[0].gain => t[0].gain => u[0].gain ;
-0.09/12 => g.gain;
+gainSet => g.gain;
 
 [0, 4, 7, 12] @=> int notes[];
-58 => int baseFreq;
+55 => int baseFreq;
 0.002 => float freqSpread; // in percent of the original frequency;
 
 Std.mtof(baseFreq)*2.0 => h.freq;
@@ -43,17 +46,21 @@ for (0 => int i; i< s.cap(); i++) {
 0.1::second => adsr.decayTime;
 4::second => adsr.releaseTime;
 
-while (true) {
+0 => int j;
 
-1 => adsr.keyOn;
-
-15.0::second => now;
-
-<<< "key off" >>>;
-
-1 => adsr.keyOff;
-
-5.0::second => now;
+while (j < iterations) {
+	
+	j++;
+	
+	1 => adsr.keyOn;
+	
+	15.0::second => now;
+	
+	<<< "key off" >>>;
+	
+	1 => adsr.keyOff;
+	
+	5.0::second => now;
 
 }
 

@@ -1,6 +1,8 @@
 // fat osc bass
 
-60./120.*.5 => float beattime; //sets time to BPM; 154 = BPM in this case
+0.01 => float gainset; // base level of volume "on"
+
+60./94.*.5 => float beattime; //sets time to BPM; 154 = BPM in this case
 beattime::second => dur beat; // this is one beat
 beat - (now % beat) => now; //synchronizes time to the beat (for multiple shreds)
 
@@ -12,11 +14,11 @@ s[2] => l => Pan2 pan2 => dac;
 -1. => pan1.pan; // pan the second and third saws hard left and right
 1 => pan2.pan;
 
-0.1 => float gainset; // base level of volume "on"
+
 
 .1 => float diff; // frequency differential across oscillators
 
-Std.mtof(60-24)=> s[0].freq; //this is the base frequency
+Std.mtof(55-24)=> s[0].freq; //this is the base frequency
 s[0].freq() + diff => s[1].freq; //spread around base frequency
 s[0].freq() - diff => s[2].freq;
 

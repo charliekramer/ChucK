@@ -25,7 +25,7 @@ class Fuzz extends Chugen
 SawOsc botl =>  Envelope env => PitShift pitch => Echo echo => Fuzz fuzz =>  PRCRev rev => Gain gain => Gain master => Pan2 pan => dac;
 SawOsc st2 => env => Gain gain2 => master => dac;
 
-.2 => master.gain;
+.1 => master.gain;
 .2 => gain.gain;
 .0 => gain2.gain; 
 
@@ -35,11 +35,11 @@ SawOsc st2 => env => Gain gain2 => master => dac;
 
 4 => int func; // 1 = multiplicative, 2 = additive, 3 = divided, 4 = sqrt
 
-60 => int midiBase;
+55 => int midiBase;
 
 [0,0,0,1,1,11,11,12,12,12] @=> int notes[];
 
-60./120. => float beatSec;
+60./94. => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat ) => now;
 

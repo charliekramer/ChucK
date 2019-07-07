@@ -30,11 +30,11 @@ Blit  sin => Fuzz fuzz => BPF filter => BPF filter2 => Fuzz fuzz2 => Echo echo =
 
  .5 => gain.gain;
 
-60 => int midiBase;
+55 => int midiBase;
 Std.mtof(midiBase) => float baseFreq; // *1.5 is cool too
 baseFreq => filter.freq => filter2.freq;
 5 => filter.Q => filter2.Q; // smaller for more noise ; 5 start
-60./120. => float beatsec;
+60./94. => float beatsec;
 beatsec::second => dur beat;
 
 .2 => rev.mix;

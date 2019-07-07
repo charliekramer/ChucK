@@ -1,16 +1,18 @@
 // modified https://www.youtube.com/watch?v=ezmpolryqUE
 
-60./120 => float beatsec;
+.1 => float gainSet;
+
+60./94 => float beatsec;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
 
 PulseOsc  osc => LPF f => LPF f2 => Envelope e => dac;
 
-Std.mtof(36) => osc.freq;
+Std.mtof(55-24) => osc.freq;
 osc.freq()*3 => f.freq => f2.freq;
 2 => f.Q => f2.Q;
 
-.9 => osc.gain;
+gainSet => osc.gain;
 
 
 /*

@@ -1,5 +1,5 @@
 // based on Effect sonar effects synch stereo
-60./120.*4. => float beatsec;
+60./94.*4 => float beatsec; // reduce time and add shred
 
 beatsec::second => dur beat;
 
@@ -19,7 +19,7 @@ ModalBar bottleR =>  NRev rR => gain => Pan2 panR => dac;
 .2 => rL.mix;
 .2 => rR.mix;
 
-60-12 => int midiBase;
+55-12 => int midiBase;
 
 Std.mtof(midiBase) => bottleL.freq;
 Std.mtof(midiBase)*1.5 => bottleR.freq;

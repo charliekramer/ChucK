@@ -34,11 +34,11 @@ StifKarp st2 => dac;
 
 8 => float divisor; // smaller=>faster. .125, 2, 4, 8
 
-60-24-12 => int midiBase;
+55-24-12 => int midiBase;
 
 [0,0,0,1,1,11,11,12,12,12] @=> int notes[];
 
-60./120. => float beatSec;
+60./94. => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat ) => now;
 

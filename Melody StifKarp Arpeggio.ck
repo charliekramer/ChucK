@@ -31,7 +31,7 @@ noteDur*1.5 => echo.delay;
 .2 => echo.mix;
 echo => echo;
 
-58-12-12 => int midiNote;
+55-12-12 => int midiNote;
 
 now + 100::second => time future;
 

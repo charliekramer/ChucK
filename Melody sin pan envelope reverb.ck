@@ -3,9 +3,9 @@
 // timed but not synched
 // time limited (120 sec)
 SinOsc sin => ADSR env => NRev rev => dac.left; // change oscillator
-env => NRev rev2 => dac.right;
+env => NRev rev2 => Gain revGain => dac.right;
 
-.02 => sin.gain;
+.05 => sin.gain;
 
 SinOsc LFO => blackhole; // to modulate RHS reverb mix
 
@@ -19,17 +19,17 @@ b + revMin => float a;
 .0 => rev.mix;
 revMin => rev2.mix;
 
-58 => float midiBase;
+55+12 => float midiBase;
 
-Std.mtof(midiBase)/Math.pow(1.5,1) => sin.freq; // divide by 1.5
+Std.mtof(midiBase)/Math.pow(1.5,0) => sin.freq; // divide by 1.5
 
-60./94. => float beatSec;
+60./94.*2 => float beatSec;
 
 beatSec::second => dur beat;
 
-.1/(beatSec*6.) => LFO.freq;
+.1/(beatSec*6.)*20 => LFO.freq;
 
-(.5*beat, .1*beat, 1., .5*beat) => env.set; // change decay parameter to .1
+(.5*beat, .1*beat, .1, .5*beat) => env.set; // change decay parameter to .1
 
 now+ 120::second => time future;
 

@@ -1,32 +1,35 @@
+.01 => float gainSet;
 SqrOsc s[2];
 
 .2 => s[0].width;
 .1 => s[1].width;
 
-50 => int midiBase1;
+55 => int midiBase1;
 
 .1 => float spread1;
 
-80 => int midiBase2;
+85 => int midiBase2;
 
 .1 => float spread2;
 
-60./120. => float beatsec;
+60./94.*2 => float beatsec;
 
 beatsec::second => dur beat;
 
 beat - (now % beat) => now;
 
 beat/4 => dur dur1;
-beat/4 => dur dur2;
+beat/2.5 => dur dur2;
 
-s[0] => ADSR adsr => Echo echo => NRev rev1 => dac;
-s[1] =>  adsr => echo => PRCRev rev2 => dac;
+s[0] => ADSR adsr => Echo echo => NRev rev1 => Gain gain => dac;
+s[1] =>  adsr => echo => PRCRev rev2 => gain => dac;
+
+gainSet => gain.gain;
 
 10*dur1 => echo.max;
-1.5*dur1 => echo.delay;
-.3 => echo.gain;
-.2 => echo.mix;
+3*dur1 => echo.delay;
+.5 => echo.gain;
+.3 => echo.mix;
 echo => echo;
 
 adsr.set(.01*dur1,.01*dur1, .9, .01*dur1);

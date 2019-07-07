@@ -17,7 +17,7 @@ masterGain => flute1.gain => flute2.gain => flute3.gain => flute4.gain => flute5
 // 0 => flute2.gain => flute3.gain => flute4.gain => flute5.gain;
 // 0 => SinLFO.gain => TriLFO.gain => SqrLFO.gain => PulseLFO.gain;
 
-57 => float midiBase; //57
+55 => float midiBase; //57
    
 120./94. => float beatSec; // 120./94.
 beatSec::second => dur beat;

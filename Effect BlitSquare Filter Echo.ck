@@ -1,14 +1,14 @@
 BlitSquare blit =>  LPF lpf => Echo echo => NRev rev => Gain g => dac;
 
-.2 => g.gain;
+.1 => g.gain;
 
-60./120.*.5 => float beatSec;
+60./94.*.5 => float beatSec;
 
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
 
-60-24 => int midiBase;
+55-12 => int midiBase;
 Std.mtof(midiBase) => blit.freq;
 
 blit.freq()*12. => float upFreq; //filter high and low frequencies

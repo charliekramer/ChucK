@@ -2,7 +2,9 @@
 
 //time synch
 
-60./120. => float beatSec;
+.01 => float gainSet;
+
+60./94. => float beatSec;
 
 beatSec::second => dur beat;
 
@@ -19,8 +21,8 @@ b => env => Echo e3 => Pan2 p3 => Gain g3 => dac.right;
 // Paralle--pan and gain paramters
 -1.0 => p3.pan;
 1.0 => p3.pan;
-0.01 => g1.gain => g2.gain => g3.gain;
-0.09 => g2.gain => g3.gain;
+gainSet => g1.gain => g2.gain => g3.gain;
+gainSet*4 => g2.gain => g3.gain;
 
 
 
@@ -39,7 +41,7 @@ beat/2. => e3.delay;
 
 // blit frequency
 
-Std.mtof(60-12) => b.freq;
+Std.mtof(55-12) => b.freq;
 .5=>b.gain;
 
 //set up harmonics cycle; start point and diff over cycle

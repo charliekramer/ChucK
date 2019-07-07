@@ -26,6 +26,9 @@ BlitSaw z => g  =>  d => pan => dac;
 6 => y.harmonics;
 6 => z.harmonics;
 */
+
+0.0001 => float baseGain;
+
 BlitSquare x => Echo e => NRev rev => Gain g => Dyno d => Pan2 pan =>  dac;
 BlitSquare y =>  e => rev => g  =>  d => pan => dac;
 BlitSquare z => e => rev => g  =>  d => pan => dac;
@@ -44,7 +47,7 @@ BlitSquare z => e => rev => g  =>  d => pan => dac;
 e => e;
 .9 => e.gain; //controls amount of echo feedback
 
-0.0001 => float baseGain => g.gain; // base gain for on/off gain
+ baseGain => g.gain; // base gain for on/off gain
 
 // lorenz parameters
 

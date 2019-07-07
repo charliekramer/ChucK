@@ -1,4 +1,4 @@
-//sinosc beating plus noise jabs
+//sinosc beating plus noise jabs 
 
 SinOsc s => Echo echo => Gain g => dac;
 SinOsc t => echo => g => dac;
@@ -17,7 +17,7 @@ Noise n =>  ResonZ f => Envelope env => echo => NRev rev => g => dac;
 .5 => echo.mix;
 echo => echo;
 
-Std.mtof(60) => float baseFreq => s.freq;
+Std.mtof(55) => float baseFreq => s.freq;
 baseFreq => t.freq;
 
 .1::second => dur rate;

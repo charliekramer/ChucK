@@ -1,4 +1,4 @@
-60./120.=> float beatsec;
+60./94.=> float beatsec;
 beatsec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -7,7 +7,7 @@ Wurley wurley => Echo echo => NRev rev => Dyno d => Pan2 p => dac;
 Echo e2 => dac;
 Echo e3 => dac;
 
-Std.mtof(24) => wurley.freq;
+Std.mtof(55-24) => wurley.freq;
 0.2 => wurley.gain;
 .1 => wurley.lfoSpeed;
 0.9 => wurley.lfoDepth;

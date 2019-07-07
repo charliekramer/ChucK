@@ -1,17 +1,17 @@
 // game of life
 // v2 add convergence check
 // v3 sndbuf 
-// see also  Splitbuf for GoL.ck--creates input
+// drum machine
 
 
-5 => int n; // dimension of matrix
+4 => int n; // dimension of matrix
 0 => int delta; // convergence check; adds up changes to matrix
 
 int x[n][n];
 int y[n][n];
 
 Gain master;
-.01/(n*n) => master.gain;
+.03/(n*n) => float masterGain => master.gain;
 
 NRev rev;
 
@@ -19,31 +19,42 @@ SndBuf buf0[n];
 SndBuf buf1[n];
 SndBuf buf2[n];
 SndBuf buf3[n];
-SndBuf buf4[n];
 
-"/Users/charleskramer/Desktop/chuck/audio/name" => string name; // 1/25th version
-//"/Users/charleskramer/Desktop/chuck/audio/hootch_1sec/name" => string name; // first 25 seconds version
+
+"/Users/charleskramer/Desktop/chuck/audio/drum" => string name; // 1/25th version
 
 .3 => rev.mix; 
 0 => int loop; // choose whether to loop buf
 1 => float rate; // change rate of playback
-0 => int randRate; // randomize playback rate
+1 => int randRate; // randomize playback rate
+1 => int noteDown; // turn off notes after cycle; more spare sounding
+1 => int switchMat; // switch order of i and j to mix it up
 
-60./94.*2./4. => float beatSec; // 2/4, 3/2 and 2/3 are interesting
+60./94s.*.25 => float beatSec; // pretty cool to layer *1 and *.5 or *.25
 beatSec::second => dur beat;
 
+0 => master.gain;
+
 beat - (now % beat) => now;
+
+masterGain => master.gain;
+
+string filename;
 
 for (0 => int j; j< n; j++) { // set up notes 
 	
 	for (0 => int i; i < n; i++) {
 		
-		name + i + j => string filename; // check path is correct
+		if (switchMat == 1) {
+			name + j + i => filename; 
+		}
+		else {
+			name + i + j =>  filename; 
+		}
 		if (i == 0) filename+".wav" => buf0[j].read;
 		if (i == 1) filename+".wav" => buf1[j].read;
 		if (i == 2) filename+".wav" => buf2[j].read;
 		if (i == 3) filename+".wav" => buf3[j].read;
-		if (i == 4) filename+".wav" => buf4[j].read;
 	}
 
     if (loop ==1 ) {
@@ -51,7 +62,6 @@ for (0 => int j; j< n; j++) { // set up notes
 		1 => buf1[j].loop;
 		1 => buf2[j].loop;
 		1 => buf3[j].loop;
-		1 => buf4[j].loop;
 	}
 	
 	
@@ -59,20 +69,17 @@ for (0 => int j; j< n; j++) { // set up notes
 	buf1[j] => rev => master => dac;
 	buf2[j] => rev => master => dac;
     buf3[j] => rev => master => dac;
-	buf4[j] => rev => master => dac;
 	
 	rate => buf0[j].rate;
 	rate => buf1[j].rate;
 	rate => buf2[j].rate;
 	rate => buf3[j].rate;
-	rate => buf4[j].rate;
 	
 	if (randRate == 1) {
 		Std.rand2f(.75,1.5) => buf0[j].rate;
 		Std.rand2f(.75,1.5) => buf1[j].rate;
 		Std.rand2f(.75,1.5) => buf2[j].rate;
 		Std.rand2f(.75,1.5) => buf3[j].rate;
-		Std.rand2f(.75,1.5) => buf4[j].rate;
 	}
 		
 }
@@ -106,9 +113,9 @@ fun void prnt_x (int x[][]) { // print element by element
 		}
 	}
 }
-fun void prnt_5 (int x[][]) { // only works on 5x5
-	for (0 => int i; i < 5; i++) {
-		<<< x[i][0],x[i][1],x[i][2],x[i][3],x[i][4]>>>;
+fun void prnt_4 (int x[][]) { // only works on 4x4
+	for (0 => int i; i < 4; i++) {
+		<<< x[i][0],x[i][1],x[i][2],x[i][3]>>>;
 	}
 }
 
@@ -168,18 +175,19 @@ fun void sound() { // set buffer position for all samples
 		
 			if (x[0][j] == 1) 0 => buf0[j].pos; 
 			else buf0[j].samples() => buf0[j].pos;
+			beat => now;
 			
 			if (x[1][j] == 1) 0 => buf1[j].pos; 
 			else buf1[j].samples() => buf1[j].pos;
+			beat => now;
 			
 			if (x[2][j] == 1) 0 => buf2[j].pos; 
 			else buf2[j].samples() => buf2[j].pos;
+			beat => now;
 			
 			if (x[3][j] == 1) 0 => buf3[j].pos; 
 			else buf3[j].samples() => buf3[j].pos;
-			
-			if (x[4][j] == 1) 0 => buf4[j].pos; 
-			else buf4[j].samples() => buf4[j].pos;
+			beat => now;
 			
 	}
 	
@@ -197,15 +205,28 @@ fun void notesoff() { // turn all notes off
 			
 			buf3[j].samples() => buf3[j].pos;
 			
-			buf4[j].samples() => buf4[j].pos;
 	}
+}
+
+fun int sum_x () { // add up all entries to check for all = 0
+	
+	0 => int x_sum;
+	
+	for (0 => int i; i < x.cap(); i++) {
+		for (0 => int j; j < x.cap(); j++) {
+			x_sum+x[i][j] => x_sum;
+		}
+	}
+	<<< "x_sum", x_sum >>>;
+	return x_sum;
 }
 
 //random_x(y);
 //x_set();
 random_x(x);
 //x_set();
-prnt_5(x);
+prnt_4(x);
+notesoff();
 while (true) {
 	
 	0 => delta;
@@ -217,15 +238,17 @@ while (true) {
 	<<< "************* X ******************">>>;
 	if (delta == 0) <<< "****CONVERGENCE ******************" >>>;
 	
-	prnt_5(x);// print the matrix (only works for 5x5
+	prnt_4(x);// print the matrix
 	
 	sound(); // turn on the corresponding notes
 	
-	beat => now;
+    if (noteDown ==1) notesoff(); 
 	
-	notesoff(); // turn all notes off
+	if (sum_x() == 0) {
+		<<< "regen on zeroes">>>;
+		random_x(x);
+	}
 	
-	beat => now;
 }
 
 		

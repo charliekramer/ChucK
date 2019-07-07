@@ -12,13 +12,13 @@ class StringPatch {
 	
 	for (0 => int i; i < n; i++) {
 		baseFreq*(1+spr*i*Math.pow(-1,i)) => sin[i].freq;
-		<<< i, sin[i].freq() >>>;
+//		<<< i, sin[i].freq() >>>;
 		masterGain => sin[i].gain;
 	}
 	
 	fun void nOsc(int tempN) {
 		tempN => n;
-		<<< "nOsc", n>>>;
+//		<<< "nOsc", n>>>;
 	}
 	
 	 fun float spread(float tempSpread) {
@@ -61,7 +61,7 @@ StringPatch s1;
 StringPatch s2;
 StringPatch s3;
 
-44 => float midiBase;
+55-12 => float midiBase;// 
 .005 => float spread => s1.spread;
 3 => s1.nOsc;
 Std.mtof(midiBase) => s1.freq;
@@ -69,6 +69,17 @@ Std.mtof(midiBase) => s1.freq;
 Std.mtof(midiBase+4) => s2.freq;
 3 => s3.nOsc;
 Std.mtof(midiBase+7) => s3.freq;
+
+//0 2 4 5 7 9 11 12 14 16 17 19 21
+
+[[0, 4, 7],
+ [2, 5, 9],
+ [4, 7, 11],
+ [5, 9, 12],
+ [7, 11, 14],
+ [9, 12, 16],
+ [11, 14, 17],
+ [12, 16, 19]]  @=> int notes[][];
 
 Gain g => ADSR env => HPF filter => NRev rev => dac;
 
@@ -80,7 +91,7 @@ masterGain => s1.gain;
 masterGain => s2.gain;
 masterGain => s3.gain;
 
-(4*beat,.0::second, .9, 3*beat) => env.set;
+(8*beat,.0::second, .9, 7*beat) => env.set;
 
 s1.connect(g);
 s2.connect(g);
@@ -88,18 +99,29 @@ s3.connect(g);
 
 spork~spread_LFO(.5,.1);
 
-now + 64*beat => time future;
+now + 8*64*beat => time future;
 
 0 => int beatcount;
 
 while (now < future) {
+	load_notes(Std.rand2(0,7));
 	1 => env.keyOn;
-	4*beat => now;
+	8*beat => now;
 	1 => env.keyOff;
-	4*beat => now;
-	8+=> beatcount;
+	8*beat => now;
+	16+=> beatcount;
 	<<< "beatcount", beatcount>>>;
 }
+
+// finish on tonic
+
+load_notes(0);
+	1 => env.keyOn;
+	8*beat => now;
+	1 => env.keyOff;
+	8*beat => now;
+	16+=> beatcount;
+	<<< "END beatcount", beatcount>>>;
 
 5::second => now;
 
@@ -115,3 +137,12 @@ fun void spread_LFO (float freq, float gain) {
 		1::samp => now;
 	}
 }
+
+fun void load_notes(int row) {
+	Std.mtof(midiBase+notes[row][0]) => s1.freq;
+	Std.mtof(midiBase+notes[row][1]) => s2.freq;	
+	Std.mtof(midiBase+notes[row][2]) => s3.freq;
+    <<< "notes",midiBase+notes[row][0], midiBase+notes[row][1], midiBase+notes[row][2] >>>;
+	
+}
+	

@@ -1,8 +1,8 @@
 TubeBell bell => Echo echo1 => Echo echo2 => Echo echo3 => Gain g => dac;
 
-.1 => g.gain;
+.05 => g.gain;
 
-58+12 => float midiBase;
+55+12 => float midiBase;
 
 Std.mtof(midiBase) => bell.freq;
 

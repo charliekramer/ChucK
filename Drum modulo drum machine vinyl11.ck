@@ -5,7 +5,9 @@
 //synch
 // added glitch mode with variable rate 
 
-60./120. => float beattime;
+.001*.25 => float gainSet;
+
+60./94. => float beattime;
 beattime::second => dur beat;
 beat - (now % beat) => now;
 
@@ -29,7 +31,7 @@ h.Q(10);
 snaregain => snare.gain;
 
 // gain settings
-0.002 => g.gain; //0.5
+gainSet => g.gain; //0.5
 1.0 => kickG.gain; //1.0
 0.2 => hatG.gain; //0.2
 0.9 => crashG.gain; //0.2
@@ -37,22 +39,23 @@ snaregain => snare.gain;
 1.5 => snareG.gain;//1.5
 .5 => tomG.gain;//0.5
 
-.7 => float dank; // slow down all kit
-dank => kick.rate => hat.rate => hatOpen.rate => crash.rate => snare.rate;
-
-//or use glitchmode (random)
-
+1 => int kickSolo;
+0 => int kickRoll;
+0 => int snareSolo;
+0 => int snareRoll;
+0 => int funkoption; 
+0 => int shuffle;
 1 => int glitchMode;
 .2 => float lowGlitch;
 2. => float hiGlitch;
 
+if (kickSolo ==1) 0. => hatG.gain => shakG.gain => snareG.gain; //kick only
+if  (snareSolo ==1) 0. => hatG.gain => shakG.gain => kickG.gain; //snare only
+
+.7 => float dank; // slow down all kit
+dank => kick.rate => hat.rate => hatOpen.rate => crash.rate => snare.rate;
 
 0.05 => snareRev.mix;
-
-// use this to drop out all but kick or snare
-0. => hatG.gain => crashG.gain => shakG.gain => snareG.gain; //kick only
-//0. => hatG.gain => crashG.gain => shakG.gain => kickG.gain; //snare only
-    
     
 //read files
 "/Users/charleskramer/Desktop/musicradar-drum-samples/Drum Kits/Kit 11 - Vinyl/CYCdh_VinylK4-Kick01.wav" => kick.read;
@@ -74,11 +77,7 @@ tom1.samples()=>tom1.pos;
 tom2.samples()=>tom2.pos;
 tom3.samples()=>tom3.pos;
 
-//funk option; set to 1 for funky action 
-// shuffle option
 
-0 => int funkoption; 
-0 => int shuffle;
 
     for ( 1 => int i; true; i++)		
     {
@@ -160,8 +159,8 @@ tom3.samples()=>tom3.pos;
         
 
  // fills here
-//  0=> snare.pos;
-//  0=> kick.pos;
+    if (snareRoll == 1) 0 => snare.pos;
+	if (kickRoll == 1) 0 => kick.pos;
 
 // whoa glitch tastic
     if (glitchMode ==1) Std.rand2f(lowGlitch,hiGlitch) => kick.rate => hat.rate => hatOpen.rate => crash.rate => snare.rate;

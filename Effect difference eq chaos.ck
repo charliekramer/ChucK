@@ -16,7 +16,7 @@ x = 0 is stable for r < 1
 x = 1 - 1/r is stable for 1 < r < 3
 */
 
-.1 => float gainSet;
+.05 => float gainSet;
 
 3.58 => float r; 
 .01 => float deltaR;

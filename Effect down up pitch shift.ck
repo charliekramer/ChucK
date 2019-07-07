@@ -5,11 +5,11 @@ beatSec::second => dur beat;
 0 => master.gain; // avoid initial beep
 beat - (now % beat) => now;
 
-.1 => master.gain;
+.05 => master.gain;
 
 
 
-(60-36) => float midiBase; // *1.1 for cool overlaps
+(55+12) - 36 => float midiBase; // *1.1 for cool overlaps
 Std.mtof(midiBase) => saw.freq;
 
 .2 => rev.mix;

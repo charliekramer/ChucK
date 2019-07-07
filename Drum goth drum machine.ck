@@ -1,5 +1,5 @@
 //synch
-60./120. => float beattime;
+60./94.*1. => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -11,7 +11,7 @@ SndBuf hat => rev =>g => dac;
 Shakers shak => rev => g => dac;
 
 
-0.03 => g.gain;
+0.06/4 => g.gain;
 0.1 => hat.gain;
 0.1 => shak.gain;
 0.2 => rev.mix;

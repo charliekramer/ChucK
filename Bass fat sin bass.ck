@@ -1,5 +1,7 @@
 // fat osc bass
 
+0.01 => float gainset;
+
 60./120. => float beattime;
 beattime::second => dur beat;
 beat - (now % beat) => now;
@@ -12,7 +14,7 @@ s[2] => l => Pan2 pan2 => dac;
 -1. => pan1.pan;
 1 => pan2.pan;
 
-0.1 => float gainset;
+
 
 .01 => float diff;
 

@@ -1,4 +1,4 @@
-60./120.*4. => float beatsec;
+60./94.*4. => float beatsec;
 
 beatsec::second => dur beat;
 
@@ -13,7 +13,7 @@ BlowBotl bottleR =>  NRev rR => Pan2 panR => gain => dac;
 .2 => rL.mix;
 .2 => rR.mix;
 
-60 => int midiBase;
+55 => int midiBase;
 
 Std.mtof(midiBase) => bottleL.freq;
 Std.mtof(midiBase)*1.5 => bottleR.freq;

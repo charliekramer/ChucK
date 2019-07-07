@@ -4,6 +4,8 @@
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
+.02 => float masterGain;
+
 
 Rhodey piano[4];
 piano[0] => JCRev rev => dac;
@@ -13,18 +15,20 @@ piano[3] => rev => dac;
 
 
 0.9 => rev.mix;
-0.3 => piano[0].gain => piano[1].gain => piano[2].gain => piano[3].gain;
+masterGain => piano[0].gain => piano[1].gain => piano[2].gain => piano[3].gain;
 
 
-58-12 => int baseNote;
+55 => int midiBase; // original = 55;
 
-[baseNote,baseNote+4,baseNote+5,baseNote+7] @=> int notes[];
+midiBase => int baseNote;
+
+[baseNote+4,baseNote+5,baseNote+7] @=> int notes[];
 
 
 while (true) {
     
 
-55 => baseNote;
+midiBase => baseNote;
 
 [baseNote,baseNote+4,baseNote+5,baseNote+7] @=> notes;
 
@@ -36,7 +40,7 @@ for (0 => int i; i < notes.cap(); i++) {
 5*beat => now;
 
 
-45 => baseNote;
+midiBase - 10 => baseNote;
 
 [baseNote,baseNote+4,baseNote+5,baseNote+9] @=> notes;
 
@@ -47,7 +51,7 @@ for (0 => int i; i < notes.cap(); i++) {
 
 4*beat => now;
 
-36 => baseNote;
+midiBase - 19 => baseNote;
 
 [baseNote,baseNote+4,baseNote+5,baseNote+7] @=> notes;
 

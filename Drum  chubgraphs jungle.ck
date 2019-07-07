@@ -109,7 +109,7 @@ beat*1.5*d2 => echo.delay; //1.5; 1.75 cool; 2.25 // .75*.5 =f time = *1;
 .5 => echo.mix;
 echo => echo;
 
-1 => kick.pitch;
+1.0 => kick.pitch;
 
 2 => tom.pitch;
 

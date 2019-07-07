@@ -5,14 +5,16 @@ SinOsc s2 => f => Echo e => NRev rev => dac; // complex function
 SinOsc s3 => f => e => rev => dac; // complex function
 SqrOsc s4 => f => e => rev => dac; // Poisson process
 
-(48+12) => int freqNum; // midi code for base frequency
+.1 => float gainSet;
+
+(55+12) => int freqNum; // midi code for base frequency
 
 Std.mtof(freqNum)*1.5 => f.freq;
 20 => f.Q;
 
-0.1 => s1.gain;
+gainSet => s1.gain;
 s1.gain()*.7 => s2.gain => s3.gain;
-0.0 => s4.gain;
+0.05 => s4.gain;
 Std.mtof(freqNum) => s1.freq;
 
 

@@ -1,5 +1,8 @@
 // bottle pad
 
+0.1 => float allGain;
+10 => int iterations;
+
 BlowBotl bottleLeft[2] ;
 BlowBotl bottleRight[2] ;
 
@@ -17,13 +20,13 @@ bottleRight[0] =>  rev =>  e => dac.right;
 
 // gain - effects;
 
-0.10 => float allGain;
+
 0.05 => rev.mix;
 0.1 => e.mix;
 
 1::second => e.delay;
 
-60 => int midiBase;
+55 => int midiBase;
 Std.mtof(midiBase+12) => float baseFreq;
 [0, 3, 5, 12] @=> int notes[];
 10 => float freqDelta;
@@ -48,8 +51,11 @@ for (0 => int i; i < bottleLeft.cap()-1; i++) {
     
 }
 
+0 => int j;
     
-while (true) {
+while (j < iterations) {
+	
+	j++;
     
     for (0 => int i; i < bottleLeft.cap()-1; i++) {
      
@@ -70,6 +76,8 @@ while (true) {
        1::second => now;
     
 }
+
+5::second => now;
 
    
         

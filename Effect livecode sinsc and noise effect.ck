@@ -1,11 +1,13 @@
 SinOsc s => Chorus c => Envelope e => Dyno d => dac;
 Noise n => LPF l => Envelope ne=> d => dac;
 
-60./120. => float beatSec;
+.05 => float gainSet;
+
+60./94. => float beatSec;
 beatSec::second => dur beat;
 
-60 => int midiBase;
-.1=>n.gain => s.gain;
+55 => int midiBase;
+gainSet=>n.gain => s.gain;
 
 4 => int speed; //larger =>faster
 

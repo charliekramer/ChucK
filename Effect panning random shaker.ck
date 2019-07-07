@@ -5,7 +5,7 @@ beat - (now% beat) => now;
 
 Shakers shak =>  NRev r => Pan2 pan => dac;
 
-2=>shak.gain;
+.5=>shak.gain;
 
 now + .5::minute => time future;
 

@@ -3,7 +3,7 @@
 // add echo;
 // add sweeping filters except for sinOsc
 // add different notes per row
-// add panning
+// add panning;
 
 
 5 => int n; // dimension of matrix
@@ -13,10 +13,7 @@ int x[n][n];
 int y[n][n];
 
 Gain master;
-.00001/(n*n) => master.gain;
-
-NRev rev;
-.2 => rev.mix;
+.00001/(n*n) => master.gain => float gainMaster;
 
 SinOsc rhodes0[n]; //each row is a different instrument
 SqrOsc rhodes1[n];
@@ -30,6 +27,13 @@ ADSR env3[n];
 ADSR env4[n];
 ResonZ filt;
 Pan2 pan[n];
+
+float freqs[n]; // frequencies for panning
+.1 => freqs[0];
+.2 => freqs[1];
+.3 => freqs[2];
+.4 => freqs[3];
+.5 => freqs[4];
 
 55 => int midiBase; // base note
 
@@ -45,10 +49,18 @@ int notes[n][n];
 [0,2,5,7,12]] @=> notes;  
 
 
-60./120.*16 => float beatSec; // 2/4 and 2/3 are interesting
+60./95.*4 => float beatSec; // <1 for interesting beats; *4, *16
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
+
+1 => float onBeats; // beats after opening envelope
+3 => float offBeats; // beats after closing envelope
+
+40 => int iterations; // # of times through
+
+NRev rev;
+0.2 => rev.mix;
 
 Echo echo;
 10*beat => echo.max;
@@ -57,28 +69,27 @@ Echo echo;
 .5 => echo.gain;
 echo => echo;
 
--1.0 => pan[2].pan;
--0.5 => pan[1].pan;
  0.0 => pan[0].pan;
+-0.5 => pan[1].pan;
+-1.0 => pan[2].pan;
  0.5 => pan[3].pan;
  1.0 => pan[4].pan;
 
 
 for (0 => int i; i< n; i++) { // set up notes and soundchains
-	
-	
 
 	Std.mtof(midiBase+notes[0][i]) => rhodes0[i].freq;
 	Std.mtof(midiBase+notes[1][i]) => rhodes1[i].freq;
 	Std.mtof(midiBase+notes[2][i]) => rhodes2[i].freq;
 	Std.mtof(midiBase+notes[3][i]) => rhodes3[i].freq;
 	Std.mtof(midiBase+notes[4][i]) => rhodes4[i].freq;
-	rhodes0[i] => env0[i] => echo => rev => master => pan[2] => dac;
+	
+	rhodes0[i] => env0[i] => echo => rev => master => pan[0] => dac;
 	rhodes1[i] => env1[i] => filt => echo => rev => master => pan[1] =>dac;
-	rhodes2[i] => env2[i] => filt => echo => rev => master => pan[0] =>dac;
+	rhodes2[i] => env2[i] => filt => echo => rev => master => pan[2] =>dac;
     rhodes3[i] => env3[i] => filt => echo => rev => master => pan[3] =>dac;
 	rhodes4[i] => env4[i] => filt => echo => rev => master => pan[4] =>dac;
-
+	
 }
 
 fun void filt_freq (float center_freq, float LFO_freq) { //modulate filter frequency
@@ -92,6 +103,22 @@ fun void filt_freq (float center_freq, float LFO_freq) { //modulate filter frequ
 		1::ms => now;
 	}
 	
+}
+
+fun void panner (float freqs[]) { // panning 
+	SinOsc LFO[n] => blackhole;
+	
+	for (0 => int i; i< pan.cap(); i++) {
+		freqs[i] => LFO[i].freq;
+	}
+	
+	while (true) {
+		for (0 => int i; i< pan.cap(); i++) {
+			
+			LFO[i].last() => pan[i].pan;
+			1::ms => now;
+		}
+	}
 }
 
 fun void env_set () { // set up envelopes
@@ -196,13 +223,12 @@ fun void sound() { // turn on notes for 'living' cells
 		x[1][i] => env1[i].keyOn;
 		x[2][i] => env2[i].keyOn;
 	    x[3][i] => env3[i].keyOn;
-		x[4][i] => env4[i].keyOn;
-		
+		x[4][i] => env4[i].keyOn;		
 	}
 	
 }
 
-fun void notesoff() { // turn all notes off
+fun void envoff() { // turn all envelopes off
 	
 	for (0 => int i; i < x.cap(); i++) {
 		
@@ -222,17 +248,21 @@ random_x(x);
 
 prnt_5(x);
 
-	
+spork~panner(freqs);
+
+0 => int j;
 	 
-while (true) {
-	
+while (j < iterations) {
+
+    j++;
+
 	0 => delta; // measures convergence
 	
 	calc_x(); // check evolution criteria
 	
 	recalc_x(); // use to create next generation
 	
-	<<< "************* X ******************">>>;
+	<<< "************* X ", j, " ******************">>>;
 	
 	if (delta == 0) <<< "****CONVERGENCE ******************" >>>;
 	
@@ -240,11 +270,24 @@ while (true) {
 
 	sound(); // turn on the corresponding notes
 
-	beat => now;
+	onBeats*beat => now;
 	
-	notesoff(); // turn all notes off
+	envoff(); // turn all envelopes off
 	
-	beat => now;
+	offBeats*beat => now;
+		
+	
+	
 }
+
+now + 12::second => time future;
+
+<<< " ////////////////  fade \\\\\\\\\\\\\\" >>>;
+
+while (now < future) {
+	master.gain()*.95 => master.gain;
+	.1::second => now;
+}
+	
 
 		

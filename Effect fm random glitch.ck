@@ -2,13 +2,16 @@
 // option to super glitch using pitch change
 
 // modulator to carrier
+
+.025 => float gainSet;
+
 SinOsc m => SinOsc c => LPF l => Gain gL  => Dyno dL => dac.left;
 
 c => Echo e => l => Gain gR => Dyno dR => dac.right; 
 
-.1=> gL.gain => gR.gain;
+gainSet=> gL.gain => gR.gain;
 
-60./120. => float beatSec;
+60./94.*.5 => float beatSec;
 
 beatSec::second => dur baseBeat;
 baseBeat => dur beat;
@@ -20,7 +23,7 @@ e => e;
 
 
 // carrier frequency
-60 => float cfreqBase => c.freq; //try 30, 300, NOT 3000; 1-3 generates pitches
+Std.mtof(55-36) => float cfreqBase => c.freq; //try 30, 60, 300, NOT 3000; 1-3 generates pitches
 // modulator frequency
 100 => m.freq;
 // index of modulation
@@ -34,7 +37,7 @@ e => e;
 50 => float pitchDelta;
 250 => int pitchDiv;
 
-0 => int pitchGlitch;
+1 => int pitchGlitch;
 
 // time-loop
 while( true ) {

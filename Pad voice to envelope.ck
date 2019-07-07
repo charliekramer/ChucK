@@ -9,7 +9,7 @@ Pan2 pan[nVoice];
 
 .6 => rev.mix;
 
-58-12 => float midiBase; // add 7 and overlay
+55-12 => float midiBase; // add 7 and overlay
 
 [[0.,4.,7.],
  [4.,7.,11.],
@@ -61,6 +61,7 @@ for (0 => int j; j < notes.size(); j++) {
 	}
 	2*beat => now;
 }
+<<<"end voice to envelope">>>;
 2*beat => now;
 
 

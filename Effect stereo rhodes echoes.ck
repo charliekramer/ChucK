@@ -6,7 +6,7 @@ Echo echoL2;
 Echo echoR;
 Echo echoR2;
 
-60./120. => float beatSec;
+60./94. => float beatSec;
 
 beatSec::second => dur beat;
 
@@ -15,7 +15,7 @@ beat - (now % beat) => now;
 rhodesL => echoL => dac.left;
 echoR => dac.right;
 
-36 => int midiNote;
+55-24 => int midiNote;
 Std.mtof(midiNote) => float baseFreq => rhodesL.freq =>rhodesR.freq;
 
 echoL => echoR => echoL ;;

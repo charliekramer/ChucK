@@ -2,6 +2,7 @@
 // double up fuzz
 // two filters
 // try sqr and tri for LFO
+// makes ascending/descending melody
 
 // fuzz bass ChuGen by Esteban Betancur https://github.com/essteban/chuckEFXs/tree/master/DigitalDistortion
 // ChuGen
@@ -26,7 +27,8 @@ class Fuzz extends Chugen
     }
 }
 
-60./120. => float beattime;
+.002*.5 => float gainSet;
+60./94. => float beattime;
 beattime::second => dur beat;
 beat - (now % beat ) => now;
 
@@ -40,13 +42,13 @@ SinOsc v => FullRect rect => blackhole; // modulate gain of other sinoscs
 2 => v.gain; // 0 for normal-ish sound
 
 .0 => s[1].gain => s[2].gain; // pick one, 0 is most normal sounding
-g.gain(.02);
+g.gain(gainSet);
 
 SinOsc t => blackhole; // try sqr and tri for different patterns
 .1 => t.freq;
 1 => t.gain;
 
-Std.mtof(36) => s[0].freq => s[1].freq => s[2].freq;
+Std.mtof(55-24) => s[0].freq => s[1].freq => s[2].freq;
 10=>filtBP.Q => filtLP.Q => filtHP.Q;
 
 1./beattime*.25=> t.freq;  //for regular sounding cycles

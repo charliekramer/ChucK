@@ -1,5 +1,6 @@
 // game of life
 // v2 add convergence check
+// add echo;
 
 
 5 => int n; // dimension of matrix
@@ -9,7 +10,7 @@ int x[n][n];
 int y[n][n];
 
 Gain master;
-.1/(n*n) => master.gain;
+.004/(n*n) => master.gain;
 
 NRev rev;
 .1 => rev.mix;
@@ -24,10 +25,17 @@ Flute rhodes4[n];
 
 [0,4,5,7,9] @=> int notes[]; // each column is a different note
 
-60./120.*2./4. => float beatSec; // 2/4 and 2/3 are interesting
+60./94.*2./4. => float beatSec; // 2/4 and 2/3 are interesting
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
+
+Echo echo;
+10*beat => echo.max;
+1.5*beat => echo.delay;
+.3 => echo.mix;
+.5 => echo.gain;
+echo => echo;
 
 for (0 => int i; i< n; i++) { // set up notes and soundchains
 
@@ -36,11 +44,11 @@ for (0 => int i; i< n; i++) { // set up notes and soundchains
 	Std.mtof(midiBase+notes[i]) => rhodes2[i].freq;
 	Std.mtof(midiBase+notes[i]) => rhodes3[i].freq;
 	Std.mtof(midiBase+notes[i]) => rhodes4[i].freq;
-	rhodes0[i] => rev => master => dac;
-	rhodes1[i] => rev => master => dac;
-	rhodes2[i] => rev => master => dac;
-    rhodes3[i] => rev => master => dac;
-	rhodes4[i] => rev => master => dac;
+	rhodes0[i] => echo => rev => master => dac;
+	rhodes1[i] => echo => rev => master => dac;
+	rhodes2[i] => echo => rev => master => dac;
+    rhodes3[i] => echo => rev => master => dac;
+	rhodes4[i] => echo => rev => master => dac;
 
 }
 	

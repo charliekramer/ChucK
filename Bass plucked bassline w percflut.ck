@@ -1,12 +1,12 @@
 StifKarp bass => LPF filt => PRCRev rev => Gain g => dac;
 PercFlut tube =>  g => dac;
 
-.4 => g.gain;
+.05 => g.gain;
 
 1 => tube.gain;
 .8 => bass.gain;
 
-24+12 => int midiBase;
+55-12 => int midiBase;
 Std.mtof(midiBase-12) => tube.freq;
 Std.mtof(midiBase)*15 => filt.freq;
 1 => filt.Q;
@@ -16,7 +16,7 @@ Std.mtof(midiBase)*15 => filt.freq;
 .8 => bass.stretch;
 
 
-60./120. => float beatsec;
+60./94. => float beatsec;
 beatsec::second => dur beat; 
 
 beat - (now % beat) => now;
