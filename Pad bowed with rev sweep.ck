@@ -1,21 +1,24 @@
 Bowed bowed[3] => dac;
 
-24+12+12+12 => int baseMidiNote;
+.05 => float gainSet;
+200 => int iterations;
 
-60./120. => float beatsec;
+55-12 => int baseMidiNote;
+
+60./94. => float beatsec;
 beatsec::second => dur beat;
 
 beat - (now % beat) => now;
 
 Std.mtof(baseMidiNote) => bowed[0].freq;
-Std.mtof(baseMidiNote+3) => bowed[1].freq; // was +7
-Std.mtof(baseMidiNote+7) => bowed[2].freq; // was +9
+Std.mtof(baseMidiNote+7) => bowed[1].freq; // was +7
+Std.mtof(baseMidiNote+9) => bowed[2].freq; // was +9
 
 bowed[0] => PRCRev rev => Dyno dyn => dac;
 bowed[1] => rev => dyn => dac;
 bowed[2] => rev => dyn => dac;
 
-.1 => bowed[0].gain => bowed[1].gain => bowed[2].gain;
+gainSet => bowed[0].gain => bowed[1].gain => bowed[2].gain;
 
 1 => bowed[0].noteOn => bowed[1].noteOn => bowed[2].noteOn;
 
@@ -25,7 +28,11 @@ bowed[2] => rev => dyn => dac;
 //spork~revSweep(rev); 
 spork~revSweepLFO(rev);
 
-while (true) {
+0 => int j;
+
+while (j < iterations) {
+	
+	j++;
     
     4*beat => now;
     for (0 => int i; i <= 2; i++) {
@@ -34,6 +41,15 @@ while (true) {
     }
 }
 
+now + 15::second => time future;
+
+while (now < future) {
+	
+	gainSet*.95 => gainSet;
+	gainSet => bowed[0].gain => bowed[1].gain => bowed[2].gain;
+	.1::second =>now;
+	
+}
 
 
 fun void revSweep (PRCRev rev) {

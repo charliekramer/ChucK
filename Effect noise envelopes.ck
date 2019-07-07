@@ -10,6 +10,8 @@ masterGain => noise1.gain => noise2.gain => noise3.gain;
 .0 => gain1.gain;// envelope => echo => reverb
 .5 => gain2.gain;// reverb  => envelope => echo 
 .0 => gain3.gain;// echo => reverb => envelope 
+
+128*40 => int nBeat;
  
 60./94.*4 => float beatSec;
 beatSec::second => dur beat;
@@ -53,7 +55,7 @@ spork~filterCycle(filter1, freqCyc, 440, .5);
 spork~filterCycle(filter2, freqCyc*1.1, 220, .2); 
 spork~filterCycle(filter3, freqCyc*.9, 110, .1); 
 
-now + 128*beat => time future;
+now + nBeat*beat => time future;
 
 while (now < future) {
 	1 => envelope1.keyOn;

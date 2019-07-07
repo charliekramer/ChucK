@@ -1,6 +1,8 @@
 // bass with panned echo and filter
 3 => int n;// pretty normal for n =2 or 3, grindy above that (watch out, gets loud)
 
+.001 => float gainSet;
+
 SawOsc bass[n];
 Pan2 panL;
 Pan2 panR;
@@ -9,12 +11,12 @@ ResonZ filter;
 Envelope env1, env2;
 Gain master;
 
-.001/n => master.gain;
+gainSet/n => master.gain;
 
  -1 => panL.pan;
   1 => panR.pan;
 
-58-36    => float midiBase; // watch out, will go nuts above 48 or so
+55-36    => float midiBase; // watch out, will go nuts above 48 or so
 .01 => float spread; // spread for frequencies
 
 Std.mtof(midiBase) => filter.freq;

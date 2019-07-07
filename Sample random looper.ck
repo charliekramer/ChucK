@@ -1,5 +1,7 @@
 // pulls random loops off sample
 
+.15 => float gainSet;
+
 SndBuf2 buffer => Gain inGain => Dyno dyn => HPF l =>  Echo echo => NRev rev => Gain outGain => dac;
 buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =>   Gain loopGain => Pan2 loopPan =>dac;
 
@@ -8,18 +10,21 @@ buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =
 22 => l.freq;
 10 => l.Q;
 
+gainSet=> float masterGain;
+
 buffer.samples()=>buffer.pos; // so it doesn't play during the synch
 
 
-208.8*.5 => float BPM; // set this to fix below
+//208.8*.5 => float BPM; // set this to fix below
+94 => float BPM; // set this to fix below
 
 60./BPM => float beatsec;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
 
 0.02 => inGain.gain;
-0.8 => outGain.gain;
-0.3 => loopGain.gain;
+0.8*masterGain => outGain.gain;
+0.3*masterGain => loopGain.gain;
 
 BPM/138. => buffer.rate; // 138 is native speed of loop
 

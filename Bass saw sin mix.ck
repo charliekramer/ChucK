@@ -4,14 +4,15 @@ Mix2 mix;
 SawOsc saw => LPF h => mix.left => Gain master => dac;
 SqrOsc sin => LPF h2 => mix.right => master => dac;
 
+.01 => float gainSet;
 
 .80 => sin.gain;
 1.0 => saw.gain;
 
-.1 => master.gain;
+gainSet => master.gain;
 
-Std.mtof(60-24)*1.01 => saw.freq;
-Std.mtof(60-24)*.99 => sin.freq;
+Std.mtof(55-24)*1.01 => saw.freq;
+Std.mtof(55-24)*.99 => sin.freq;
 
 
 saw.freq()*4=> h.freq;
@@ -29,7 +30,7 @@ SinOsc lfo4 => blackhole; // drives sqrosc width
 
 1. => lfo.freq;
 
-60./120. => float beatSec;
+60./94. => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat) => now;
 

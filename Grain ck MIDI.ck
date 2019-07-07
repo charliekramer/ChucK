@@ -22,7 +22,7 @@ echo => echo;
 
 // load the file
 
-22 => int sampleChoose;
+18 => int sampleChoose;
 
 if (sampleChoose == 1) 
 {"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => buf2.read;}
@@ -104,49 +104,49 @@ fun void grain(float duration , int position, float pitch, int randompos, float 
         {
             if( msg.data1 == 176 && msg.data2 == 1 ) //cc
             {
-                msg.data3*3000/127 => duration;
-                <<<duration>>>;
+                msg.data3*6000/127 => duration;
+                <<<"duration, ", duration>>>;
             }
             
             if( msg.data1 == 176 && msg.data2 == 2 )
             {
                 msg.data3*samples/(127) => position;
-                <<<position>>>;
+                <<<"position, ",position>>>;
             }
             
             if( msg.data1 == 176 && msg.data2 == 3 ) // pitch wheel
             {
                 msg.data3*2.0/127 => pitch;
-                <<<pitch>>>;
+                <<<"pitch, ", pitch>>>;
             }
             
             if( msg.data1 == 176 && msg.data2 == 4 )
             {
                 msg.data3*4.0/127 => randpitch;
-                <<<randpitch>>>;
+                <<<"randpitch, ", randpitch>>>;
             }
             
             if( msg.data1 == 176 && msg.data2 == 5 )
             {
                 msg.data3*samples/127 => randompos;
-                <<<randompos>>>;
+                <<<"randompos, ", randompos>>>;
             }
             
             if( msg.data1 == 176 && msg.data2 == 6 )
             {
                 msg.data3/127.0 => R.mix;
-				<<< R.mix() >>>;
+				<<<"R.mix(), ", R.mix() >>>;
             }
 			
 			if( msg.data1 == 176 && msg.data2 == 7 )
 			{
 				msg.data3/127. => echo.mix;
-				<<< echo.mix() >>>;
+				<<< "echo.mix(), ", echo.mix() >>>;
 			}
 			if( msg.data1 == 176 && msg.data2 == 8 )
 			{
 				msg.data3/127.0*baseGain => gain.gain;
-				<<< gain.gain() >>>;
+				<<< "gain.gain(). " ,gain.gain() >>>;
 			}
         }
         

@@ -2,14 +2,20 @@
 // based on saturn keyboard
 // dont forget to set high and low notes on input device in function
 
-SndBuf buf => NRev rev => Envelope e => PitShift pitch => Gain g => Pan2 p => dac;
+SndBuf buf => NRev rev => Envelope e => PitShift pitch => Echo echo => Gain g => Pan2 p => dac;
 
 1 => pitch.mix;
 
-.1 => rev.mix;
+.2 => rev.mix;
 
-2 => g.gain;
-;
+7 => g.gain;
+
+10::second => echo.max;
+1.5::second => echo.delay;
+.3 => echo.gain;
+.5 => echo.mix;
+
+echo => echo;
 
 me.dir(-1)+"chuck/audio/SoundsofSaturnClip.wav" => buf.read;
 
@@ -19,7 +25,7 @@ me.dir(-1)+"chuck/audio/SoundsofSaturnClip.wav" => buf.read;
 			 //  for 2 and 3 make sure note limits on input device are set in 
 			 //    returnNote function
 
-7 => int sampleChoose;
+15 => int sampleChoose;
 
 if (sampleChoose == 1) 
 {"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => buf.read;}
@@ -56,7 +62,7 @@ else if (sampleChoose == 15)
 
 MidiIn min;
 
-1 => int port;
+2 => int port;
 
 if (!min.open(port) )
 {

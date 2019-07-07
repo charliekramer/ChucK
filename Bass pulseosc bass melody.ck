@@ -1,16 +1,19 @@
 //noisy panning pulseosc
 //synch
-60./120.*2. => float beattime;
+
+0.01 => float gainSet;
+
+60./94.*2. => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
 
 PulseOsc p => Echo e => NRev rev=> Pan2 pan => dac;
 
-36 => int midiBase;
+55 -24 => int midiBase;
 Std.mtof(midiBase) => float baseFreq => p.freq;
 
-0.04=>p.gain;
+gainSet=>p.gain;
 
 .75::second => e.delay;
 0.1 => e.mix;

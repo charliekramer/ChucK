@@ -4,12 +4,12 @@ SinOsc s[2] => dac;
 
 0.01 => s[0].gain => s[1].gain;
 
-60 => int midiBase;
+55 => int midiBase;
 
 Std.mtof(midiBase)*.9 => s[0].freq;
 Std.mtof(midiBase)*1.1 => s[0].freq;
 
-60./120.*2. => float beatsec;
+60./94. => float beatsec;
 beatsec::second => dur beat;
 
 beat - (now % beat) => now;

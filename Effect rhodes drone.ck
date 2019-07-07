@@ -2,19 +2,19 @@ Rhodey rhodes => BPF filt => Echo echo  => NRev rev => dac;
 // cool with Flute too
 echo => Echo echo2 => PitShift pitch => dac;
 
-.8 => rhodes.gain;
+.9 => rhodes.gain;
 
 SqrOsc PitchLFO => blackhole;
 SinOsc DelayLFO => blackhole;
 
-(58) - 36   => int midiBase; //60 -3 - 36
+(59+24) - 36   => int midiBase; //60 -3 - 36
 
 Std.mtof(midiBase) => rhodes.freq;
 
 Std.mtof(midiBase) => filt.freq;
 2 => filt.Q;
 
-120./94.*.25 => float beatSec; // 120./94.*.25
+120./80.*.25 => float beatSec; // 120./94.*.25 HANGS WHEN .25 removed
 beatSec::second => dur beat;
 
 spork~LFOPitch(4., .5, 1/beatSec*.125/16); // a, b, LFO freq (a+b*LFO.last => pitch) // 4, .5, .125

@@ -15,9 +15,9 @@ Blit sin => HalfRect frsin => Chorus c =>  Echo echo => PRCRev rev => Gain gain 
 
 1 => lfo1.gain => lfo2.gain => lfo3.gain;
 
-60 => int midiBase;
+55 => int midiBase;
 Std.mtof(midiBase)*1.5 => float baseFreq; 
-60./120. => float beatsec;
+60./94. => float beatsec;
 beatsec::second => dur beat;
 
 .2 => rev.mix;

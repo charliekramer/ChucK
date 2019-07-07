@@ -14,9 +14,9 @@ Gain bndGain[nOsc];
 Pan2 panEcho[nOsc];
 Pan2 panDry;
 
-60-24 => int midiBase;
+59-24 => int midiBase;
 
-60./120. => float beatsec;
+60./80. => float beatsec;
 beatsec::second => dur beat;
 
 for (0 => int i; i<nOsc; i++) {	

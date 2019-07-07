@@ -3,13 +3,15 @@
 // soundchain for nixon
 SndBuf nixon => PitShift pitch => NRev rev => Gain g => Pan2 pan => dac;
 
-.7 => g.gain;
+.5 => g.gain;
 0.1 => rev.mix; // turn down gain
 0.2 => rev.gain; //
 1.0 => pitch.mix;
+1.0 => float pitchNixon;
+1.0 => float rateNixon;
 
 // synch code
-60./120 => float beattime;
+60./94 => float beattime;
 beattime::second => dur beat;
 beat - (now % beat) => now;
 
@@ -28,11 +30,11 @@ beat - (now % beat) => now;
 */
 
 // farewell speech
-//"/Users/charleskramer/Desktop/chuck/audio/nixon_farewell.wav" => nixon.read;
+"/Users/charleskramer/Desktop/chuck/audio/nixon_farewell.wav" => nixon.read;
 
 // farewell: sample markers
 
-//[0,110000,250000,340000,425000] @=> marks;
+[0,110000,250000,340000,425000] @=> marks;
 /*
 0. Others may hate you 4 or 8 beat
 1. Those who hate you don't win 8 beat
@@ -46,11 +48,11 @@ beat - (now % beat) => now;
 
 while (true) {
        
-    marks[1] => nixon.pos;
-    1 => nixon.rate;
-    1 => pitch.shift;
+    marks[0] => nixon.pos;
+    rateNixon => nixon.rate;
+    pitchNixon => pitch.shift;
    -1*pan.pan()=> pan.pan;
-    beat*4 =>  now;  
+    beat*6 =>  now;  // 6; 24 for full sample of farewell
 //	g.gain()*.9 => g.gain; use to fade
 }
 
