@@ -21,9 +21,9 @@ class Fuzz extends Chugen
 
 SqrOsc s => ADSR env =>Fuzz fuzz => LPF bpf => LPF bpf2 => Fuzz fuzz2 => Echo echo => NRev rev => Gain gain => dac;
 
-.03 => gain.gain;
+.01 => gain.gain;
 
-60./120. => float beatsec;
+60./80. => float beatsec; // *.01 = cool
 
 beatsec::second*4. => dur beat;
 
@@ -38,7 +38,7 @@ echo => echo;
 
 //ADSR env;
 
-48 => float baseFreq;
+Std.mtof(59-24) => float baseFreq;
 baseFreq => s.freq => bpf.freq => bpf2.freq;
 10 => bpf.Q;
 2 => bpf2.Q; // put at 1 for less musical sound

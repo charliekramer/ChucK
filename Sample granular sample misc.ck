@@ -2,8 +2,6 @@
 // miscellaneous samples
 // stops at time "future"
 
-.5 => float gainSet;
-
 SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Dyno dyn => dac;
 
 SinOsc LFO => blackhole;
@@ -17,11 +15,11 @@ now + 120::second => time future;
 
 .1 => LFO.freq;
 
-gainSet => click.gain;
+
 
 10*beat => echo.max;
 1.5*beat => echo.delay;
-.5 => echo.mix;
+.2 => echo.mix;
 .5 => echo.gain;
 echo => echo;
 
@@ -38,12 +36,15 @@ echo => echo;
 // 8 => chord
 // 9 => grain skipper
 
-1 => int chooser;
+3 => int chooser;
 1./1.0 => pitch.shift;
 0.9 => pitch.mix;
 1 => click.loop;
+1 => click.rate; // may be overridden in function
 
-22 => int sampleChoose;
+2 => float gainSet;
+gainSet => click.gain;
+7 => int sampleChoose;
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -140,7 +141,7 @@ int randStartPos;
 
 while (now < future) {
     
-    if (chooser == 1) speedBuf (click, 1., beat*4,1.);
+    if (chooser == 1) speedBuf (click, 1., beat*16,1.);
 //    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
     
     else if (chooser == 2) granularize(click,900);

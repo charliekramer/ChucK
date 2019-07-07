@@ -23,9 +23,9 @@ SawOsc s =>Fuzz fuzz => LPF bpf => Fuzz fuzz2 => Echo echo => NRev rev => Gain g
 SawOsc t =>  fuzz => BPF bpf2 => fuzz2 => echo => rev => gain => dac;
 ADSR env => blackhole;
 
-.004 => gain.gain;
+.004*1 => gain.gain;
 
-60./120. => float beatsec;
+60./80. => float beatsec;
 
 beatsec::second*4. => dur beat;
 beat - (now % beat) => now;
@@ -42,7 +42,7 @@ echo => echo;
 //ADSR env;
 
 //55*1.5*1.5 => float baseFreq; original
-Std.mtof(24+12) => float baseFreq;
+Std.mtof(59-24) => float baseFreq;//24+12
 baseFreq*1.5 => float baseFreq2;
 baseFreq => s.freq => bpf.freq ;
 baseFreq2=> t.freq => bpf2.freq;

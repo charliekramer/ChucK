@@ -8,6 +8,8 @@ HevyMetl m => echo => Chorus c => rev => g =>  dac;
 
 .3 => rev.mix;
 
+59 => float midiBase;
+
 10::second => echo.max;
 1.75::second => echo.delay;
 .5 => echo.gain;
@@ -17,7 +19,7 @@ echo => echo;
 .007 => c.modFreq;
 1 => c.modDepth;
 
-Std.mtof(48) => float baseFreq;
+Std.mtof(midiBase) => float baseFreq;
 
 baseFreq => s.freq;
 baseFreq*.99 => t.freq;

@@ -1,6 +1,7 @@
+// loud deep exploding sound
 SinOsc sin => Modulate mod => NRev rev => Gain gain => dac;
 
-.02 => gain.gain;
+.001 => gain.gain;
 
 200 => sin.freq; // this doesn't seem to affect anything
 
@@ -13,7 +14,7 @@ SinOsc sin => Modulate mod => NRev rev => Gain gain => dac;
  mod.randomGain() => float randGain;
 
 
-60./120. => float beatsec;
+60./80. => float beatsec;
 beatsec::second => dur beat;
 
 beat - (now % beat) => now;

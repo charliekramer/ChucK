@@ -22,15 +22,15 @@ class Fuzz extends Chugen
 SawOsc s =>Fuzz fuzz => LPF bpf => Fuzz fuzz2 =>  ADSR env => Echo echo => NRev rev => Gain gain => dac;
 SawOsc t =>  fuzz => BPF bpf2 => fuzz2 =>env => echo => rev => gain => dac;
 
-.004 => gain.gain;
+.004*1 => gain.gain;
 
-60./120. => float beatsec;
+60./80. => float beatsec;
 
 beatsec::second*4. => dur beat;
 
 beat - (now % beat) => now;
-.1 => float nBeat1; // number of beats for envelope A 
-1.9 => float nBeat2; // number of beats for envelope R
+.1 => float nBeat1; // number of beats for envelope A (.1)
+1.9 => float nBeat2; // number of beats for envelope R (1.9)
 0.2 => rev.mix;
 
 10::second => echo.max;
@@ -41,8 +41,8 @@ echo => echo;
 
 //ADSR env;
 
-//55 => float baseFreq; original
-Std.mtof(24) => float baseFreq;
+//55 => float baseFreq; original // 24 is deep
+Std.mtof(59-24) => float baseFreq;
 baseFreq*1.5 => float baseFreq2;
 baseFreq => s.freq => bpf.freq ;
 baseFreq2=> t.freq => bpf2.freq;
