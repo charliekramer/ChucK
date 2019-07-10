@@ -53,49 +53,49 @@ while (true) {
 		
 		if( msg.data1 == 176 && msg.data2 == 1 ) //
 		{
-			msg.data3*bar[0].freq()*mult/127. => filt[0].freq;
+			msg.data3*bar[0].freq()*mult/127. + 20. => filt[0].freq;
 			<<<"Filt0, ", filt[0].freq() >>>;
 		}
 		
 		if( msg.data1 == 176 && msg.data2 == 2 ) //
 		{
-			msg.data3*bar[1].freq()*mult/127. => filt[1].freq;
+			msg.data3*bar[1].freq()*mult/127. + 20. => filt[1].freq;
 			<<<"Filt1, ", filt[1].freq() >>>;
 		}
 		
 		if( msg.data1 == 176 && msg.data2 == 3 ) //
 		{
-			msg.data3*bar[2].freq()*mult/127. => filt[2].freq;
+			msg.data3*bar[2].freq()*mult/127. + 20. => filt[2].freq;
 			<<<"Filt2, ", filt[2].freq() >>>;
 		}
 		
 		if( msg.data1 == 176 && msg.data2 == 4 ) //
 		{
-			msg.data3*bar[3].freq()*mult/127. => filt[3].freq;
+			msg.data3*bar[3].freq()*mult/127. + 20. => filt[3].freq;
 			<<<"Filt3, ", filt[3].freq() >>>;
 		}
 		
 		if( msg.data1 == 176 && msg.data2 == 5 ) //
 		{
-			msg.data3*bar[4].freq()*mult/127. => filt[4].freq;
+			msg.data3*bar[4].freq()*mult/127. + 20. => filt[4].freq;
 			<<<"Filt4, ", filt[4].freq() >>>;
 		}
 		
 		if( msg.data1 == 176 && msg.data2 == 6 ) //
 		{
-			msg.data3*bar[5].freq()*mult/127. => filt[5].freq;
+			msg.data3*bar[5].freq()*mult/127.+ 20.  => filt[5].freq;
 			<<<"Filt5, ", filt[5].freq() >>>;
 		}
 		
 		if( msg.data1 == 176 && msg.data2 == 7 ) //
 		{
-			msg.data3*bar[6].freq()*mult/127. => filt[6].freq;
+			msg.data3*bar[6].freq()*mult/127. + 20. => filt[6].freq;
 			<<<"Filt6, ", filt[6].freq() >>>;
 		}
 		
 		if( msg.data1 == 176 && msg.data2 == 8 ) //
 		{
-			msg.data3*bar[7].freq()*mult/127. => filt[7].freq;
+			msg.data3*bar[7].freq()*mult/127. + 20. => filt[7].freq;
 			<<<"Filt7, ", filt[7].freq() >>>;
 		}
 		if( msg.data1 == 144 && msg.data2 == 36) // beat division
