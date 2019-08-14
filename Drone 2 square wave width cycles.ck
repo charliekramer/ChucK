@@ -1,14 +1,13 @@
 // 2 square width cycle
 
-.05 => float gainSet;
+.01 => float gainSet;
 
 SqrOsc sin;
-Pan2 mix;
 SqrOsc tri;
 
 SinOsc lfo  => blackhole;
 
-59 => float midiBase;
+59=> float midiBase;
 
 Std.mtof(midiBase)/8.*1.001 => sin.freq;
 Std.mtof(midiBase)/8.*.999 => tri.freq;
@@ -24,9 +23,9 @@ tri => dac;
 
 
 while (true) {
-	(lfo.last()+1)*.7 => tri.width;
-	(lfo.last()+1)*.6 => sin.width;
+	(lfo.last()+1)*.5 => tri.width;
+	(lfo.last()+1)*.3 => sin.width;
 	//(2 - lfo.last())*.7 => sin.width;
-	1::samp => now;
+	1::ms  => now;
 	
 }

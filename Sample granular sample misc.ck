@@ -6,7 +6,7 @@ SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Dyno dyn => dac;
 
 SinOsc LFO => blackhole;
 
-60./94. => float beatsec;
+60./80. => float beatsec;
 1 => click.rate;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
@@ -19,11 +19,11 @@ now + 120::second => time future;
 
 10*beat => echo.max;
 1.5*beat => echo.delay;
-.2 => echo.mix;
+.0 => echo.mix;
 .5 => echo.gain;
 echo => echo;
 
-0.3 => rev.mix;
+0.0 => rev.mix;
 
 // chooser
 // 1 => speedBuf;
@@ -36,15 +36,15 @@ echo => echo;
 // 8 => chord
 // 9 => grain skipper
 
-3 => int chooser;
+1 => int chooser;
 1./1.0 => pitch.shift;
 0.9 => pitch.mix;
-1 => click.loop;
+0 => click.loop;
 1 => click.rate; // may be overridden in function
 
 2 => float gainSet;
 gainSet => click.gain;
-7 => int sampleChoose;
+23 => int sampleChoose;
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -90,6 +90,13 @@ gainSet => click.gain;
 	{"/Users/charleskramer/Desktop/chuck/audio/mower_edit.wav" => click.read;}
 	else if (sampleChoose == 22)
 	{"/Users/charleskramer/Desktop/chuck/audio/cartoons.wav" => click.read;}
+	else if (sampleChoose == 23)
+	{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-english.wav" => click.read;}
+	else if (sampleChoose == 24)
+	{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-german.wav" => click.read;}
+	else if (sampleChoose == 25)
+	{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-both.wav" => click.read;}
+	
 	
 	
 
@@ -141,7 +148,7 @@ int randStartPos;
 
 while (now < future) {
     
-    if (chooser == 1) speedBuf (click, 1., beat*16,1.);
+    if (chooser == 1) speedBuf (click, 1., beat*8,1.);
 //    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
     
     else if (chooser == 2) granularize(click,900);

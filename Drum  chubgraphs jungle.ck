@@ -2,14 +2,14 @@ class KickDrum extends Chubgraph {
 	
 SinOsc kick => ADSR env => PitShift pit => HPF filt => Dyno dyn => outlet;
 
-(100::samp, 75::ms, .0, 3::second) => env.set;
+(100::samp, 75::ms, 0., 3::second) => env.set;
 
-.7 => pit.shift;
+1 => pit.shift;
 1 => pit.mix;
 
-44 => kick.freq;
-35 => filt.freq;
-3 => filt.Q; // crank it up for resonant bass
+44 => kick.freq; //44
+1.5*kick.freq() => filt.freq; //1.5*
+3 => filt.Q; // 3; crank it up for resonant bass
 
 fun void noteOn (int noteTemp) {
 	noteTemp => env.keyOn;
@@ -84,24 +84,30 @@ class SnareDrum extends Chubgraph {
 	
 }
 
-.02 => float masterGain;
+.3 => float masterGain;
 
 float d1, d2; //beat divisors; for drums and echo
 
-2 => d1; .125 => d2; // (.25, 1), (.25, 3) (.5, .5) (2,.125)
+.25 => d1; 1 => d2; // (.25, 1), (.25, 3) (.5, .5) (2,.125)
 
-120./94*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
+120./80*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
 
-KickDrum kick => Echo echo => NRev rev  => Dyno dyn1 => dac;
-KickDrum tom => echo => rev => Dyno dyn2 => dac;
+KickDrum kick => Echo kickEcho => NRev rev  => Dyno dyn1 => dac;
+KickDrum tom => Echo echo => rev => Dyno dyn2 => dac;
 SnareDrum snare => echo => rev => Dyno dyn3 => dac;
 
 masterGain => kick.gain => tom.gain => snare.gain => kick.gain;
 
 .01 => rev.mix;
+
+5*beat=> kickEcho.max;
+beat*1.5*d2 => kickEcho.delay; //1.5; 1.75 cool; 2.25 // .75*.5 =f time = *1;
+.5 => kickEcho.gain;
+.1 => kickEcho.mix;
+kickEcho => kickEcho;
 
 5*beat=> echo.max;
 beat*1.5*d2 => echo.delay; //1.5; 1.75 cool; 2.25 // .75*.5 =f time = *1;
@@ -113,11 +119,15 @@ echo => echo;
 
 2 => tom.pitch;
 
-while (true) {
+now + 30::second => time future;
+
+while (now < future) {
 	1 => kick.noteOn;
 	.25*beat => now;
 	1 => kick.noteOff;
 	.25*beat => now;
+	
+	.5*beat => now;
 	
 	1 => tom.noteOn;
 	Std.rand2f(.5,5) => tom.pitch;
@@ -125,10 +135,14 @@ while (true) {
 	1 => tom.noteOff;
 	.25*beat => now;
 	
+	.5*beat => now;
+	
 	1 => kick.noteOn;
 	.25*beat => now;
 	1 => kick.noteOff;
 	.25*beat => now;
+	
+	.5*beat => now;
 	
 	1 => snare.noteOn;
 	Std.rand2f(.5,5) => snare.pitch;
@@ -136,5 +150,9 @@ while (true) {
 	1 => snare.noteOff;
 	.25*beat => now;
 	
+	.5*beat => now;
+	
 }
+
+5::second => now;
 

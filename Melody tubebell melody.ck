@@ -1,17 +1,20 @@
-// tube bell melody
+// tube bell melody; church bells
 
-60./120. => float beattime; 
+.03 => float gainSet;
+59 => float midiBase;
+
+60./80. => float beattime; 
 beattime::second => dur beat; 
 beat - (now % beat) => now;
 
 TubeBell bellL => Echo eL => NRev revL =>dac.left;
 TubeBell bellR =>  Echo eR => NRev revR => dac.right;
 
-0.1 => bellL.gain;
-0.1 => bellR.gain;
+gainSet => bellL.gain;
+gainSet => bellR.gain;
 
-Std.mtof(60+12) => bellL.freq;
-Std.mtof(60+7) => bellR.freq;
+Std.mtof(midiBase+12) => bellL.freq;
+Std.mtof(midiBase+7) => bellR.freq;
 
 0.5 => revL.mix;
 0.5 => revR.mix;

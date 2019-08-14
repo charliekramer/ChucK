@@ -2,6 +2,8 @@ SinOsc s => Chorus c => Echo echo => Gain g => Pan2 pan => dac;
 
 .1 => float gainSet;
 
+120 => float length; // length in seconds
+
 gainSet => s.gain;
 
 .5 => c.modFreq;
@@ -10,11 +12,11 @@ gainSet => s.gain;
 
 10::second => echo.max;
 .75::second => echo.delay;
-.3 => echo.gain;
-.3 => echo.mix;
+.5 => echo.gain;
+.5 => echo.mix;
 echo => echo;
 
-440 => float baseFreq => s.freq;
+Std.mtof(59) => float baseFreq => s.freq;
 
 fun void pitchy() {
 	SinOsc v => blackhole;
@@ -60,7 +62,9 @@ spork~panner(1);
 250 => int iiMax;
 0 => int jjCount;
 
-while (true) {
+now + length::second => time future;
+
+while (now < future) {
 	
 	Std.rand2f(.8,1.5)*baseFreq => s.freq;
 	
@@ -77,3 +81,8 @@ while (true) {
 	
 }
 
+<<< "bitcrusher ending" >>>;
+
+0 => s.gain;
+
+5::second => now;

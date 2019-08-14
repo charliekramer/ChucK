@@ -1,6 +1,6 @@
 Bowed bowed[3] => dac;
 
-.05 => float gainSet;
+.01 => float gainSet;
 12 => int iterations;//each is 10 seconds
 59-12 => int baseMidiNote;
 

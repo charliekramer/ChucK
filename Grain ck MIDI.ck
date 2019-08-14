@@ -20,6 +20,12 @@ echo => echo;
 
 8 => float baseGain;
 
+0 => int offset; //start point offset; use to offset shreds when running multiples
+
+//msg.data3*grainB/127.+grainA => duration; 
+200 => float grainB; //6000 for longer samples
+10 => float grainA;
+
 // load the file
 
 18 => int sampleChoose;
@@ -104,13 +110,13 @@ fun void grain(float duration , int position, float pitch, int randompos, float 
         {
             if( msg.data1 == 176 && msg.data2 == 1 ) //cc
             {
-                msg.data3*6000/127 => duration;
+                msg.data3*grainB/127.+grainA => duration; //6000+0
                 <<<"duration, ", duration>>>;
             }
             
             if( msg.data1 == 176 && msg.data2 == 2 )
             {
-                msg.data3*samples/(127) => position;
+                msg.data3*samples/(127) + offset => position;
                 <<<"position, ",position>>>;
             }
             

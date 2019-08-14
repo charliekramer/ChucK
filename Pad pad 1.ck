@@ -2,7 +2,7 @@
 // frequency spreading, BFP, reverb
 
 .09/12 => float gainSet;
-20 => int iterations;
+10 => int iterations; //each currently 20 seconds
 
 SawOsc s[2];
 SawOsc t[2]; // doubling
@@ -15,7 +15,7 @@ u[0] => h => adsr => rev => g => dac;
 gainSet => g.gain;
 
 [0, 4, 7, 12] @=> int notes[];
-55 => int baseFreq;
+59-12 => int baseFreq;
 0.002 => float freqSpread; // in percent of the original frequency;
 
 Std.mtof(baseFreq)*2.0 => h.freq;
@@ -41,7 +41,7 @@ for (0 => int i; i< s.cap(); i++) {
 //    1 => s[i].noteOn;
 }
     
-0.5 => rev.mix;
+0.8 => rev.mix;
 4::second => adsr.attackTime;
 0.1::second => adsr.decayTime;
 4::second => adsr.releaseTime;

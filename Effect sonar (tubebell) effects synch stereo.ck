@@ -1,5 +1,6 @@
 // based on Effect sonar effects synch stereo
-60./94.*4. => float beatsec;
+// creepy bends
+60./80.*4. => float beatsec;
 
 beatsec::second => dur beat;
 
@@ -17,7 +18,7 @@ PercFlut bottleR =>  NRev rR => gain => Pan2 panR => dac;
 .2 => rL.mix;
 .2 => rR.mix;
 
-55-12 => int midiBase;
+59-12 => int midiBase;
 1.5 => float multiplier; // multiplies first note to get second note
 
 Std.mtof(midiBase) => bottleL.freq;

@@ -1,4 +1,5 @@
 // impulse-excited resonant filter drives
+// melodic pulses
 Impulse imp => ResonZ rez => Gain input => dac;
 
 1 => float gainSet;
@@ -7,7 +8,7 @@ Impulse imp => ResonZ rez => Gain input => dac;
 100 => rez.gain;
 gainSet => input.gain;
 
-60./94. => float beatsec;
+60./80. => float beatsec;
 beatsec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -24,7 +25,7 @@ for (0 => int i; i < 3; i++) {
 //    (0.8 +i*0.3) :: second => del[i].max => del[i].delay;
     (2.*beatsec +i*0.75*beatsec) :: second => del[i].max => del[i].delay;
 }
-55 => int baseNote;
+59 => int baseNote;
 [0, 4, 5, 7, 10, 12] @=> int notes[];
 notes.cap() -1 => int numNotes;
 

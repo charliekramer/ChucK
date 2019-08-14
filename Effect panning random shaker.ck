@@ -1,4 +1,4 @@
-60./94.*.25 => float beatSec;
+60./80.*.25 => float beatSec;
 beatSec::second => dur beat;
 
 beat - (now% beat) => now;
@@ -19,3 +19,4 @@ while (now < future){
     beat*.75=> now;
 }
 
+5::second => now;

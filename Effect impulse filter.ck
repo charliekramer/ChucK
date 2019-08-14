@@ -1,5 +1,6 @@
+// noisy ratchety cycle
 Impulse imp => BPF filt => Echo echo => NRev rev =>  Gain g => dac;
-SinOsc filtLFO => blackhole;
+SinOsc filtLFO => blackhole; 
 SinOsc timeLFO => blackhole;
 
 5 => float gainSet;

@@ -19,7 +19,7 @@ SinOsc PitchLFO => blackhole;
 1 => PanLFO.gain;
 1 => PitchLFO.gain; // max 1
 
-59-12+7 => float midiBase;
+59-12+12 => float midiBase;
 Std.mtof(midiBase) => saw.freq;
 Std.mtof(midiBase) => tri.freq;
 Std.mtof(midiBase) => sqr.freq;
@@ -29,9 +29,9 @@ Std.mtof(midiBase) => filt.freq;
 
 30 => float length; // length in seconds
 
-60./80.*4 => float beatSec;
+60./80.*16 => float beatSec; //*4; *16 = triippy; multiply by 2 successively
 beatSec::second => dur beat;
-beat - (now % beat) => now;
+//beat - (now % beat) => now; // comment out for long pads
 
 1 => int randBeats; // choose to randomize first (on) beat (total of totalBeats between on and off)
 32 => int totalBeats;

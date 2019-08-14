@@ -2,9 +2,11 @@ ModalBar bar => NRev rev1 => Pan2 panBar =>  dac;
 
 bar => Echo echo =>  NRev rev2 => Pan2 panEcho =>  dac;
 
+.1 => float gainSet;
+
 1 => int panSwitch; // (pan echo/original between sides)
 
-.5 => bar.gain;
+gainSet => bar.gain;
 
 44 => bar.freq;
 
@@ -20,7 +22,7 @@ bar => Echo echo =>  NRev rev2 => Pan2 panEcho =>  dac;
 echo => echo;
 
 
-60./94.*.5 => float beatSec;
+60./80.*.5 => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat) => now;
 

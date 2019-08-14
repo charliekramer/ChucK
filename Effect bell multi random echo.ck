@@ -1,12 +1,12 @@
 TubeBell bell => Echo echo1 => Echo echo2 => Echo echo3 => Gain g => dac;
 
-.05 => g.gain;
+.03 => g.gain;
 
-55+12 => float midiBase;
+59+12 => float midiBase;
 
 Std.mtof(midiBase) => bell.freq;
 
-60./94. => float beatSec;
+60./80. => float beatSec;
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
