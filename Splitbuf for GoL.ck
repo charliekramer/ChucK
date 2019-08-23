@@ -5,16 +5,16 @@ SndBuf split => dac;
 
 dac => WvOut2 w => blackhole; 
 
-"/Users/charleskramer/Desktop/chuck/audio/hooch.wav" => split.read;
+"/Users/charleskramer/Desktop/chuck/audio/Bern-Audio/02-Inside-metal-bin.wav" => split.read;
 
-"/Users/charleskramer/Desktop/chuck/audio/" => w.autoPrefix;
+"/Users/charleskramer/Desktop/chuck/audio/Bern-Audio/" => w.autoPrefix;
 
 
 0 => split.pos;
 
 5 => int n;
 
-"name" => string name;
+"bern" => string name;
 
 for (0 => int i; i < n; i++) {
 	

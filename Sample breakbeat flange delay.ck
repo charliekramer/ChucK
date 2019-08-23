@@ -1,4 +1,4 @@
-
+.5 => float gainSet;
 SndBuf2 buf => Echo delay => Echo delay2 => dac;
 
 //"/Users/charleskramer/Desktop/chuck/audio/apache_break_editor.wav" => buf.read;
@@ -25,7 +25,7 @@ delay2 => delay2;
 
 0 => buf.loop;
 
-.1 => float gainSet;
+
 
 SinOsc LFO => blackhole;
 SinOsc LFO_Master => blackhole;

@@ -9,7 +9,7 @@ SinOsc LFO[n];
 [2.,2.,2.,2.] @=> float LFOGains[];
 
 
-59-12=> float midiBase;
+59 => float midiBase;
 
 [0., 4., 7., 12.] @=> float notes[];
 [1.,1.,1.,1.] @=> float sigma[];
@@ -37,7 +37,7 @@ for (0 => int i; i < sin.cap(); i++) {
 while (true) {
 	
 	for (0 => int i; i < sin.cap(); i++) {
-		freqs[i]*(1+Std.rand2f(-.1,.1)*sigma[i]*LFO[i].last()) => sin[i].freq;
+		freqs[i]*(1+Std.rand2f(lo,hi)*sigma[i]*LFO[i].last()) => sin[i].freq;
 		loopTime => now;
 	}
 	allTime=> now;
