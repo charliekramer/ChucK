@@ -1,6 +1,6 @@
 // pulls random loops off sample
 
-.15 => float gainSet;
+.15*8 => float gainSet;
 
 SndBuf2 buffer => Gain inGain => Dyno dyn => HPF l =>  Echo echo => NRev rev => Gain outGain => dac;
 buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =>   Gain loopGain => Pan2 loopPan =>dac;
@@ -16,10 +16,11 @@ buffer.samples()=>buffer.pos; // so it doesn't play during the synch
 
 
 //208.8*.5 => float BPM; // set this to fix below
-94 => float BPM; // set this to fix below
+80 => float BPM; // set this to fix below
 
 60./BPM => float beatsec;
 beatsec::second => dur beat;
+0 => inGain.gain;
 beat - (now % beat) => now;
 
 0.02 => inGain.gain;
@@ -47,7 +48,7 @@ int numLoops;
 
 spork~loopit(beat*4);
 
-now + 120::second => time future;
+now + 45::second => time future;
 
 int numBeats;
 
@@ -100,6 +101,8 @@ while (now < future) {
 		
 	
 }
+
+me.exit();
 
 fun void loopit (dur length) {
 	while (true) {
