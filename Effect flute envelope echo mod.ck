@@ -7,18 +7,18 @@ env => Echo echo => Pan2 pan2 => dac;
 SinOsc LFO1 => blackhole;
 SinOsc LFO2 => blackhole;
 
-.1 => float gainSet;
+.02*8 => float gainSet;
+30 => float length; //length of loop in seconds
 
 gainSet => flute.gain;
 
-59+3*12 => float midiBase;
+59+3*12+4=> float midiBase;
 
 Std.mtof(midiBase) => flute.freq;
 
 60./80*Math.pow(.5,0) => float beatSec; // set exponent to higher for chop fx
 beatSec::second => dur beat;
 
-30 => float length; //length of loop in seconds
 
 1./beatSec*3.14 => LFO1.freq;
 1./beatSec*2.71 => LFO2.freq;
@@ -31,8 +31,8 @@ beatSec::second => dur beat;
  .3 => flute.vibratoGain;
  .86 => flute.pressure;
 
-0 => int jetDLFO; // use LFO for jetDelay;
-0 => int jetRLFO; // use LFO for jetReflection;
+1 => int jetDLFO; // use LFO for jetDelay;
+1 => int jetRLFO; // use LFO for jetReflection;
 1 => int envKeyOff;// key off envelope after noteOff
 
 1 => LFO1.gain; //modifies jetDelay
@@ -77,3 +77,5 @@ while (now < future) {
 	
 	
 }
+
+5::second => now;

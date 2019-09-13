@@ -1,4 +1,4 @@
-.1 => float gainSet;
+.05 => float gainSet;
 
 4 => int n;
 SinOsc sin[n];
@@ -6,10 +6,15 @@ SinOsc sin[n];
 SinOsc LFO[n];
 
 [.05,.07,.09,.11] @=> float LFOFreqs[];
+[.01,.02,.03,.04] @=> LFOFreqs;
+
 [2.,2.,2.,2.] @=> float LFOGains[];
+//[0.,0.,0.,0.] @=>  LFOGains;
+[4.,4.,4.,4.] @=>  LFOGains;
+[8.,8.,8.,8.] @=>  LFOGains;
 
 
-59 => float midiBase;
+59 -12=> float midiBase;
 
 [0., 4., 7., 12.] @=> float notes[];
 [1.,1.,1.,1.] @=> float sigma[];

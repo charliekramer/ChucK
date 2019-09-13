@@ -3,6 +3,8 @@
 // play for random length but with the constraint that beats add up to a measure
 // slightly randomize gain and pitch
 
+.4*2 => float masterGain;
+
 SndBuf2 sv[10]; // sound vector
 NRev rev[10];
 Echo echo [10];
@@ -22,10 +24,8 @@ Gain gain[10];
 sv.cap()-1 => int nDrum; // how big a drum set to use; this is the whole set
 //4 => nDrum; // this is a more basic set, use for a more standard beat
 
-60./94*.5 => float beatsec; // .5 multiplier seems to work well
+60./80*.5 => float beatsec; // .5 multiplier seems to work well
 beatsec::second => dur beat;
-
-.5 => float masterGain;
 
 beat - (now % beat) => now;
 

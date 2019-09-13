@@ -3,13 +3,14 @@ SawOsc saw => Envelope env => LPF filt => Echo echo => Pan2 pan => dac;
 TriOsc tri => env => filt => echo => pan => dac;
 PulseOsc sqr => env => filt => echo => pan => dac;
 
-.2 => sqr.width;
-
-.001 => float gainSet;
+.00005*6 => float gainSet;
+30 => float length; // length in seconds
 
 gainSet => saw.gain;
 gainSet => tri.gain;
 gainSet => sqr.gain;
+
+.2 => sqr.width;
 
 SinOsc FiltLFO => blackhole; 
 SinOsc PanLFO => blackhole;  
@@ -19,7 +20,7 @@ SinOsc PitchLFO => blackhole;
 1 => PanLFO.gain;
 1 => PitchLFO.gain; // max 1
 
-59-12+12 => float midiBase;
+59-12 => float midiBase;
 Std.mtof(midiBase) => saw.freq;
 Std.mtof(midiBase) => tri.freq;
 Std.mtof(midiBase) => sqr.freq;
@@ -27,16 +28,16 @@ Std.mtof(midiBase) => sqr.freq;
 Std.mtof(midiBase) => filt.freq;
 5 => filt.Q;
 
-30 => float length; // length in seconds
 
-60./80.*16 => float beatSec; //*4; *16 = triippy; multiply by 2 successively
+
+60./80.*4 => float beatSec; //*4; *16 = triippy; multiply by 2 successively
 beatSec::second => dur beat;
 //beat - (now % beat) => now; // comment out for long pads
 
 1 => int randBeats; // choose to randomize first (on) beat (total of totalBeats between on and off)
-32 => int totalBeats;
-4 => int beat1; // "noteon" beat
-4 => int beat2; // "noteoff" beat
+32 => int totalBeats; //32
+4 => int beat1; // "noteon" beat ; 4
+4 => int beat2; // "noteoff" beat ;4 
 
 5*beat => echo.max;
 .75*beat => echo.delay;

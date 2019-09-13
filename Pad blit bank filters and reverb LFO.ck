@@ -3,8 +3,8 @@ Blit blit => BiQuad f => NRev rev => Dyno dyn => Gain master => dac;
 BlitSquare sqr => f => rev=> dyn =>  master => dac;
 BlitSaw saw => f => rev =>  dyn => master => dac;
 
-.01*.5 => master.gain;
-120::second => dur runTime;
+.01*.5=> master.gain;
+45::second => dur runTime;
 
 SinOsc pLFO => blackhole; // modulate pole freq
 SinOsc zLFO => blackhole; // modulate zero freq

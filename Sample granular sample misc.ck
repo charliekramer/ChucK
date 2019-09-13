@@ -2,6 +2,10 @@
 // miscellaneous samples
 // stops at time "future"
 
+4 => float gainSet;
+
+now + 120::second => time future;
+
 SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Dyno dyn => dac;
 
 SinOsc LFO => blackhole;
@@ -11,7 +15,6 @@ SinOsc LFO => blackhole;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
 
-now + 120::second => time future;
 
 .1 => LFO.freq;
 
@@ -26,7 +29,7 @@ echo => echo;
 0.0 => rev.mix;
 
 // chooser
-// 1 => speedBuf;
+// 1 => speedBuf; play for nBeats
 // 2 => granularize
 // 3 => timed play starting at zero
 // 4 => specify start and end positions; (currently randomized length, speed, pitch)
@@ -37,14 +40,14 @@ echo => echo;
 // 9 => grain skipper
 
 1 => int chooser;
+16 => int nBeats;
 1./1.0 => pitch.shift;
 0.9 => pitch.mix;
 0 => click.loop;
 1 => click.rate; // may be overridden in function
 
-2 => float gainSet;
 gainSet => click.gain;
-23 => int sampleChoose;
+26 => int sampleChoose;
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -96,6 +99,9 @@ gainSet => click.gain;
 	{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-german.wav" => click.read;}
 	else if (sampleChoose == 25)
 	{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-both.wav" => click.read;}
+	else if (sampleChoose == 26)
+	"/Users/charleskramer/Desktop/chuck/audio/eric-mcluhan-kmox-10-sea-of-information.wav" => click.read;
+
 	
 	
 	
@@ -148,7 +154,7 @@ int randStartPos;
 
 while (now < future) {
     
-    if (chooser == 1) speedBuf (click, 1., beat*8,1.);
+    if (chooser == 1) speedBuf (click, 1., beat*nBeats,1.);
 //    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
     
     else if (chooser == 2) granularize(click,900);

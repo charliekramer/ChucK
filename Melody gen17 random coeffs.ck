@@ -1,4 +1,5 @@
 // gen17 chebyshev lookup table
+// sounds cool against drone sinosc tanpura perfection
 //
 // ported to ChucK from rtcmix by dan trueman
 // see luke's page: http://www.music.columbia.edu/cmix/makegens.html#06
@@ -17,7 +18,12 @@
 //   http://en.wikipedia.org/wiki/Distortion_synthesis
 
 // the patch
-SinOsc drive => Gen17 g17 => dac;
+.1*4 => float gainSet;
+59+24-24 => float midiBase;
+
+SinOsc drive => Gen17 g17 => Gain master => dac;
+
+gainSet => master.gain;
 
 // load up the coeffs
 [1., 0.5, 0.25, 0.125, 0.06, 0.03, 0.015] => g17.coefs;
@@ -27,10 +33,10 @@ SinOsc drive => Gen17 g17 => dac;
  [1., 0.] => g17.coefs; // a simple one
 
 // make it quiet
-0.1 => g17.gain;
+0.2 => g17.gain;
 
 // set frequency for reading through table
-drive.freq( Std.mtof(60-12) );
+drive.freq( Std.mtof(midiBase) );
 // sounds better not going to extremes
 drive.gain( .99 ); 
 
@@ -41,7 +47,7 @@ e.duration( 10000::ms );
 0. => e.value;
 e.keyOn();
 
-60./120. => float beatSec;
+60./80. => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat) => now;
 

@@ -21,9 +21,9 @@ class Fuzz extends Chugen
 }
 Impulse imp => LPF filt => Fuzz fuzz => PitShift pitch => Echo echo => NRev rev =>  Gain gain => dac;
 
-.1 => float gainSet;
+.1*2 => float gainSet;
 5 => fuzz.intensity;
-55+12+7 => float midiBase;
+55+12 => float midiBase;
 
 1 => pitch.mix;
 .5 => pitch.shift;
@@ -40,7 +40,7 @@ echo => echo;
 
 gainSet => gain.gain;
 
-2 => int chooser;
+1 => int chooser;
 //1 additive
 //2 multiplicative
 
@@ -92,7 +92,7 @@ while (true) {
 	{
 		if( msg.data1 == 176 && msg.data2 == 1 ) //Sin Freq
 		{
-			msg.data3*20./127. => SinLFO.freq;
+			msg.data3*20./127.+.05 => SinLFO.freq;
 			<<<"SinFreq, ", SinLFO.freq() >>>;
 		}
 		
@@ -104,7 +104,7 @@ while (true) {
 		
 		if( msg.data1 == 176 && msg.data2 == 3 ) //Saw Freq
 		{
-			msg.data3*20./127. => SawLFO.freq;
+			msg.data3*20./127. + .05 => SawLFO.freq;
 			<<< " SawFreq, ", SawLFO.freq() >>>;
 		}
 		
@@ -116,7 +116,7 @@ while (true) {
 		
 		if( msg.data1 == 176 && msg.data2 == 5 ) //Sqr Freq
 		{
-			msg.data3*20./127. => SqrLFO.freq;
+			msg.data3*20./127. + .05  => SqrLFO.freq;
 			<<< " SqrFreq, ", SqrLFO.freq() >>>;
 		}
 		
@@ -127,7 +127,7 @@ while (true) {
 		}
 		if( msg.data1 == 176 && msg.data2 == 7 ) //Pulse Freq
 		{
-			msg.data3*20./127. => PulseLFO.freq;
+			msg.data3*20./127. + .05 => PulseLFO.freq;
 			<<< " PulseFreq, ", PulseLFO.freq() >>>;
 		}
 		

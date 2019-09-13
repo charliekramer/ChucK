@@ -1,10 +1,10 @@
-.5 => float gainSet;
+.3*2 => float gainSet;
 SndBuf2 buf => Echo delay => Echo delay2 => dac;
 
-//"/Users/charleskramer/Desktop/chuck/audio/apache_break_editor.wav" => buf.read;
-//138 => float BPM0;
-"/Users/charleskramer/Desktop/chuck/audio/looperman-l-1319133-0161182-african-percu.wav" => buf.read;
-110 => float BPM0;
+"/Users/charleskramer/Desktop/chuck/audio/apache_break_editor.wav" => buf.read;
+138 => float BPM0;
+//"/Users/charleskramer/Desktop/chuck/audio/looperman-l-1319133-0161182-african-percu.wav" => buf.read;
+//110 =>  BPM0;
 
 80 => float BPM;
 

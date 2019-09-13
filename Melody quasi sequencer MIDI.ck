@@ -6,12 +6,12 @@ LPF filt[8];
 Echo echo[8];
 NRev rev[8];
 
-[0.,3.,4.,7.,9.,11., 12., 14.] @=> float notes[];
+[0.,2.,4.,7.,9.,11., 12., 14.] @=> float notes[];
 
 6. => float mult; // cutoff => midi/127*mult*noteFreq;
 
 
-.3 => float gainSet;
+.3*10 => float gainSet;
 
 59 => float midiBase;
 
@@ -101,34 +101,42 @@ while (true) {
 		if( msg.data1 == 144 && msg.data2 == 36) // beat division
 		{
 			.5 => beatDiv;
+			<<< "beatDiv ", beatDiv>>>;
 		}
 		if( msg.data1 == 144 && msg.data2 == 37) // beat division
 		{
 			1 => beatDiv;
+			<<< "beatDiv ", beatDiv>>>;
 	    }
 		if( msg.data1 == 144 && msg.data2 == 38) // beat division
 		{
 			2 => beatDiv;
+			<<< "beatDiv ", beatDiv>>>;
 		}
 		if( msg.data1 == 144 && msg.data2 == 39) // beat division
 		{
 			4 => beatDiv;
+			<<< "beatDiv ", beatDiv>>>;
 	    }
 		if( msg.data1 == 144 && msg.data2 == 40) // echo.beats
 		{
 			echoBeats(.25);
+			<<< "echoBeats .25" >>>;
 		}
 		if( msg.data1 == 144 && msg.data2 == 41) // echo.beats
 		{
 			echoBeats(.5);
+			<<< "echoBeats .5" >>>;
 		}
 		if( msg.data1 == 144 && msg.data2 == 42) // echo.beats
 		{
 			echoBeats(.75);
+			<<< "echoBeats .75" >>>;
 		}
 		if( msg.data1 == 144 && msg.data2 == 43) // echo.beats
 		{
 			echoBeats(1);
+			<<< "echoBeats 1" >>>;
 		}
 	}
 	

@@ -1,12 +1,12 @@
-.5 => float gainSet;
+.5*2 => float gainSet;
 
-59-24 => float midiBase;
-15 => int nOsc;// orchestral for large (up to 15)
+59-24=> float midiBase;
+5=> int nOsc;// orchestral for large (up to 15)
 
-0 => int sweepArp; //sweep through notes
+1 => int sweepArp; //sweep through notes
 16 => float beatDiv; // beat division if sweep thru notes
 
-60./80.*4. => float beatSec;
+60./80.*2*2 => float beatSec;
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;

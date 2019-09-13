@@ -2,7 +2,7 @@
 // frequency spreading, BFP, reverb
 
 .09/12 => float gainSet;
-10 => int iterations; //each currently 20 seconds
+5 => int iterations; //each currently 20 seconds
 
 SawOsc s[2];
 SawOsc t[2]; // doubling
@@ -56,7 +56,7 @@ while (j < iterations) {
 	
 	15.0::second => now;
 	
-	<<< "key off" >>>;
+	<<< "Pad1 key off, j = " , j, " out of ", iterations>>>;
 	
 	1 => adsr.keyOff;
 	

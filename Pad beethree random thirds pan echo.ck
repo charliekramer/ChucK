@@ -1,8 +1,9 @@
-.01*.01*.5 => float gainSet;
+.01*.01*.25*8 => float gainSet;
+30::second => dur runtime;
 
-7 => int n;
+5 => int n;
 
-BeeThree wurley[n]; // sounds nice with Wurley too
+PercFlut wurley[n]; // sounds nice with BeeThree, Wurley too or PercFlut
 JCRev rev1;
 JCRev rev2;
 ADSR env;
@@ -13,7 +14,8 @@ SinOsc LFO => blackhole;
 
 Gain main;
 
-59-12 => float midiBase;
+
+59-12 +12=> float midiBase;
 [0., 2., 4., 5., 7., 9., 11., 12.] @=> float notes[];
 
 for (0 => int i; i < n; i++) {
@@ -22,13 +24,13 @@ for (0 => int i; i < n; i++) {
 	gainSet => wurley[i].gain;
 }
 
-.05 => main.gain;
+.01 => main.gain;
 .7 => rev1.mix => rev2.mix;
 
 0 => pan1.pan;
 0.75 => pan2.pan;
 
-60./80.*2 => float beatSec;
+60./80.*4 => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat) => now;
 
@@ -48,7 +50,7 @@ float octave;
 
 spork~panLFO();
 
-now + 30::second => time future;
+now + runtime => time future;
 
 while (now < future) {
 	// choose random start place and length;
@@ -79,14 +81,13 @@ while (now < future) {
 
 for (0 => int i; i < 3; i++) {
 	Std.mtof(midiBase+notes[2*i])=> wurley[i].freq;
-	1 => wurley[i].noteOn;
+	1 => wurley[i].noteOff;
 }
 
 1 => env.keyOn;
 8*beat => now;
 1 => env.keyOff;
-
-64*beat => now;
+8*beat => now;
 
 fun void panLFO () {
 	while (true) {

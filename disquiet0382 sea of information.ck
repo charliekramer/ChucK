@@ -1,3 +1,4 @@
+.5*.5*.5=> float gainSet;
 
 5 => int nBuf;
 SndBuf buf[nBuf] => dac;
@@ -6,6 +7,7 @@ for (0 => int i; i < buf.cap(); i++) {
 "/Users/charleskramer/Desktop/chuck/audio/eric-mcluhan-kmox-10-sea-of-information.wav" => buf[i].read;
 0 => buf[i].loop;
 buf[i].samples() => buf[i].pos;
+gainSet => buf[i].gain;
 }
 
 
@@ -21,6 +23,9 @@ buf[i].samples() => buf[i].pos;
 
 1.15::second => dur beat;
 
+//60./80.*4 => float beatSec; 
+//beatSec::second => beat;
+
 
 beat - (now % beat) => now;
 
@@ -34,6 +39,8 @@ for (0 => int i; i < buf.cap(); i++) {
 	
 	bufDiff+bufDiffDelta => bufDiff;
 	<<< bufDiff>>>;
+	
+	beat => now;
 }
 
 .9::second => now;

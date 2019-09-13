@@ -1,17 +1,25 @@
+.01*3 => float gainSet;
+
 //synch
-60./94.*1. => float beattime;
+60./80.*2 => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
 //soundchain
 Gain g => dac;
-SndBuf kick  => NRev rev => g => dac;
-SndBuf snare  => rev => g => dac;
+SndBuf kick  => Echo echo => NRev rev => g => dac;
+SndBuf snare  => echo => rev => g => dac;
 SndBuf hat => rev =>g => dac;
 Shakers shak => rev => g => dac;
 
+5*beat => echo.max;
+.125*beat => echo.delay;
+.5 => echo.gain;
+.3 => echo.mix;
+echo => echo;
 
-0.06/4 => g.gain;
+
+gainSet => g.gain;
 0.1 => hat.gain;
 0.1 => shak.gain;
 0.2 => rev.mix;
