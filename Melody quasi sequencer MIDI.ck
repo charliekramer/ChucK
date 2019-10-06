@@ -1,6 +1,9 @@
 // midi controlled "sequencer"
 // rewrite to use pads to control speed, echo
 
+2 => int device;
+
+
 ModalBar bar[8];
 LPF filt[8];
 Echo echo[8];
@@ -13,9 +16,9 @@ NRev rev[8];
 
 .3*10 => float gainSet;
 
-59 => float midiBase;
+62 => float midiBase;
 
-60./80. => float beatSec;
+60./60. => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat) => now;
 
@@ -38,7 +41,6 @@ for (0 => int i; i < bar.size(); i++) {
 	
 0 => int j; // counter
 
-2 => int device;
 
 MidiIn min;
 MidiMsg msg;

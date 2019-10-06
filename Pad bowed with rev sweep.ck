@@ -1,11 +1,11 @@
 Bowed bowed[3] => dac;
 
-.05 => float gainSet;
+.05*2 => float gainSet;
 200 => int iterations;
 
-55-12 => int baseMidiNote;
+59-12 => int baseMidiNote;
 
-60./94. => float beatsec;
+60./80. => float beatsec;
 beatsec::second => dur beat;
 
 beat - (now % beat) => now;

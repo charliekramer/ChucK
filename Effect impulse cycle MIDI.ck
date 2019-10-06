@@ -19,11 +19,14 @@ class Fuzz extends Chugen
 			1.0/i => p;
 	}
 }
+
+2 => int device;
+
 Impulse imp => LPF filt => Fuzz fuzz => PitShift pitch => Echo echo => NRev rev =>  Gain gain => dac;
 
-.1*2 => float gainSet;
+.1*5 => float gainSet;
 5 => fuzz.intensity;
-55+12 => float midiBase;
+62 => float midiBase;
 
 1 => pitch.mix;
 .5 => pitch.shift;
@@ -77,7 +80,7 @@ float xtime;
 Std.mtof(midiBase) => filt.freq;
 10 => filt.Q;
 
-2 => int device;
+
 
 MidiIn min;
 MidiMsg msg;

@@ -1,6 +1,6 @@
-SqrOsc s => NRev rev => dac; // SqrOsc is cool too 
+SqrOsc s => NRev rev => Dyno dyn => dac; // SqrOsc is cool too 
 
-.005 => float gainSet;
+.01 => float gainSet;
 
 SinOsc t => blackhole;
 
@@ -21,8 +21,8 @@ for (0 => int i; i < drops.size(); i++) {
 	<<< "i, drops[i] ", i, drops[i]>>>;
 }
 
-110/2 => s.freq;
-Std.mtof(59-12) => s.freq;
+110/2. => s.freq;
+Std.mtof(61-12) => s.freq;
 
 0 => int i;
 131 => int iMax;

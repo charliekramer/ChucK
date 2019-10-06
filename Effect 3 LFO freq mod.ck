@@ -7,9 +7,9 @@ SinOsc sin => HalfRect frsin => Echo echo => PRCRev rev => Gain gain => dac;
 
 .3 => gain.gain;
 
-57 => int midiBase;
-Std.mtof(midiBase)*1.5 => float baseFreq; 
-60./120. => float beatsec;
+62 => float midiBase;
+Std.mtof(midiBase) => float baseFreq; 
+60./60. => float beatsec;
 beatsec::second => dur beat;
 
 .2 => rev.mix;
@@ -23,7 +23,7 @@ echo => echo;
 beat - (now % beat) => now;
 
 750::ms => dur increment; // increment for lfo; shorter = smoother
-100::ms => increment;
+500::ms=> increment;
 
 7 => float lfo1High;
 3 => float lfo1Low;

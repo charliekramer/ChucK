@@ -2,7 +2,7 @@
 
 Bowed bow => Echo e => PRCRev rev => dac;
 
-59 => float midiBase;
+59 -24=> float midiBase;
 
 0.2 => rev.mix;
 

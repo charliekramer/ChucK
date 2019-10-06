@@ -19,6 +19,7 @@ class Fuzz extends Chugen
 	}
 }
 
+.1*10 => float gainSet;
 
 SinOsc lfo1 => FullRect fr1 => blackhole;
 SinOsc lfo2 => FullRect fr2 => blackhole;
@@ -28,13 +29,13 @@ Blit  sin => Fuzz fuzz => BPF filter => BPF filter2 => Fuzz fuzz2 => Echo echo =
 2.7 => fuzz.intensity;
 1.5 => fuzz2.intensity;
 
- .5 => gain.gain;
+ gainSet => gain.gain;
 
-55 => int midiBase;
+62=> int midiBase;
 Std.mtof(midiBase) => float baseFreq; // *1.5 is cool too
 baseFreq => filter.freq => filter2.freq;
 5 => filter.Q => filter2.Q; // smaller for more noise ; 5 start
-60./94. => float beatsec;
+60./60.*4 => float beatsec;
 beatsec::second => dur beat;
 
 .2 => rev.mix;
@@ -47,8 +48,8 @@ echo => echo;
 
 beat - (now % beat) => now;
 
-50::ms => dur increment; // increment for lfo; shorter = smoother
-//100::ms => increment;
+//750::ms => dur increment; // increment for lfo; shorter = smoother
+100::ms => dur increment;
 
 8 => float lfo1High; // 7 
 2 => float lfo1Low; // 3

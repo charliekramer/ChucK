@@ -9,7 +9,7 @@ Pan2 pan[nVoice];
 
 .6 => rev.mix;
 
-55-12 => float midiBase; // add 7 and overlay
+59-12 => float midiBase; // add 7 and overlay
 
 [[0.,4.,7.],
  [4.,7.,11.],
@@ -24,7 +24,7 @@ Pan2 pan[nVoice];
  
  <<< "notes size", notes.size()>>>;
 
-60./94.*4 => float beatSec;
+60./80.*4 => float beatSec;
 beatSec::second => dur beat;
 
 for (0 => int i; i<voice.cap(); i++) {

@@ -3,13 +3,13 @@ adc =>  inGain =>  dyn =>  l =>  echo => LiSa loop =>  rev =>   Gain loopGain =>
 
 25 => l.freq;
 
-0.02 => inGain.gain;
+0.02 => inGain.gain; 
 0.5 => outGain.gain;
 0.2 => loopGain.gain;
 
 10::second => echo.max;
 
-.75::second => echo.delay;
+1.25::second => echo.delay;
 
 .7 => echo.gain;
 .3 => echo.mix;

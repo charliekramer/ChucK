@@ -2,7 +2,7 @@
 // miscellaneous samples
 // stops at time "future"
 
-4 => float gainSet;
+.2 => float gainSet;
 
 now + 120::second => time future;
 
@@ -10,23 +10,10 @@ SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Dyno dyn => dac;
 
 SinOsc LFO => blackhole;
 
-60./80. => float beatsec;
+60./60. => float beatsec;
 1 => click.rate;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
-
-
-.1 => LFO.freq;
-
-
-
-10*beat => echo.max;
-1.5*beat => echo.delay;
-.0 => echo.mix;
-.5 => echo.gain;
-echo => echo;
-
-0.0 => rev.mix;
 
 // chooser
 // 1 => speedBuf; play for nBeats
@@ -40,14 +27,24 @@ echo => echo;
 // 9 => grain skipper
 
 1 => int chooser;
-16 => int nBeats;
-1./1.0 => pitch.shift;
+20 => int nBeats;
+1./1.0 => float bufPitch => pitch.shift;
 0.9 => pitch.mix;
 0 => click.loop;
-1 => click.rate; // may be overridden in function
+1 => float bufRate => click.rate; // may be overridden in function
+
+.1 => LFO.freq;
+
+10*beat => echo.max;
+1.5*beat => echo.delay;
+.0 => echo.mix;
+.5 => echo.gain;
+echo => echo;
+
+0.0 => rev.mix;
 
 gainSet => click.gain;
-26 => int sampleChoose;
+27 => int sampleChoose;
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -100,7 +97,11 @@ gainSet => click.gain;
 	else if (sampleChoose == 25)
 	{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-both.wav" => click.read;}
 	else if (sampleChoose == 26)
-	"/Users/charleskramer/Desktop/chuck/audio/eric-mcluhan-kmox-10-sea-of-information.wav" => click.read;
+	{"/Users/charleskramer/Desktop/chuck/audio/eric-mcluhan-kmox-10-sea-of-information.wav" => click.read;}
+    else if (sampleChoose == 27)
+    {"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => click.read;}
+    else if (sampleChoose == 28)
+    {"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_2.wav" => click.read;}
 
 	
 	
@@ -154,7 +155,7 @@ int randStartPos;
 
 while (now < future) {
     
-    if (chooser == 1) speedBuf (click, 1., beat*nBeats,1.);
+    if (chooser == 1) speedBuf (click, bufRate, beat*nBeats,bufPitch);
 //    if (chooser == 1) speedBuf (click, 154./138., beat*164, 138./154);
     
     else if (chooser == 2) granularize(click,900);
@@ -192,7 +193,7 @@ while (now < future) {
 	}
 	else if(chooser == 8) 
 	{
-		1 => float factor;
+		.7 => float factor;
 		while (now < future) {
 		spork~speedBuf (click, .5/factor, beat*4*factor, 1.);
 		spork~speedBuf (click, .5/factor, beat*4*factor, 1.33);
@@ -203,7 +204,7 @@ while (now < future) {
 	}
 	else 
 	{
-		grainSkipper(click,10, 10, 1); 
+		grainSkipper(click,100, 100, 1); 
 		
 	}
         

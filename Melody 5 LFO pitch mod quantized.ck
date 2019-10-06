@@ -13,9 +13,9 @@ PulseOsc PulseLFO => blackhole;
 
 masterGain => flute1.gain => flute2.gain => flute3.gain => flute4.gain => flute5.gain;
 
-55 => float midiBase;
+61. => float midiBase;
 
-120./94. => float beatSec;
+120./50. => float beatSec;
 beatSec::second => dur beat;
 
 1/beatSec *13 => SinLFO.freq;

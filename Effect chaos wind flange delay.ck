@@ -35,20 +35,20 @@ SinOsc LFO_Master => blackhole;
 LFO[0] => blackhole;
 LFO[1] => blackhole;
 
-.05 => float baseFreq;
+.01 => float baseFreq;
 
 baseFreq => LFO[0].freq;
 .9 => float freqFraction;
 freqFraction*baseFreq => LFO[1].freq;
 
-.1 => LFO_Master.freq;
+.05 => LFO_Master.freq;
 
 5::second => delay[0].max => delay[1].max;
 1::ms => delay[0].delay => delay[1].delay;
 
 .5 => delay[0].mix => delay[1].mix;
 
-.3 => delay[0].gain => delay[1].gain; //watch volume!
+.5 => delay[0].gain => delay[1].gain; //watch volume!
 
 delay[0] => delay[0]; delay[1] => delay[1];
 

@@ -52,7 +52,7 @@ class StringPatch {
 
 .01 => float masterGain;
 
-60./94. => float beatSec;
+60./80. => float beatSec;
 beatSec::second => dur beat;
 
 //beat - (now % beat) => now;
@@ -61,7 +61,7 @@ StringPatch s1;
 StringPatch s2;
 StringPatch s3;
 
-55-12 => float midiBase;// 
+59-12 => float midiBase;// 
 .005 => float spread => s1.spread;
 3 => s1.nOsc;
 Std.mtof(midiBase) => s1.freq;

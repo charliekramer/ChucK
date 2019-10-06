@@ -30,7 +30,7 @@ SndBuf buf3[n];
 1 => int noteDown; // turn off notes after cycle; more spare sounding
 1 => int switchMat; // switch order of i and j to mix it up
 
-60./80.*.25 => float beatSec; // pretty cool to layer *1 and *.5 or *.25
+60./50.*.25 => float beatSec; // pretty cool to layer *1 and *.5 or *.25
 beatSec::second => dur beat;
 
 0 => master.gain;

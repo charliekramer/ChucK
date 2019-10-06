@@ -1,4 +1,4 @@
-// game of life
+// game of life 
 // v2 add convergence check
 // add echo;
 // add sweeping filters except for sinOsc
@@ -14,6 +14,7 @@ int y[n][n];
 
 Gain master;
 .0000007/(n*n) => master.gain => float gainMaster;
+8 => int iterations; // # of times through
 
 SinOsc rhodes0[n]; //each row is a different instrument
 SqrOsc rhodes1[n];
@@ -49,15 +50,13 @@ int notes[n][n];
 [0,2,5,7,12]] @=> notes;  
 
 
-60./80. => float beatSec; // <1 for interesting beats; *4, *16
+60./80.*4 => float beatSec; // <1 for interesting beats; *4, *16
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
 
 1 => float onBeats; // beats after opening envelope
 3 => float offBeats; // beats after closing envelope
-
-4 => int iterations; // # of times through
 
 NRev rev;
 0.2 => rev.mix;
@@ -262,7 +261,7 @@ while (j < iterations) {
 	
 	recalc_x(); // use to create next generation
 	
-	<<< "************* X ", j, " ******************">>>;
+	<<< "************* X ", j, "of ", iterations, " ******************">>>;
 	
 	if (delta == 0) <<< "****CONVERGENCE ******************" >>>;
 	

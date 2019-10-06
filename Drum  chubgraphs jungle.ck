@@ -9,7 +9,7 @@ SinOsc kick => ADSR env => PitShift pit => HPF filt => Dyno dyn => outlet;
 
 44 => kick.freq; //44
 1.5*kick.freq() => filt.freq; //1.5*
-3 => filt.Q; // 3; crank it up for resonant bass
+3=> filt.Q; // 3; crank it up for resonant bass
 
 fun void noteOn (int noteTemp) {
 	noteTemp => env.keyOn;
@@ -86,11 +86,13 @@ class SnareDrum extends Chubgraph {
 
 .3 => float masterGain;
 
-float d1, d2; //beat divisors; for drums and echo
+120::second => dur length;
+
+float d1, d2; //delay beat divisors; for drums and echo
 
 .25 => d1; 1 => d2; // (.25, 1), (.25, 3) (.5, .5) (2,.125)
 
-120./80*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
+120./60*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -119,7 +121,7 @@ echo => echo;
 
 2 => tom.pitch;
 
-now + 30::second => time future;
+now + length => time future;
 
 while (now < future) {
 	1 => kick.noteOn;

@@ -75,20 +75,20 @@ fun void filt_sweep () {
 /*
  thought it would be interesting to see what it sounded like to use samples to process other samples. So Ioaded up six samples, some of which I've used for other Junto stuff:
 
--piano notes
--lawnmower
--a fountain at the Watergate hotel
--sounds made by the planet Saturn
--random voice mail left by some telemarketer
-- a crosswalk light saying "wait"
+1 piano notes
+2 lawnmower
+3 a fountain at the Watergate hotel
+4 sounds made by the planet Saturn
+5 random voice mail left by some telemarketer
+6 a crosswalk light saying "wait"
 
-then I put the samples in a list and rand down the list successively playing each sample. But for each sample I did two operations using the value of the previous sample in the list:
+then I put the samples in a list (1 to 6) and ran through each one, doing two things:
+1. adding or subtracting a function of the sample just before it in the list
+2. skipping a number of milliseconds (basically downsampling) with the skip size
+dependent on the value of the other sample
 
-1. subtracted 1/2 the square root of the absolute value of the previous sample (why this weird function? i experimented and came up with this. It sounded interesting.)
-2. I played the original sample but skipped the number of milliseconds corresponding to a number called "skip" (basically downsampling, I suppose) . Skip was set equal to the absolute value of the previous sample plus a variable called "jump". I had to put jump in there because the program would hang if I didn't. I think that's because sometimes the sample value is zero (silence). Anyway fiddling with "jump" made some cool stuff happen.
-
-All this messing around with the sample created a lot of painful high frequency noise so I added an actual (low pass) filter that I then swept using two sine LFOs. I also ran the output through a reverb.
-
-The whole program ran around 30 seconds so I triggered multiple copies with decreasing values of "jump". Fun!
+when I fiddled with the parameters of these two functions, some really interesting 
+tones emerged. I also got a ton of high-frequency noise, so I applied 
+an actual low-pass filter that I swept using two LFOs.
 
 */

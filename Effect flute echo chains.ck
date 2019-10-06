@@ -9,7 +9,7 @@ flute => f => Echo echo2 => NRev rev2 => Pan2 pan2 => dac;
 
 SinOsc LFO => blackhole; // drives jetDelay
 
-60./94. => float beatSec;
+60./94. => float beatSec; // 60./80.
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -37,7 +37,7 @@ if (beatMeasure < beat1 ) <<< "error beatMeasure < beat1">>>;
 echo => echo2 => echo;
 echo2 => echo => echo2;
 
-55 -12 -12 => float midiBase;
+(59 -12 -12)*0 + 96 => float midiBase; //59 -12-12; 
 
 Std.mtof(midiBase) => flute.freq; //90, 59
 

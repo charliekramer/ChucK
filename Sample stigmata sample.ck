@@ -1,23 +1,31 @@
 // stigmata remix
 
-60./120. => float beatsec; // original is 154 BPM
+.05 => float gainSet;
 
-120./154. => float rate;
+80 => float BPM;
+
+60./BPM => float beatsec; // original is 154 BPM
+
+BPM/154. => float rate;
 
 // is this right
 beatsec::second => dur beat;
 beat - (now % beat) => now;
 
+Gain g;
+
+gainSet => g.gain;
+
 //set buffers for the chunks of song
-SndBuf2 intro => dac;
-SndBuf2 introNoise => dac;
-SndBuf2 main => dac;
-SndBuf2 breakScream => dac;
-SndBuf2 breakDrum => dac; // break is a protected work
-SndBuf2 v1 => dac;
-SndBuf2 c => dac;
-SndBuf2 v2 => dac;
-SndBuf2 blast => dac;
+SndBuf2 intro => g => dac;
+SndBuf2 introNoise => g => dac;
+SndBuf2 main => g => dac;
+SndBuf2 breakScream => g => dac;
+SndBuf2 breakDrum => g => dac; // break is a protected work
+SndBuf2 v1 => g => dac;
+SndBuf2 c => g => dac;
+SndBuf2 v2 => g =>  dac;
+SndBuf2 blast => g => dac;
 
 // load samples
 me.dir(-1)+"chuck/audio/stigmata_intro.wav"=> intro.read;

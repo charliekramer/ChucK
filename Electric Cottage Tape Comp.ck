@@ -1,4 +1,5 @@
-1 => float gainSet;
+.1 => float gainSet;
+
 
 5 => int n;
 
@@ -15,17 +16,18 @@ NRev rev[n];
 "/Users/charleskramer/Desktop/chuck/audio/concrete_4.wav" => buf[3].read;
 "/Users/charleskramer/Desktop/chuck/audio/concrete_5.wav" => buf[4].read;
 
-60./80.*4 => float beatSec;
+60./60.*2 => float beatSec;
 beatSec::second => dur beat;
 
 5*beat => dur echoMax;
 .75*beat => dur echoDelay;
 4 => float echoGain;
-.2 => float revMix;
-1 => float bufRate;
+.9 => float revMix;
+.5 => float bufRate;
 1 => int bufLoop;
 
 for (0 => int i; i< n; i++) {
+	gainSet => buf[i].gain;
 	bufLoop => buf[i].loop;
 	bufRate => buf[i].rate;
 	buf[i] => env[i] => pan[i] => dac;
@@ -42,7 +44,7 @@ for (0 => int i; i< n; i++) {
 
 int j;
 
-15::second => dur length;
+45::second => dur length;
 
 now + length => time future;
 

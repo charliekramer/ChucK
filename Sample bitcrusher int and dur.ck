@@ -1,16 +1,22 @@
-SndBuf2 s => Chorus c => Echo echo => Gain g => Pan2 pan => dac;
+//timed (see below) 
+
+SndBuf2 s => Chorus c => Echo echo => Gain g => Gain master => Pan2 pan => dac;
+
+.3 => master.gain;
 
 .5 => c.modFreq;
 .5 => c.modDepth;
 .5 => c.mix;
 
 10::second => echo.max;
-.75::second => echo.delay;
-.3 => echo.gain;
+1.75::second => echo.delay;
+.7 => echo.gain;
 .3 => echo.mix;
 echo => echo;
 
 "/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => s.read;
+"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => s.read;
+
 
 //4400=> float baseFreq => s.freq;
 
@@ -18,7 +24,7 @@ fun void pitchy() {
 	SinOsc v => blackhole;
 	.2 => v.freq;
 	while (true) {
-		(1+v.last()/4.)*1.0=> s.rate;
+		(1+v.last()/4.)*1.0*.5=> s.rate;
 		1::samp => now;
 	}
 }
@@ -28,7 +34,7 @@ spork~pitchy();
 0 => pan.pan;
 
 0::samp => dur jMin;
-250::samp => dur iMax;
+50::samp => dur iMax;
 0::samp => dur jCount;
 1::samp => dur jDelta;
 
@@ -39,9 +45,9 @@ spork~pitchy();
 
 0 => s.pos;
 
+now + 60::second => time future;
 
-
-while (true) {
+while (now < future) {
 	
 	s.pos()+1 => s.pos;
 	
@@ -60,3 +66,4 @@ while (true) {
 	
 }
 
+5::second => now;

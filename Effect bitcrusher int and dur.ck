@@ -1,4 +1,4 @@
-SinOsc s => Chorus c => Echo echo => Gain g => Pan2 pan => dac;
+SinOsc s => Chorus c => Echo echo => Gain g => Pan2 pan =>  dac;
 
 .1 => float gainSet;
 

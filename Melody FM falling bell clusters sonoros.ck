@@ -5,21 +5,25 @@
 //from Dodge and Jerse chapter 4
 // basic FM synthesis using SinOsc (2 => .sync; also see fm3.ck)
 
-60 => int midiBase; //base note in midi format
+.1 => float gainSet;
+59-12 => int midiBase; //base note in midi format
 Std.mtof(midiBase) => float baseFreq; //* 1.5 interesting
 [-24, -12, -10, -8, -5, -3,  0, 2, 4, 7, 9, 12, 24] @=> int notes[];
+//[ 0,  7, 11, 12] @=> int notes[];
 
-5./7. => float ratio; // 7./5. 13./3. interesting, 1/1
+
+5./7. => float ratio; // 7./5. 5./7. 13./3. 11./3. interesting, 1/1
+                      // also start with 1./1. and gradually reduce denominator
 
 6::second => dur decay;
 
 int nBells;
 float bellFreq;
 
-now + 10::minute => time future;
+now + 2::minute => time future;
 
 while( now < future ) {
-    Std.rand2(2,3) => nBells;
+    Std.rand2(2,5) => nBells;
     
     for (1 => int i; i <= nBells; i++) {
        	
@@ -38,7 +42,7 @@ fun void bellStrike(float inFreq) {
     
 SinOsc m => SinOsc c => ADSR env => PRCRev rev => Pan2 pan => Gain g => dac;
 
-.1 => g.gain;
+gainSet => g.gain;
 
 0.3 => rev.mix;
 

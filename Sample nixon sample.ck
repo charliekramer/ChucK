@@ -1,9 +1,9 @@
 // nixon
 
-// soundchain for nixon
+// soundchain for nixon 
 SndBuf nixon => PitShift pitch => NRev rev => Gain g => Pan2 pan => dac;
 
-.1*8 => g.gain;
+.1*10 => g.gain;
 0.05 => rev.mix; // turn down gain
 0.9 => rev.gain; //
 1.0 => pitch.mix;
@@ -30,7 +30,7 @@ beat - (now % beat) => now;
 */
 
 // farewell speech
-//"/Users/charleskramer/Desktop/chuck/audio/nixon_farewell.wav" => nixon.read;
+"/Users/charleskramer/Desktop/chuck/audio/nixon_farewell.wav" => nixon.read;
 
 // farewell: sample markers
 
@@ -65,15 +65,15 @@ beat - (now % beat) => now;
 // cancer on the presidency
 // https://www.nixonlibrary.gov/sites/default/files/forresearchers/find/tapes/watergate/trial/exhibit_12.pdf
 
-//[0,120000,250000,340000,420000] @=> marks; good for industrial noises
+[0,120000,250000,340000,420000] @=> marks; //good for industrial noises
 410000*23+250000 => marks[0]; // use 8 beats
 /*
 0. we have a cancer close to the presidency
 
 */
  
-"/Users/charleskramer/Desktop/chuck/audio/thp-nixon-farewell-combined.wav" => nixon.read;
-41000*55 => marks[0]; // use 16 beats
+//"///Users/charleskramer/Desktop/chuck/audio/thp-nixon-farewell-combined.wav" => nixon.read;
+//41000*55 => marks[0]; // use 16 beats
 // because only if you've been in the deepest valley
 
 
@@ -88,7 +88,7 @@ while (true) {
     rateNixon => nixon.rate;
     pitchNixon => pitch.shift;
    -1*pan.pan()=> pan.pan;
-    beat*16 =>  now;  // 6; 24 for full sample of farewell
+    beat*8 =>  now;  // 6; 24 for full sample of farewell
 	g.gain()*.9 => g.gain; //use to fade
 }
 

@@ -1,5 +1,7 @@
 // three lfos multiplied together determine frequency--two of which change frequency every 4 beats
 
+.3*1*2 => float gainSet;
+
 SinOsc lfo1 => blackhole;
 SinOsc lfo2 => blackhole;
 SinOsc lfo3 => blackhole;
@@ -9,15 +11,15 @@ Blit sin => HalfRect frsin => Chorus c =>  Echo echo => PRCRev rev => Gain gain 
 .2 => c.modDepth;
 .5 => c.mix;
 
-[0,4,7,12] @=> int freqs[]; 
+[0.,3.,4.,-1.,.5,.25,.3] @=> float freqs[]; // needs to be at least 4 long
 
-.3 => gain.gain;
+gainSet => gain.gain;
 
 1 => lfo1.gain => lfo2.gain => lfo3.gain;
 
-55 => int midiBase;
-Std.mtof(midiBase)*1.5 => float baseFreq; 
-60./94. => float beatsec;
+62 => float midiBase;
+Std.mtof(midiBase) => float baseFreq; 
+60./60. => float beatsec;
 beatsec::second => dur beat;
 
 .2 => rev.mix;
@@ -30,9 +32,9 @@ echo => echo;
 
 beat - (now % beat) => now;
 
-750::ms => dur increment; // increment for lfo; shorter = smoother
-100::ms => increment;
-beat/4. => increment;
+//750::ms => dur increment; // increment for lfo; shorter = smoother
+//100::ms => increment;
+beat/4. => dur increment;
 
 7 => float lfo1High;
 3 => float lfo1Low;

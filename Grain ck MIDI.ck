@@ -28,7 +28,7 @@ echo => echo;
 
 // load the file
 
-18 => int sampleChoose;
+24 => int sampleChoose;
 
 if (sampleChoose == 1) 
 {"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => buf2.read;}
@@ -74,6 +74,10 @@ else if (sampleChoose == 21)
 {"/Users/charleskramer/Desktop/chuck/audio/mower_edit.wav" => buf2.read;}
 else if (sampleChoose == 22)
 {"/Users/charleskramer/Desktop/chuck/audio/cartoons.wav" => buf2.read;}
+else if (sampleChoose == 23)
+{"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => buf2.read;}
+else if (sampleChoose == 24)
+{"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_2.wav" => buf2.read;}
 
 
 

@@ -25,7 +25,7 @@ for (1 => int i; i < 12; i++) {
 
 0.2 => float baseAmp;
 15::second => dur baseDur;
-Std.mtof(60)*4 => float baseFreq;
+Std.mtof(61) => float baseFreq; //60*4
 
 0 => int panBell; // switch for evenly spread panning. 
 

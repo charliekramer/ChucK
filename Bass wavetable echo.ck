@@ -1,4 +1,4 @@
-// bass wavetable with echo
+// bass wavetable with echo 
 // array of sinoscs drive coeffs
 // melody emerges
 
@@ -8,10 +8,10 @@ Phasor phase => Gen17 ct => Echo echo => PRCRev rev => Gain g => dac; // try rep
 
 [1.,.5,.7,2,.3] => ct.coefs;
 
-55 -12 => float midiBase;
+62 -12-12 => float midiBase;
 Std.mtof(midiBase) => float baseFreq => phase.freq;
 
-60./94.=> float beatSec;
+60./60.*2=> float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat) => now;
 

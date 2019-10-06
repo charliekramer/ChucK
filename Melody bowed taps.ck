@@ -1,7 +1,8 @@
 // notes for taps on bowed instrument
-// two minute limit
+// time limit
 
 .7 => float gainSet;
+120::second => dur length;
 
 Bowed bow => ADSR adsr => Echo echo => PRCRev rev => Gain g => Pan2 p => dac;
 
@@ -23,13 +24,13 @@ gainSet => g.gain;
 .02 => bow.vibratoGain;
 .5 => bow.volume;
 
-55-12 => int baseNote;
+62-12 => int baseNote;
 baseNote - 5 => int fifthNote;
 baseNote + 4 => int thirdNote;
 
 [fifthNote,baseNote,thirdNote] @=> int notes[];
 
-now + 120::second => time future;
+now + length => time future;
 
 while (now < future) {
 	

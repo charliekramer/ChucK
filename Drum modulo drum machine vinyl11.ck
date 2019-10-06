@@ -5,9 +5,9 @@
 //synch
 // added glitch mode with variable rate 
 
-.001*.25 => float gainSet;
+.001*.25*4 => float gainSet;
 
-60./94. => float beattime;
+60./50. => float beattime;
 beattime::second => dur beat;
 beat - (now % beat) => now;
 

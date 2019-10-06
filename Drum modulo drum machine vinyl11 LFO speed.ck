@@ -5,9 +5,9 @@
 //synch
 // added glitch mode with variable rate 
 
-.001 => float gainSet;
+.001*2=> float gainSet;
 
-60./94. => float beatSec;
+60./50. => float beatSec;
 beatSec::second => dur beat;
 beat - (now % beat) => now;
 
@@ -53,7 +53,7 @@ gainSet => g.gain; //0.5
 0 => int snareSolo;
 0 => int snareRoll;
 0 => int funkoption; 
-0 => int shuffle;
+1 => int shuffle;
 1 => int glitchMode;
 .2 => float lowGlitch;
 2. => float hiGlitch;
