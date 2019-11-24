@@ -12,7 +12,7 @@ if( !min.open( device ) ) me.exit();
 
 <<< "MIDI device:", min.num(), " -> ", min.name() >>>;
 
-.5 => float gainSet;
+.05 => float gainSet;
 
 4 => int nLoops;
 
@@ -38,10 +38,25 @@ for (0 => int i; i < nLoops; i++) {
     loopme[i].rate(1);
     loopme[i].play(1);
     loopme[i].loop(1);
+    loopme[i].gain(1);
     loopme[i].bi(0);
+    loopme[i].feedback(0.);
 }
 
 gainSet => gain.gain;
+
+
+adc => PitShift pitch => Gain gainDirect => dac;
+
+.0 => gainDirect.gain;
+
+.5 => pitch.mix;
+SinOsc pitchLFO => blackhole;
+100 => pitchLFO.freq;
+.9 => pitchLFO.gain;
+
+spork~livePitch();
+
 
 .5 => float revMix;
 .0 => rev.mix;
@@ -157,6 +172,14 @@ while( true ){
               }
           }
     }
+
+
+fun void livePitch() {
+    while (true) {
+        1+ pitchLFO.last() => pitch.shift;
+        1::samp => now;
+    }
+}
 
 
 //LiSa Command Summary:
