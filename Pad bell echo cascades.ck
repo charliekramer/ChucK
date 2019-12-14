@@ -2,7 +2,7 @@
 
 4 => int n;
 
-45::second => dur length;
+30::second => dur length;
 
 ModalBar bell[n];
 Echo echo[n];
@@ -12,9 +12,10 @@ Pan2 pan[n];
 
 58 => float baseFreq;
 
-[0.,2., 7.,9.] @=> float notes[];
+//[0.,2., 7.,9.] @=> float notes[];
+[0., 2.,4., 7.] @=> float notes[];
 
-60./80.*.125*2*2*2*2 => float beatSec; // take out 8*2 to get textured sound
+60./80.*.125*1 + 0*2*2*2*2 => float beatSec; // take out 8*2 to get textured sound
 beatSec::second => dur beat;
 
 for (0 => int i; i<bell.size(); i++) {
