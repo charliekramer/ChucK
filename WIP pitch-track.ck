@@ -10,14 +10,16 @@
 // analysis
 adc => PoleZero dcblock => FFT fft => blackhole;
 // synthesis
-SinOsc s => JCRev r => dac;
+SinOsc s => JCRev r => Dyno dyn => Gain gain => dac;
+
+10 => gain.gain;
 
 // set reverb mix
 .05 => r.mix;
 // set to block DC
 .99 => dcblock.blockZero;
 // set FFT params
-1024 => fft.size;
+1024*8 => fft.size;
 // window
 Windowing.hamming( fft.size() ) => fft.window;
 
@@ -52,9 +54,10 @@ while( true )
     // set freq
     (where $ float) / fft.size() * srate => target_freq;
     // set gain
-    (max / .8) => target_gain;
+    (max / .1) => target_gain;
     
     // hop
+//    1 => s.noteOn;
     (fft.size()/2)::samp => now;
 }
 

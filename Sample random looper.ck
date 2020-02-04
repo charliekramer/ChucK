@@ -1,11 +1,26 @@
 // pulls random loops off sample
 
-.15*8 => float gainSet;
+.15*20 => float gainSet;
+45::second => dur length;
 
-SndBuf2 buffer => Gain inGain => Dyno dyn => HPF l =>  Echo echo => NRev rev => Gain outGain => dac;
-buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =>   Gain loopGain => Pan2 loopPan =>dac;
+SndBuf2 buffer => Gain inGain => Dyno dyn => HPF l =>  Echo echo => NRev rev => Gain outGain => Gain gain => dac;
+buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =>   Gain loopGain => Pan2 loopPan => gain => dac;
+
+SinOsc sin => gain => dac;
+0 => sin.gain; // run ringmod to make this work with 3 => gain.op;
+//spork~ringmod();
 
 "/Users/charleskramer/Desktop/chuck/audio/apache_break_editor.wav" => buffer.read;
+138 => float loopSpeed; // native speed of loop
+
+//"/Users/charleskramer/Desktop/chuck/audio/loopermanferryterry101bpmjazzsambadrum.wav" => buffer.read;
+///101 => loopSpeed;
+
+//"/Users/charleskramer/Desktop/chuck/audio/looperman-83bpm-l-0850517-0116649-miazyo-sazzyjazzydrumlings.wav" => buffer.read;
+//83 => loopSpeed;
+
+//"/Users/charleskramer/Desktop/chuck/audio/looperman-1564425-0149579-brisk-bossa-nova-drumgroove.wav" => buffer.read;
+//87 => loopSpeed;
 
 22 => l.freq;
 10 => l.Q;
@@ -16,7 +31,7 @@ buffer.samples()=>buffer.pos; // so it doesn't play during the synch
 
 
 //208.8*.5 => float BPM; // set this to fix below
-80 => float BPM; // set this to fix below
+94 => float BPM; // set this to desired BPM
 
 60./BPM => float beatsec;
 beatsec::second => dur beat;
@@ -25,9 +40,9 @@ beat - (now % beat) => now;
 
 0.02 => inGain.gain;
 0.8*masterGain => outGain.gain;
-0.3*masterGain => loopGain.gain;
+0.8*masterGain => loopGain.gain; //.3?
 
-BPM/138. => buffer.rate; // 138 is native speed of loop
+BPM/loopSpeed => buffer.rate; // loopSpeed is native speed of loop
 
 [.25,.5,1., 2.] @=> float glitchArray[];
 
@@ -48,7 +63,7 @@ int numLoops;
 
 spork~loopit(beat*4);
 
-now + 45::second => time future;
+now + length => time future;
 
 int numBeats;
 
@@ -110,6 +125,16 @@ fun void loopit (dur length) {
 		length => now;
 	}
 }
+
+fun void ringmod() {
+    3 => gain.op;
+    6 => sin.gain;
+    while (true) {
+        beat => now;
+        Std.rand2f(.7,1.5)*440 => sin.freq;
+    }
+}
+    
 	
 /*
 4::second => loop.duration;

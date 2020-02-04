@@ -20,9 +20,9 @@ echo => echo;
 .0 => rev.mix;
 
 SawOsc sin => master => dac;
-.2 => sin.gain;
+gainSet*.8 => sin.gain;
 
-57-12 =>float midiBase;
+57-24 =>float midiBase;
 
 //read files
 me.dir(-1)+"chuck/audio/kick_01.wav" => kick.read;
@@ -35,6 +35,7 @@ kick.samples()=>kick.pos;
         if (i % 8 == 1 )
         {
             00=>kick.pos;
+            Std.rand2f(.7,1.3) => kick.rate;
            
         }   
     now + beat / 4 => time future;

@@ -2,15 +2,19 @@
 // miscellaneous samples
 // stops at time "future"
 
-.2 => float gainSet;
+.2*80 => float gainSet;
 
-now + 120::second => time future;
+now + 180::second => time future;
 
-SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Dyno dyn => dac;
+SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Gain gain => Dyno dyn => dac;
 
 SinOsc LFO => blackhole;
 
-60./60. => float beatsec;
+SinOsc sin => gain => dac;
+0 => sin.gain;
+//spork~ringmod();
+
+60./94. => float beatsec;
 1 => click.rate;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
@@ -25,26 +29,28 @@ beat - (now % beat) => now;
 // 7 => (5) plus rate from LFO
 // 8 => chord
 // 9 => grain skipper
+// 10 => skip = exp(gain) (zeros volume)
+// 11 => skip = exp(gain) (skips samples)
 
 1 => int chooser;
-20 => int nBeats;
-1./1.0 => float bufPitch => pitch.shift;
-0.9 => pitch.mix;
+200 => int nBeats;
+1./1.0 => float bufPitch => pitch.shift; // for weird secrest = 5 and rate = .1
+0.9 => pitch.mix; // for weird secrest = .9
 0 => click.loop;
-1 => float bufRate => click.rate; // may be overridden in function
+1 => float bufRate => click.rate; // may be overridden in function;for weird secrest = .1
 
 .1 => LFO.freq;
 
 10*beat => echo.max;
-1.5*beat => echo.delay;
-.0 => echo.mix;
+1.5*beat*4. => echo.delay;
+.6 => echo.mix;
 .5 => echo.gain;
 echo => echo;
 
-0.0 => rev.mix;
+0.5 => rev.mix;
 
 gainSet => click.gain;
-27 => int sampleChoose;
+7 => int sampleChoose; // 28 is secrest
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -102,6 +108,8 @@ gainSet => click.gain;
     {"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => click.read;}
     else if (sampleChoose == 28)
     {"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_2.wav" => click.read;}
+    else if (sampleChoose == 29)
+    {"/Users/charleskramer/Desktop/chuck/audio/PB_radio.wav" => click.read;}
 
 	
 	
@@ -148,7 +156,46 @@ fun void grainSkipper (SndBuf inBuf, int skip, int length, int repeater) {
 		}
 	}
 		
+fun void expSkip(SndBuf inBuf, float _a) {
+    .1 => float a;
+    _a => a;
+    
+    0 => inBuf.pos;
+    
+    float mss;
+    
+    while (true) {
+        
+        Math.exp(inBuf.last()*a) => mss;
+        0 => inBuf.gain;
+        mss::ms => now;
+        1 => inBuf.gain;
+        mss::ms => now;
+        if (inBuf.pos() == inBuf.samples()) 0 => inBuf.pos;
+      
+    }
+}
 
+fun void expSkipSamp(SndBuf inBuf, float _a) {
+    .1 => float a;
+    _a => a;
+    
+    0 => inBuf.pos;
+    
+    float mss;
+    
+    while (true) {
+        
+        Math.exp(inBuf.last()*a) => mss;
+        Std.rand2(0,Std.ftoi(mss)*15) => mss;
+        inBuf.pos() + Std.ftoi(mss) => inBuf.pos;
+        10::samp => now;
+       
+        if (inBuf.pos() == inBuf.samples()) 0 => inBuf.pos;
+        
+    }
+}
+            
 
 int randStartPos;
 
@@ -202,12 +249,31 @@ while (now < future) {
 	    }
 		
 	}
-	else 
+	else if (chooser == 9)
 	{
 		grainSkipper(click,100, 100, 1); 
 		
 	}
+    else if (chooser == 10)
+    {
+        expSkip(click,.01); 
         
+    }
+    else 
+    {
+        expSkipSamp(click,.2); 
+        
+    }
+        
+}
+
+fun void ringmod() {
+    3 => gain.op;
+    6 => sin.gain;
+    while (true) {
+        beat => now;
+        Std.rand2f(.7,1.5)*440 => sin.freq;
+    }
 }
 // outro
 0 => click.loop;
