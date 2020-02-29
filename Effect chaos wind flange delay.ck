@@ -16,18 +16,19 @@ class ChaosNoise extends Chugen {
     }
 }
 
-.1 => float gainSet;
+.05 => float gainSet;
 
 ChaosNoise nz[2];
+0.3 => nz[0].seed;
+0.7 => nz[1].seed;
 
-//SawOsc nz[2];
+//SqrOsc nz[2];
 Echo delay[2];
 LPF filter[2];
-nz[0] => filter[0] => delay[0] => dac.left; 0.3 => nz[0].seed;
-nz[1] => filter[1] => delay[1] => dac.right; 0.7 => nz[1].seed;
-
-2000 => filter[0].freq => filter[1].freq;
-2 => filter[0].Q => filter[1].Q;
+nz[0] => filter[0] => delay[0] => dac.left; 
+nz[1] => filter[1] => delay[1] => dac.right; 
+440 => filter[0].freq => filter[1].freq;
+20 => filter[0].Q => filter[1].Q;
 
 SinOsc LFO[2];
 SinOsc LFO_Master => blackhole;
@@ -56,10 +57,13 @@ gainSet => nz[0].gain => nz[1].gain;
 
 //1::second => now;
 
+
 while (true) {
 	100*(2+LFO[0].last()/2)::samp => delay[0].delay;
 	100*(2+LFO[1].last()/2)::samp => delay[1].delay;
 	1::samp => now;
-	baseFreq*(2+LFO_Master.last()/2) => LFO[0].freq;
-	freqFraction*LFO[0].freq() => LFO[1].freq;
+    baseFreq*(2+LFO_Master.last()/2) => LFO[0].freq;
+    freqFraction*LFO[0].freq() => LFO[1].freq;
+
+	
 }

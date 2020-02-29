@@ -2,17 +2,24 @@
 // miscellaneous samples
 // stops at time "future"
 
-.2*80 => float gainSet;
+.2*10 => float gainSet;
 
-now + 180::second => time future;
+now + 45::second => time future;
 
 SndBuf2 click => PitShift pitch => Echo echo => NRev rev => Gain gain => Dyno dyn => dac;
 
 SinOsc LFO => blackhole;
 
+SinOsc rateLFO1 => blackhole;
+3 => rateLFO1.freq;
+.1 => rateLFO1.gain;
+SinOsc rateLFO2 => blackhole;
+5 => rateLFO2.freq;
+.1 => rateLFO2.gain;
+
 SinOsc sin => gain => dac;
 0 => sin.gain;
-//spork~ringmod();
+//spork~ringmod(6,333);
 
 60./94. => float beatsec;
 1 => click.rate;
@@ -31,8 +38,10 @@ beat - (now % beat) => now;
 // 9 => grain skipper
 // 10 => skip = exp(gain) (zeros volume)
 // 11 => skip = exp(gain) (skips samples)
+// 12 => multi rate LFO (product of rateLFO1 and rateLFO2, above)
 
-1 => int chooser;
+
+12 => int chooser;
 200 => int nBeats;
 1./1.0 => float bufPitch => pitch.shift; // for weird secrest = 5 and rate = .1
 0.9 => pitch.mix; // for weird secrest = .9
@@ -43,14 +52,14 @@ beat - (now % beat) => now;
 
 10*beat => echo.max;
 1.5*beat*4. => echo.delay;
-.6 => echo.mix;
+.1 => echo.mix;
 .5 => echo.gain;
 echo => echo;
 
-0.5 => rev.mix;
+0.1 => rev.mix;
 
 gainSet => click.gain;
-7 => int sampleChoose; // 28 is secrest
+29 => int sampleChoose; // 28 is secrest
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -214,9 +223,9 @@ while (now < future) {
     }
     else if (chooser == 4)
     {
-        Std.rand2f(.1,.3) => click.rate; //backwards changes tone
+        Std.rand2f(-2,2) => click.rate; //backwards changes tone
         Std.rand2f(.5,.7) => pitch.shift;
-        grainPlay(click, click.samples()/2,Std.rand2(5000,10000));
+        grainPlay(click, Std.rand2(0,click.samples()),Std.rand2(5000,10000));
     }
     else if (chooser == 5)
     {
@@ -259,22 +268,28 @@ while (now < future) {
         expSkip(click,.01); 
         
     }
-    else 
+    else if (chooser == 11) 
     {
         expSkipSamp(click,.2); 
         
     }
+    else {
+        (1+rateLFO1.last())*(1+rateLFO2.last()) => click.rate;
+        1::samp => now;
+        if (click.pos() == click.samples()) 0 => click.pos;
+    }
         
 }
 
-fun void ringmod() {
+fun void ringmod(float _gain, float _freq) {
     3 => gain.op;
-    6 => sin.gain;
+    _gain => sin.gain;
     while (true) {
         beat => now;
-        Std.rand2f(.7,1.5)*440 => sin.freq;
+        Std.rand2f(.7,1.5)*_freq => sin.freq;
     }
 }
+
 // outro
 0 => click.loop;
 click.samples() => click.pos;

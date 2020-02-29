@@ -1,9 +1,11 @@
 // based on goth drum machine
 //synch
 
-.2 => float gainSet;
+.3 => float gainSet;
 
-60./94.*1 => float beattime;
+.05 => float base; // >0; 1 normal ish; .05 freaky
+
+60./120.*1 => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -41,7 +43,7 @@ kick.samples()=>kick.pos;
     now + beat / 4 => time future;
     
     while (now < future) {    
-        Std.mtof(midiBase)*.5*(1+1/((i%120)*Std.fabs(gain.last())+1)) => sin.freq;
+        Std.mtof(midiBase)*.5*(1+1/((i%120)*Std.fabs(gain.last())+base)) => sin.freq;
         1::samp => now; 
     }
        

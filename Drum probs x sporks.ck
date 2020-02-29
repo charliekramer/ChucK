@@ -1,6 +1,6 @@
-.1 => float gainSet;
+.1*4 => float gainSet;
 
-(60./120.)::second*1 => dur beat;
+(60./120.)::second*4 => dur beat;
 
 beat - (now % beat) => now;
 
@@ -12,9 +12,9 @@ beat - (now % beat) => now;
 [.1,.1,.9,.5] @=> float pTom2[];
 [.1,.1,.5,.9] @=> float pTom3[];
 
-//[.1,.9,.5,.1,.5,.5] @=>  pTom1;
-//[.1,.1,.9,.5,.5,.1] @=>  pTom2;
-//[.1,.1,.5,.9,.5,.1] @=>  pTom3;
+[.1,.9,.5,.1,.5,.5] @=>  pTom1;
+[.1,.1,.9,.5,.5,.1] @=>  pTom2;
+[.1,.1,.5,.9,.5,.1] @=>  pTom3;
 
 
 SndBuf snare => NRev snareRev => Gain gain => dac;
@@ -24,11 +24,13 @@ SndBuf tom1 => gain => dac;
 SndBuf tom2 => gain => dac;
 SndBuf tom3 => gain => dac;
 
+0 => snare.loop => kick.loop => hat.loop => tom1.loop => tom2.loop => tom3.loop;
+
 gainSet => gain.gain;
 
-.02 => snareRev.mix;
+.1 => snareRev.mix;
 
-spork~randRate(.5,1.5);
+spork~randRate(.5,1.5);//.5, 1.5,.01.,.1 pretty groove
 
 "/Users/charleskramer/Desktop/chuck/audio/CYCdh_ElecK02-Snr01.wav" => snare.read;
 "/Users/charleskramer/Desktop/chuck/audio/CYCdh_ElecK02-ClHat01.wav" => hat.read;

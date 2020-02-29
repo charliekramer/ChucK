@@ -4,7 +4,7 @@
 SndBuf nixon => PitShift pitch => NRev rev => Gain g => Pan2 pan => dac;
 SinOsc sin => g => dac;
 0 => sin.gain;
-//spork~ringmod();
+//spork~ringmod(6,440);
 
 .1*2 => g.gain;
 0.05 => rev.mix; // turn down gain
@@ -98,12 +98,12 @@ while (true) {
 	g.gain()*.9 => g.gain; //use to fade
 }
 
-fun void ringmod() {
+fun void ringmod(float _gain, float _freq) {
     3 => g.op;
-    6 => sin.gain;
+    _gain => sin.gain;
     while (true) {
         beat => now;
-        Std.rand2f(.7,1.5)*440 => sin.freq;
+        Std.rand2f(.7,1.5)*_freq => sin.freq;
     }
 }
 

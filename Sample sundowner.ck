@@ -1,6 +1,6 @@
 /// could be cool to have multiple buffers of the same thing and speed up/slow down
 
-1.5 => float gainSet;
+5.5 => float gainSet;
 
 SndBuf2 buf0 => Gain gain => dac;
 SndBuf2 buf1 => PitShift pitch1 => NRev rev1 => Pan2 pan1 => dac;

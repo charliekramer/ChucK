@@ -29,7 +29,7 @@ SndBuf buf4[n];
 1 => float rate; // change rate of playback
 0 => int randRate; // randomize playback rate
 
-60./94.*2./4. => float beatSec; // 2/4, 3/2 and 2/3 are interesting
+60./60.*1. => float beatSec; // 2/4, 3/2 and 2/3 are interesting
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;

@@ -8,7 +8,7 @@ buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =
 
 SinOsc sin => gain => dac;
 0 => sin.gain; // run ringmod to make this work with 3 => gain.op;
-//spork~ringmod();
+//spork~ringmod(6,200); //gain, freq
 
 "/Users/charleskramer/Desktop/chuck/audio/apache_break_editor.wav" => buffer.read;
 138 => float loopSpeed; // native speed of loop
@@ -126,12 +126,12 @@ fun void loopit (dur length) {
 	}
 }
 
-fun void ringmod() {
+fun void ringmod(float _gain, float _freq) {
     3 => gain.op;
-    6 => sin.gain;
+    _gain => sin.gain;
     while (true) {
         beat => now;
-        Std.rand2f(.7,1.5)*440 => sin.freq;
+        Std.rand2f(.7,1.5)*_freq => sin.freq;
     }
 }
     

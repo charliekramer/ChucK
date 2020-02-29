@@ -85,7 +85,26 @@ class SnareDrum extends Chubgraph {
 	
 }
 
-.1 => float masterGain;
+class Fuzz extends Chugen
+{
+    1.0/2.0 => float p;
+    
+    2 => intensity;
+    
+    fun float tick(float in)
+    {
+        Math.sgn(in) => float sgn;
+        return Math.pow(Math.fabs(in), p) * sgn;
+    }
+    
+    fun void intensity(float i)
+    {
+        if(i > 1)
+            1.0/i => p;
+    }
+}
+
+
 
 120::second => dur length;
 
@@ -93,7 +112,7 @@ float d1, d2; //delay beat divisors; for drums and echo
 
 .25 => d1; 1 => d2; // (.25, 1), (.25, 3) (.5, .5) (2,.125)
 
-120./94*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
+120./60*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -102,21 +121,38 @@ KickDrum kick => Echo kickEcho => NRev rev  => Dyno dyn1 => dac;
 KickDrum tom => Echo echo => rev => Dyno dyn2 => dac;
 SnareDrum snare => echo => rev => Dyno dyn3 => dac;
 
-masterGain => kick.gain => tom.gain => snare.gain => kick.gain;
 
+dyn1 => Fuzz fuzz1 => Chorus chorus => Gain fuzzGain1 => dac;
+dyn2 => Fuzz fuzz2 => chorus => Gain fuzzGain2 => dac;
+dyn3 => Fuzz fuzz3 => chorus => Gain fuzzGain3 => dac;
+
+.0 => chorus.mix;
+1. => chorus.modFreq;
+1 => chorus.modDepth;
+
+1. => float fuzzI => fuzz1.intensity;
+fuzzI => fuzz2.intensity;
+fuzzI => fuzz3.intensity;
+
+.01*2 => float masterGain; //gainSet;
+
+.5 => float fuzzRatio;
+masterGain*fuzzRatio => fuzzGain1.gain => fuzzGain2.gain => fuzzGain3.gain;
+
+masterGain => kick.gain => tom.gain => snare.gain => kick.gain;
 
 .0 => rev.mix;
 
 5*beat=> kickEcho.max;
 beat*1.5*d2 => kickEcho.delay; //1.5; 1.75 cool; 2.25 // .75*.5 =f time = *1;
 .5 => kickEcho.gain;
-.5 => kickEcho.mix;
+.3 => kickEcho.mix;
 kickEcho => kickEcho;
 
 5*beat=> echo.max;
 beat*1.5*d2 => echo.delay; //1.5; 1.45 1.75 cool; 2.25 // .75*.5 =f time = *1;
 .5 => echo.gain;
-.5 => echo.mix;
+.3 => echo.mix;
 echo => echo;
 
 1. => kick.pitch;
@@ -133,31 +169,29 @@ while (now < future) {
 	.5*beat => now;
 	
 	1 => tom.noteOn;
-    
 	Std.rand2f(.5,5) => tom.pitch;
 	.25*beat => now;
 	1 => tom.noteOff;
 	.25*beat => now;
 	
 	.5*beat => now;
-	
-	
-	1 => snare.noteOn;
+    
+    1 => snare.noteOn;
 	Std.rand2f(.5,3) => snare.pitch;
 	.25*beat => now;
 	1 => snare.noteOff;
 	.25*beat => now;
 	
 	.5*beat => now;
-    
-    1 => tom.noteOn;
-    
+	
+	1 => tom.noteOn;
 	Std.rand2f(.5,5) => tom.pitch;
 	.25*beat => now;
 	1 => tom.noteOff;
 	.25*beat => now;
 	
 	.5*beat => now;
+	
 	
 }
 

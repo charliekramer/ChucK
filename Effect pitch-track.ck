@@ -10,11 +10,11 @@
 // analysis
 adc => PoleZero dcblock => FFT fft => blackhole;
 // synthesis
-Rhodey s => JCRev r => Dyno dyn => Gain gain => dac;
+Saxofony s => JCRev r => Dyno dyn => Gain gain => dac;
 
 10 => gain.gain;
 
-10 => int smooth; // size of window 
+8*2 => int smooth; // size of window 
 .5 => float pitchScale;// scale pitch up/down
 
 // set reverb mix
