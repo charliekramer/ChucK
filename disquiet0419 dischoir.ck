@@ -14,7 +14,7 @@ Std.mtof(69)/Std.mtof(60) => float sixth;
 Std.mtof(71)/Std.mtof(60) => float seventh;
 Std.mtof(72)/Std.mtof(60) => float octave;
 
-1 => int audition;
+0=> int audition;
 
 [1.] @=> float notes[];
 

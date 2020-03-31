@@ -11,7 +11,7 @@ int x[n][n];
 int y[n][n];
 
 Gain master;
-.005/(n*n) => float masterGain => master.gain;
+.005/(n*n)*6 => float masterGain => master.gain;
 
 NRev rev;
 
@@ -23,14 +23,14 @@ SndBuf buf3[n];
 
 "/Users/charleskramer/Desktop/chuck/audio/drum" => string name; // 1/25th version
 
-.3 => rev.mix; 
+.2 => rev.mix; 
 0 => int loop; // choose whether to loop buf
 1 => float rate; // change rate of playback
 1 => int randRate; // randomize playback rate
 1 => int noteDown; // turn off notes after cycle; more spare sounding
 1 => int switchMat; // switch order of i and j to mix it up
 
-60./50.*.25 => float beatSec; // pretty cool to layer *1 and *.5 or *.25
+60./94.*.25 => float beatSec; // pretty cool to layer *1 and *.5 or *.25
 beatSec::second => dur beat;
 
 0 => master.gain;

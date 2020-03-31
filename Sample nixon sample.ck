@@ -75,8 +75,8 @@ beat - (now % beat) => now;
 
 */
  
-//"///Users/charleskramer/Desktop/chuck/audio/thp-nixon-farewell-combined.wav" => nixon.read;
-//41000*55 => marks[0]; // use 16 beats
+"///Users/charleskramer/Desktop/chuck/audio/thp-nixon-farewell-combined.wav" => nixon.read;
+41000*55 => marks[0]; // use 16 beats
 // because only if you've been in the deepest valley
 
 
@@ -94,7 +94,7 @@ while (true) {
     rateNixon => nixon.rate;
     pitchNixon => pitch.shift;
    -1*pan.pan()=> pan.pan;
-    beat*8 =>  now;  // 6; 24 for full sample of farewell
+    beat*20 =>  now;  // 6; 24 for full sample of farewell
 	g.gain()*.9 => g.gain; //use to fade
 }
 

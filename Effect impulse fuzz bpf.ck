@@ -20,10 +20,10 @@ class Fuzz extends Chugen
 
 Impulse imp => BPF filt => Echo echo1 => Fuzz fuzz => NRev rev => Echo echo => Gain gain => dac;
 
-.1 => gain.gain;
+.1*10 => gain.gain;
 
 .2 => rev.mix;
-60./80.*4 => float beatSec;
+60./94.*8 => float beatSec;
 beatSec::second => dur beat;
 5*beat => echo.max;
 1.5*beat => echo.delay;
@@ -39,7 +39,7 @@ echo1 => echo1;
 
 25 => fuzz.intensity;//25
 
-57 => float midiBase;
+57+7+7=> float midiBase;
 Std.mtof(midiBase) => float baseFreq => filt.freq; //110
 1 => filt.Q; // randomly driven below
 

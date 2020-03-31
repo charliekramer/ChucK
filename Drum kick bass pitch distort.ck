@@ -1,11 +1,13 @@
 // based on goth drum machine
 //synch
 
-.3 => float gainSet;
+.05*2*2 => float gainSet;
 
-.05 => float base; // >0; 1 normal ish; .05 freaky
+1. => float base; // >0; 1 normal ish; .05 freaky
+120 => int mod; // 120 normalish, 12 weird
+1. => float pow; // power, 1.0 normalish, lower weirder
 
-60./120.*1 => float beattime;
+60./94.*2 => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -24,7 +26,7 @@ echo => echo;
 SawOsc sin => master => dac;
 gainSet*.8 => sin.gain;
 
-57-24 =>float midiBase;
+57-12 =>float midiBase;
 
 //read files
 me.dir(-1)+"chuck/audio/kick_01.wav" => kick.read;
@@ -43,7 +45,7 @@ kick.samples()=>kick.pos;
     now + beat / 4 => time future;
     
     while (now < future) {    
-        Std.mtof(midiBase)*.5*(1+1/((i%120)*Std.fabs(gain.last())+base)) => sin.freq;
+        Std.mtof(midiBase)*.5*(1+1/((i%mod)*Math.pow(Std.fabs(gain.last()),pow)+base)) => sin.freq;
         1::samp => now; 
     }
        

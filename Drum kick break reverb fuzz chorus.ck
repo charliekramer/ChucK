@@ -20,7 +20,7 @@ class Fuzz extends Chugen
 	}
 }
 
-60./50. => float beattime;
+60./94.*.5 => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -32,14 +32,14 @@ SndBuf snare  => rev => fuzz => c => g => dac;
 SndBuf hat => rev =>fuzz => c => g => dac;
 Shakers shak => rev => fuzz => c => g => dac;
 
-0.001 => g.gain;
+0.005*.1*6 => g.gain;
 
 1 => fuzz.intensity;
 
 0.2 => rev.mix;
 
 .3 => c.mix;
-.25 => c.modFreq;
+.205 => c.modFreq;
 1 => c.modDepth;
 
 1.0 => kick.gain;

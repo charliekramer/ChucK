@@ -1,6 +1,6 @@
-.1*4 => float gainSet;
+.1 => float gainSet;
 
-(60./120.)::second*4 => dur beat;
+(60./94.)::second*2 => dur beat;
 
 beat - (now % beat) => now;
 

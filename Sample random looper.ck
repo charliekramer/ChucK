@@ -1,6 +1,6 @@
 // pulls random loops off sample
 
-.15*20 => float gainSet;
+.15*10 => float gainSet;
 45::second => dur length;
 
 SndBuf2 buffer => Gain inGain => Dyno dyn => HPF l =>  Echo echo => NRev rev => Gain outGain => Gain gain => dac;
@@ -8,7 +8,7 @@ buffer =>  inGain =>  dyn =>  l =>  LiSa loop => echo => PitShift pitch => rev =
 
 SinOsc sin => gain => dac;
 0 => sin.gain; // run ringmod to make this work with 3 => gain.op;
-//spork~ringmod(6,200); //gain, freq
+//spork~ringmod(6,400); //gain, freq
 
 "/Users/charleskramer/Desktop/chuck/audio/apache_break_editor.wav" => buffer.read;
 138 => float loopSpeed; // native speed of loop
@@ -31,7 +31,7 @@ buffer.samples()=>buffer.pos; // so it doesn't play during the synch
 
 
 //208.8*.5 => float BPM; // set this to fix below
-94 => float BPM; // set this to desired BPM
+94*1 => float BPM; // set this to desired BPM
 
 60./BPM => float beatsec;
 beatsec::second => dur beat;

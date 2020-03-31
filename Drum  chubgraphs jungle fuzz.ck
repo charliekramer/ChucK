@@ -112,7 +112,7 @@ float d1, d2; //delay beat divisors; for drums and echo
 
 .25 => d1; 1 => d2; // (.25, 1), (.25, 3) (.5, .5) (2,.125)
 
-120./60*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
+120./94*d1 => float beatSec; // *.25  // half time for rolls// or 1.0 if echo = .75*.5
 beatSec::second => dur beat;
 
 beat - (now % beat) => now;
@@ -126,7 +126,7 @@ dyn1 => Fuzz fuzz1 => Chorus chorus => Gain fuzzGain1 => dac;
 dyn2 => Fuzz fuzz2 => chorus => Gain fuzzGain2 => dac;
 dyn3 => Fuzz fuzz3 => chorus => Gain fuzzGain3 => dac;
 
-.0 => chorus.mix;
+.5 => chorus.mix;
 1. => chorus.modFreq;
 1 => chorus.modDepth;
 
@@ -134,7 +134,7 @@ dyn3 => Fuzz fuzz3 => chorus => Gain fuzzGain3 => dac;
 fuzzI => fuzz2.intensity;
 fuzzI => fuzz3.intensity;
 
-.01*2 => float masterGain; //gainSet;
+.01*20 => float masterGain; //gainSet;
 
 .5 => float fuzzRatio;
 masterGain*fuzzRatio => fuzzGain1.gain => fuzzGain2.gain => fuzzGain3.gain;

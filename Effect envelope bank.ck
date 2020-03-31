@@ -10,12 +10,12 @@ SinOsc LFOSqr => blackhole;
 .04 => LFOTri.freq;
 .03 => LFOSqr.freq;
 
-2*30::second => dur length;
+30::second => dur length;
 
-.5 => float gainSet => sin.gain => tri.gain => sqr.gain;
+.1 => float gainSet => sin.gain => tri.gain => sqr.gain;
 
 //[0.,4.,5.,7.,9.,11] @=> float notes[];
-[0.,12.] @=> float notes[];
+[0.,12] @=> float notes[];
 
 
 45 => float midiBase;
