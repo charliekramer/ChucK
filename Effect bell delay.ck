@@ -1,4 +1,5 @@
 .5 => float gainSet;
+2::minute => dur length;
 
 TubeBell bell => Gain gain => dac;
 gain =>  PitShift pitch => Echo echo => Pan2 pan1 => dac;
@@ -23,7 +24,7 @@ echo => echo;
 
 7::second => dur beat;
 
-now + 10::minute => time future;
+now + length => time future;
 
 while (now < future) {
     1 => bell.noteOn;

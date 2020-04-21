@@ -7,11 +7,11 @@ SinOsc sin => g => dac;
 //spork~ringmod(6,440);
 
 .1*2 => g.gain;
-0.05 => rev.mix; // turn down gain
+0.5 => rev.mix; // turn down gain
 0.9 => rev.gain; //
 1.0 => pitch.mix;
 1 => float pitchNixon;
-1. => float rateNixon;
+1 => float rateNixon;
 
 // synch code
 60./94 => float beattime;
@@ -33,11 +33,11 @@ beat - (now % beat) => now;
 */
 
 // farewell speech
-"/Users/charleskramer/Desktop/chuck/audio/nixon_farewell.wav" => nixon.read;
+//"/Users/charleskramer/Desktop/chuck/audio/nixon_farewell.wav" => nixon.read;
 
 // farewell: sample markers
 
-[0,110000,250000,340000,425000] @=> marks;
+//[0,110000,250000,340000,425000] @=> marks;
 /*
 0. Others may hate you 4 or 8 beat
 1. Those who hate you don't win 8 beat
@@ -75,8 +75,8 @@ beat - (now % beat) => now;
 
 */
  
-"///Users/charleskramer/Desktop/chuck/audio/thp-nixon-farewell-combined.wav" => nixon.read;
-41000*55 => marks[0]; // use 16 beats
+//"///Users/charleskramer/Desktop/chuck/audio/thp-nixon-farewell-combined.wav" => nixon.read;
+//41000*55 => marks[0]; // use 16 beats
 // because only if you've been in the deepest valley
 
 
@@ -94,7 +94,7 @@ while (true) {
     rateNixon => nixon.rate;
     pitchNixon => pitch.shift;
    -1*pan.pan()=> pan.pan;
-    beat*20 =>  now;  // 6; 24 for full sample of farewell
+    beat*24 =>  now;  // 6; 24 for full sample of farewell
 	g.gain()*.9 => g.gain; //use to fade
 }
 

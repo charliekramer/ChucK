@@ -1,6 +1,6 @@
 // midi controller version of impulse LFOspeed
 // to do: program pads
-.5 => float gainSet;
+.5*2 => float gainSet;
 300::second => dur length;
 
 Impulse imp => BPF filt => NRev rev => Dyno dyn => Gain master => dac;

@@ -1,7 +1,7 @@
 //fat phase bass with filter sweep
 
 //time synch code
-60./120.*.5 => float beattime;
+60./80.*1 => float beattime;
 beattime::second=>dur beat;
 beat - (now % beat) => now;
 
@@ -19,7 +19,7 @@ SinOsc t => Phasor p => l => e => g =>  d => dac;
 d.limit;
 
 //set oscillator base frequency
-Std.mtof(36) => s.freq => t.freq => float baseFreq;
+Std.mtof(59-24) => s.freq => t.freq => float baseFreq; // don't subtract 36, freaks
 
 //frequency spreading
 .5 => float delta;
@@ -28,12 +28,12 @@ t.freq()-delta => t.freq;
 
 //set LPF cutoff
 s.freq()*25 => l.freq;
-//1.5 => l.Q;
+//1.50 => l.Q;
 
 // phaser parameters; c is carrier
 SinOsc c => p;
-.001 => c.freq;
-7 => c.gain;
+1000*.0001 => c.freq;//.001 crank for noise
+70 => c.gain;//7
 4 => p.gain;
 1 => p.sync;
 

@@ -1,4 +1,4 @@
-.1 => float gainSet;
+.1*20 => float gainSet;
 5 => int n; // dimension of lattice
 float A[n][n]; // status matrix
 float B[2][2]; // sensitivity matrix
@@ -11,9 +11,9 @@ MidiMsg msg;
 
 1::minute => dur length;
 
-60-36+12 => float midiBase;
-[0.,4.,7.,9.,12.] @=> float notes[];
-[0.,2.,5.,9.,4.] @=> notes;
+60-36 => float midiBase;
+[0.,4.,7.,9.,11,12.] @=> float notes[];
+//[0.,4.,5.,9.,6.] @=> notes;
 
 for (0 => int i; i< A.cap(); i++) {
     for (0 => int j; j < A.cap(); j++) {
