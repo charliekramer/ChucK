@@ -2,8 +2,8 @@
 
 .5 => float masterGain;
 
-5 => int pulses;
-3 => int onsets;
+11 => int pulses;
+9 => int onsets;
 
 
 SndBuf2 sv[10]; // sound vector
@@ -34,7 +34,7 @@ for (0 => int i; i < sv.cap(); i++) {
     sv[i] => echo[i] => rev[i] => gain[i]=> dac;
     masterGain => gain[i].gain;
     .1 => rev[i].mix;
-    .3 => echo[i].mix;
+    .2 => echo[i].mix;
     .4 => echo[i].gain;
     10::second => echo[i].max;
     1.5*beat => echo[i].delay;
@@ -63,7 +63,7 @@ for (0 => int i; i < pulses; i++) {
 40 => int k1;
 31 => int k2; // fire new bass if j % k1 > k2;
 
-
+spork~hat(2,.5, 1); // beatdiv, gain, random gain/rate
     
 while (true) {
     for (0 => int i; i < pulses; i++) {
@@ -77,21 +77,60 @@ while (true) {
             Std.rand2f(.7,1.5) => sv[0].gain;
             0 => sv[0].pos;  
         }
+         
+        //if (j % k1 > k2) {
+        //    Std.rand2f(2,4) => sv[3].rate;
+        //    0 => sv[3].pos;
+        //    <<< "roll" >>>;
+        //}
         
-        Std.rand2f(.5,2) => sv[8].rate;
-        Std.rand2f(.3,.5) => sv[8].gain;
-        0 => sv[8].pos;
-        
-        if (j % k1 > k2) {
-            Std.rand2f(2,4) => sv[3].rate;
-            0 => sv[3].pos;
-            <<< "roll" >>>;
-        }
+        if (Std.rand2f(0,1) > .9) spork~roll();
         
         beat => now;
         
         j++;
    }
 }
+
+fun void hat (float beatDiv, float gain, int random) {
+    gain => sv[8].gain;
+    [1., 1., 1., 1., 1., 1., 1., .5, 2., 3., 4.] @=> float divisors[];
+    1 => float randDiv;
+    while (true) {
+        0 => sv[8].pos;
+        if (random == 1) {
+            Std.rand2f(.5,2) => sv[8].rate;
+            Std.rand2f(gain*.7,gain/.7) => sv[8].gain;
+            if(Std.rand2f(0,1) > .9) {
+                divisors[Std.rand2(0, divisors.cap()-1)] => randDiv;
+                <<< "hat" , randDiv>>>;
+            }
+        }
+        1./(beatDiv*randDiv)*beat => now;
+    }
+}
+
+fun void roll() {
+    Std.rand2(1,8) => int beat1;
+    Std.rand2(1,4) => int rate1;
+    Std.rand2(1,8) => int beat2;
+    Std.rand2(1,4) => int rate2;
+    
+    <<< "roll, beat 1" , beat1, "rate1", rate1, "beat2", beat2, "rate2", rate2 >>>;
+   
+    for (0 => int i; i< beat1; i++) {
+        0 => sv[3].pos;
+        Std.rand2f(.5,6) => sv[3].rate;
+        beat/rate1 => now;
+    }
+    
+    for (0 => int i; i< beat2; i++) {
+        0 => sv[4].pos;
+        Std.rand2f(.5,6) => sv[4].rate;
+        beat/rate2 => now;
+    }
+}
+        
+        
 
 //1001010100101010
