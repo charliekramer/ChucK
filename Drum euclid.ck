@@ -1,6 +1,6 @@
 // https://medium.com/code-music-noise/euclidean-rhythms-391d879494df
 
-.5 => float masterGain;
+.5*1.5 => float masterGain;
 
 11 => int pulses;
 9 => int onsets;

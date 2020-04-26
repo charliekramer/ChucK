@@ -2,10 +2,14 @@ Rhodey rhodes    => NRev rev => Pan2 pan1 => dac;
 BeeThree rhodes2 =>      rev => Pan2 pan2 => dac;
 ModalBar rhodes3 =>      rev => Pan2 pan3 => dac;
 
+.1 => float gainSet;
+
 .2 => rev.mix;
 
+gainSet => rhodes.gain => rhodes2.gain;
+
 1 => rhodes3.preset;
-2 => rhodes3.gain;
+2*gainSet => rhodes3.gain;
 0 => rhodes3.damp;
 
 -0.75 => pan1.pan;
@@ -15,12 +19,13 @@ ModalBar rhodes3 =>      rev => Pan2 pan3 => dac;
 0 => int notesOff; //1 = turn off notes after play; may want separate function
 0 => int synch; // send synch code after bursts
 
-44 => int midiBase;
+59-24 => int midiBase; //44
 
 [0,2,4,5,7,9,11,12] @=> int notes[];
 
-60./120. => float beatSec;
+60./94. => float beatSec; //120 
 beatSec::second => dur beat;
+beat - (now % beat) => now;
 
 [.25*beat, .25*beat, .5*beat, .5*beat, beat, 2*beat, 2*beat, 4*beat] @=> dur beats[]; 
 

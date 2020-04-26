@@ -4,12 +4,12 @@ SndBuf buf[n];
 dur length[n];
 Impulse imp => LPF filter => NRev rev => Dyno dyn => dac;
 
-880 => filter.freq;
+880 => float filt_freq;
 2 => filter.Q;
 
 .2 => rev.mix;
 
--.5 => float fraction; // how much of 
+-.2 => float fraction; // how much of 
 8 => float jump; // ms to add to skip value derived from sample 2
 .5 => float skipCoeff; // coefficent on abs sample in skipper 
 
@@ -67,7 +67,7 @@ fun void filt_sweep () {
 	.1 => sin.freq;
 	3.2 => sin2.freq;
 	while (true) {
-		(1+sin.last())*(1+sin2.last())*880 => filter.freq;
+		(1+sin.last())*(1+sin2.last())*filt_freq => filter.freq;
 		1::samp => now;
 	}
 }
