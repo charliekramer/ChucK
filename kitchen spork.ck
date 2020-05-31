@@ -5,7 +5,7 @@ Gain gain => dac;
 
 int minTime, maxTime;
 
-now + 20::second => time future;
+now + 2::minute + 50::second => time future;
 
 while (now < future) {
     
