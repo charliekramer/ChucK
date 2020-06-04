@@ -86,6 +86,9 @@ beat - (now % beat) => now;
 //"/Users/charleskramer/Desktop/chuck/audio/nixon_peace.wav" => nixon.read;
 //0 => marks[0];
 
+"/Users/charleskramer/Desktop/chuck/audio/nixon_humiliate.wav" => nixon.read;
+0 => marks[0];
+
 
 1.0 => pan.pan;
 
