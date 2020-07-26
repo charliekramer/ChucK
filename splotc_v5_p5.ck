@@ -5,6 +5,8 @@
 Noise osc => LPF filt => Dyno noiseDyn => Pan2 pan => dac;
 Clarinet clarinet => Echo echo => NRev rev => Dyno clarinetDyn => pan => dac;
 
+3. => float noiseRatio; // ratio of noise to clarinet volume
+
 5::second => echo.max;
 .75::second => echo.delay;
 .7 => echo.mix;
@@ -36,7 +38,8 @@ while (true) {
     while ( oin.recv(msg) != 0 )
     { 
         // getFloat fetches the expected float (as indicated by "f")
-        msg.getFloat(0)*gainSet => osc.gain => clarinet.gain;
+        msg.getFloat(0)*gainSet => clarinet.gain;
+        clarinet.gain()*noiseRatio => osc.gain;
         msg.getFloat(1)*hiFreq+loFreq => filt.freq => clarinet.freq;
         msg.getFloat(2) => pan.pan;
         //<<< osc.gain(), filt.freq(), pan.pan() >>>;
