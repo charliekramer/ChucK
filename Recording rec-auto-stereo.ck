@@ -13,7 +13,7 @@ dac => WvOut2 w => blackhole;
 //"chuck-session" => w.autoPrefix;
 
 // this is the output file name
-"/Users/charleskramer/Desktop/chuck/audio/recording.wav" => w.wavFilename;
+"/Users/charleskramer/Desktop/chuck/audio/fried.wav" => w.wavFilename;
 
 // print it out
 <<<"writing to file: ", w.filename()>>>;
