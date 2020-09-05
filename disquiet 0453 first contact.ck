@@ -4,13 +4,13 @@
 100::second => dur length;
 
 
-Impulse imp1 => Gain gain1 => Gain masterL => dac.left;
-Impulse imp2 => Gain gain2 => masterL => dac.left;
-Impulse imp3 => Gain gain3 => masterL => dac.left;
+Impulse imp1 => Gain gain1 => Gain masterL => Dyno dynL => dac.left;
+Impulse imp2 => Gain gain2 => masterL => dynL => dac.left;
+Impulse imp3 => Gain gain3 => masterL => dynL => dac.left;
 
-gain1 => BPF filt1 => Echo echoR => dac.right;
-gain2 => BPF filt2 =>  echoR => dac.right;
-gain3 => BPF filt3 => echoR => dac.right;
+gain1 => BPF filt1 => Echo echoR => Dyno dynR => dac.right;
+gain2 => BPF filt2 =>  echoR => dynR => dac.right;
+gain3 => BPF filt3 => echoR => dynR => dac.right;
 
 SinOsc rateLFO => blackhole;
 .01 => rateLFO.freq;
@@ -57,6 +57,9 @@ echoR => Echo echoL => dac.left;
 17.5*beat/2 => echoL.delay;
 .75 => echoL.gain;
 1 => echoL.mix;
+
+echoR => NRev revR => dac.right;
+echoL => NRev revL => dac.left;
 
 now + length => future;
 
