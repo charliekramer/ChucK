@@ -31,58 +31,71 @@ echo => echo;
 
 26 => int sampleChoose;
 
+
 if (sampleChoose == 1) 
-{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
 else if (sampleChoose == 2) 
-{"/Users/charleskramer/Desktop/chuck/audio/wait_wilson.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/wait_wilson.wav" => click.read;}
 else if (sampleChoose == 3)
-{"/Users/charleskramer/Desktop/chuck/audio/lincolnshire_numberstation.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/lincolnshire_numberstation.wav" => click.read;}
 else if (sampleChoose == 4)
-{"/Users/charleskramer/Desktop/chuck/audio/tyrolean_numberstation.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/tyrolean_numberstation.wav" => click.read;}
 else if (sampleChoose == 5)
-{"/Users/charleskramer/Desktop/chuck/audio/buzzer_numberstation.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/buzzer_numberstation.wav" => click.read;}
 else if (sampleChoose == 6)
-{"/Users/charleskramer/Desktop/chuck/audio/pulse_sample.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/pulse_sample.wav" => click.read;}
 else if (sampleChoose == 7)
-{"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/voicemail-31.wav" => click.read;}
 else if (sampleChoose == 8)
-{"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/delme.wav" => click.read;}
 else if (sampleChoose == 9)
-{"/Users/charleskramer/Desktop/chuck/audio/nari-lata-vela.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/nari-lata-vela.wav" => click.read;}
 else if (sampleChoose == 10)
-{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesAnnouncement.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesAnnouncement.wav" => click.read;}
 else if (sampleChoose == 11)
-{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesBackgroundMusic.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesBackgroundMusic.wav" => click.read;}
 else if (sampleChoose == 12)
-{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesLanding.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesLanding.wav" => click.read;}
 else if (sampleChoose == 13)
-{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesTakeoff.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/ethiopianAirlinesTakeoff.wav" => click.read;}
 else if (sampleChoose == 14)
-{"/Users/charleskramer/Desktop/chuck/audio/Sheriff_2014-12-04.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/Sheriff_2014-12-04.wav" => click.read;}
 else if (sampleChoose == 15)
-{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => click.read;}
 else if (sampleChoose == 16)
-{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano_edit.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano_edit.wav" => click.read;}
 else if (sampleChoose == 17)
-{"/Users/charleskramer/Desktop/chuck/audio/voicemail_goodbye.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/voicemail_goodbye.wav" => click.read;}
 else if (sampleChoose == 18)
-{"/Users/charleskramer/Desktop/chuck/audio/voicemail_unsecured_dad.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/voicemail_unsecured_dad.wav" => click.read;}
 else if (sampleChoose == 19)
-{"/Users/charleskramer/Desktop/chuck/audio/glitchvector.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/glitchvector.wav" => click.read;}
 else if (sampleChoose == 20)
-{"/Users/charleskramer/Desktop/chuck/audio/countdown.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/countdown.wav" => click.read;}
 else if (sampleChoose == 21)
-{"/Users/charleskramer/Desktop/chuck/audio/mower_edit.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/mower_edit.wav" => click.read;}
 else if (sampleChoose == 22)
-{"/Users/charleskramer/Desktop/chuck/audio/cartoons.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/cartoons.wav" => click.read;}
 else if (sampleChoose == 23)
-{"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-english.wav" => click.read;}
 else if (sampleChoose == 24)
-{"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_2.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-german.wav" => click.read;}
 else if (sampleChoose == 25)
-{"/Users/charleskramer/Desktop/chuck/audio/PB_radio.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/numberstation-808-both.wav" => click.read;}
 else if (sampleChoose == 26)
-{"/Users/charleskramer/Desktop/chuck/audio/breathe.wav" => buf2.read;}
+{"/Users/charleskramer/Desktop/chuck/audio/eric-mcluhan-kmox-10-sea-of-information.wav" => click.read;}
+else if (sampleChoose == 27)
+{"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => click.read;}
+else if (sampleChoose == 28)
+{"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_2.wav" => click.read;}
+else if (sampleChoose == 29)
+{"/Users/charleskramer/Desktop/chuck/audio/PB_radio.wav" => click.read;}
+else if (sampleChoose == 30)
+{"/Users/charleskramer/Desktop/chuck/audio/breathe.wav" => click.read;}
+else if (sampleChoose == 31)
+{"/Users/charleskramer/Desktop/chuck/audio/afc1939007_afs02246b.wav" => click.read;}
+else if (sampleChoose == 32)
+{"/Users/charleskramer/Desktop/chuck/audio/04252020.wav" => click.read;} //ambient recording april 25 2020
 
 
 

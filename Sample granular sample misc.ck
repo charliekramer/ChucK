@@ -1,8 +1,9 @@
-//sample manipulator/grandulator
+//sample manipulator/grandulator, echo and reverb and pitch shift
+// see below for options
 // miscellaneous samples
 // stops at time "future"
 
-.2*10 => float gainSet;
+.02*10 => float gainSet;
 
 now + 45::second => time future;
 
@@ -21,8 +22,7 @@ SinOsc sin => gain => dac;
 0 => sin.gain;
 //spork~ringmod(6,333);
 
-60./94. => float beatsec;
-1 => click.rate;
+60./60. => float beatsec;
 beatsec::second => dur beat;
 beat - (now % beat) => now;
 
@@ -41,12 +41,13 @@ beat - (now % beat) => now;
 // 12 => multi rate LFO (product of rateLFO1 and rateLFO2, above)
 
 
-12 => int chooser;
-200 => int nBeats;
-1./1.0 => float bufPitch => pitch.shift; // for weird secrest = 5 and rate = .1
-0.9 => pitch.mix; // for weird secrest = .9
-0 => click.loop;
-1 => float bufRate => click.rate; // may be overridden in function;for weird secrest = .1
+3 => int chooser;
+40 => int nBeats;
+(5/1.0-.7)*1.1*1.1 => float bufPitch => pitch.shift; // for weird secrest = 5 and rate = .1
+1*.9 => pitch.mix; // for weird secrest = .9
+1 => click.loop;
+.1 => float bufRate => click.rate; // may be overridden in function;for weird secrest = .1
+61*44100*0 => int startPos;
 
 .1 => LFO.freq;
 
@@ -56,10 +57,10 @@ beat - (now % beat) => now;
 .5 => echo.gain;
 echo => echo;
 
-0.1 => rev.mix;
+0.7 => rev.mix;
 
 gainSet => click.gain;
-29 => int sampleChoose; // 28 is secrest
+32 => int sampleChoose; // 28 is secrest
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -119,6 +120,14 @@ gainSet => click.gain;
     {"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_2.wav" => click.read;}
     else if (sampleChoose == 29)
     {"/Users/charleskramer/Desktop/chuck/audio/PB_radio.wav" => click.read;}
+    else if (sampleChoose == 30)
+    {"/Users/charleskramer/Desktop/chuck/audio/breathe.wav" => click.read;}
+    else if (sampleChoose == 31)
+    {"/Users/charleskramer/Desktop/chuck/audio/afc1939007_afs02246b.wav" => click.read;} //https://www.loc.gov/item/afc1939007_afs02246b/
+    else if (sampleChoose == 32)
+    {"/Users/charleskramer/Desktop/chuck/audio/04252020.wav" => click.read;} //ambient recording april 25 2020
+    
+
 
 	
 	
@@ -137,11 +146,11 @@ fun void granularize(SndBuf myWav, int steps)
 
 fun void speedBuf (SndBuf myWav, float speed, dur playTime, float pitchCorrect)
 {
-    0=>myWav.pos;
+    startPos=>myWav.pos;
     speed => myWav.rate;
     pitchCorrect => pitch.shift;
     1 => pitch.mix;
-    1 => myWav.loop;
+    0 => myWav.loop;
     playTime => now;
     
 }
@@ -219,7 +228,7 @@ while (now < future) {
     else if (chooser == 3)
     {
         0 => click.pos;
-        beat*160=> now;
+        beat*nBeats=> now;
     }
     else if (chooser == 4)
     {
@@ -248,7 +257,8 @@ while (now < future) {
 		
 	}
 	else if(chooser == 8) 
-	{
+	{   
+        startPos => click.pos;
 		.7 => float factor;
 		while (now < future) {
 		spork~speedBuf (click, .5/factor, beat*4*factor, 1.);
