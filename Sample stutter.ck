@@ -1,10 +1,17 @@
 //timed (see below) 
 
-Impulse imp  => PitShift pitch => dac;
+3 => float gainSet;
+
+.5::minute => dur length;
+
+Impulse imp  => PitShift pitch => Gain gain => dac;
 SndBuf s => blackhole;
 
+gainSet => gain.gain;
+
 "/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => s.read;
-"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => s.read;
+//"/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => s.read;
+"/Users/charleskramer/Desktop/chuck/audio/nixon_humiliate.wav" => s.read;
 
 
 //"/Users/charleskramer/Desktop/chuck/audio/apache_break_editor.wav" => s.read;
@@ -42,7 +49,7 @@ beatMs::ms => dur beat;
 
 int holder;
 
-now + 20::second => time future;
+now + length => time future;
 
 while (now < future) {
 	
