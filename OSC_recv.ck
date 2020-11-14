@@ -1,15 +1,18 @@
+.2 => float gainSet;
 // (launch with OSC_send.ck)
 5 => int n;
+.5 => float freqMult; // multiplies freq of all Oscs
 SinOsc sin[n];
-// the patch
+// the patch 
 SndBuf buf => dac;
 
 Echo echo;
-.5::second => echo.max => echo.delay;
+2*1.5::second => echo.max => echo.delay;
 .5 => echo.mix => echo.gain;
 echo => echo;
 for (0 => int i; i < n; i++) {
     sin[i] => echo => dac;
+    gainSet => sin[i].gain;
 }
 // load the file
 me.dir(-1) + "data/snare.wav" => buf.read;
@@ -36,7 +39,7 @@ while ( true )
     { 
         // getFloat fetches the expected float (as indicated by "f")
         for (0 => int i; i < n; i++) {
-            msg.getFloat(i) => sin[i].freq;
+            msg.getFloat(i)*freqMult => sin[i].freq;
         }
         // print
         <<< "got (via OSC):", buf.play() >>>;
