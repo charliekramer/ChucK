@@ -1,18 +1,23 @@
 .01 => float gainSet;
 
-11-.015 => float midiBase; // 11 interesting
+55+7 => float midiBase; // 11 interesting
 
-31 => float gainMult;
-43 => float freqMult;
-.0001 => float echoMin;// in seconds
-.0005 => float echoMax; // seconds
+510 => float gainMult;
+21 => float freqMult;
+.1 => float echoMin;// in seconds
+5 => float echoMax; // seconds < 10
+.1 => float minFreqShock; // frequency shocks in FM
+2.1 => float maxFreqShock;
+
+20::second => dur play;
+60::second => dur outro;
 
 
 3 => int nOsc; // <= dimension of arrays as filled below;
                // could algorithmically define from fibonacci formula
 SinOsc osc[nOsc]; //try different oscs
 
-TriOsc LFO[nOsc];
+TriOsc LFO[nOsc]; // try different oscs
 
 Envelope env[nOsc]; 
 
@@ -31,7 +36,7 @@ float gains[nOsc];
 [100.,100.,100.,100.,100.,100.,100.,100.,100.] @=> gains;
 
 for (0 => int i; i < nOsc; i++) {
-    2::second => echo[i].max;
+    10::second => echo[i].max;
     Std.rand2f(echoMin,echoMax)::second => echo[i].delay;
     .8 => echo[i].mix => echo[i].gain;
     echo[i] => echo[i];
@@ -50,13 +55,13 @@ float sum;
 spork~FMs();
 spork~LFO_LFO();
 
-15::second => now;
+play => now;
 
 for (0 => int i; i < nOsc; i++) {
     1 => env[i].keyOff;
 }
 
-30::second => now;
+outro => now;
 
 fun void FMs() {
     while (true) {
@@ -64,7 +69,7 @@ fun void FMs() {
             for (0 => int j; j <= i; j++) {
                 sum + LFO[j].last() => sum;
             }
-            sum + Std.mtof(midiBase)*Std.rand2f(.9,1.1) => osc[i].freq;
+            sum + Std.mtof(midiBase)*Std.rand2f(minFreqShock,maxFreqShock) => osc[i].freq;
            
        }
         0 => sum;
