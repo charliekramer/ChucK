@@ -18,9 +18,14 @@ SinOsc rateLFO2 => blackhole;
 5 => rateLFO2.freq;
 .1 => rateLFO2.gain;
 
-SinOsc sin => gain => dac;
+SinOsc sin => gain => dac; 
 0 => sin.gain;
 //spork~ringmod(6,333);
+
+SqrOsc oscVC => Gain vcGain => pitch => echo => rev => gain => dac;
+SawOsc oscVC2 =>  vcGain => pitch => echo => rev => gain => dac;
+15 => oscVC.freq => oscVC2.freq;
+0 => vcGain.gain;
 
 60./60. => float beatsec;
 beatsec::second => dur beat;
@@ -39,14 +44,15 @@ beat - (now % beat) => now;
 // 10 => skip = exp(gain) (zeros volume)
 // 11 => skip = exp(gain) (skips samples)
 // 12 => multi rate LFO (product of rateLFO1 and rateLFO2, above)
+// 13 => cheapo vocoder(doesn't really work yet)
 
 
-3 => int chooser;
+13 => int chooser;
 40 => int nBeats;
-(5/1.0-.7)*1.1*1.1 => float bufPitch => pitch.shift; // for weird secrest = 5 and rate = .1
-1*.9 => pitch.mix; // for weird secrest = .9
+1 => float bufPitch => pitch.shift; // for weird secrest = 5 and rate = .1
+1 => pitch.mix; // for weird secrest = .9
 1 => click.loop;
-.1 => float bufRate => click.rate; // may be overridden in function;for weird secrest = .1
+.1/.1 => float bufRate => click.rate; // may be overridden in function;for weird secrest = .1
 61*44100*0 => int startPos;
 
 .1 => LFO.freq;
@@ -57,10 +63,10 @@ beat - (now % beat) => now;
 .5 => echo.gain;
 echo => echo;
 
-0.7 => rev.mix;
+0.7*0 => rev.mix;
 
 gainSet => click.gain;
-32 => int sampleChoose; // 28 is secrest
+28 => int sampleChoose; // 28 is secrest
 
     if (sampleChoose == 1) 
 	{"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav" => click.read;}
@@ -127,12 +133,6 @@ gainSet => click.gain;
     else if (sampleChoose == 32)
     {"/Users/charleskramer/Desktop/chuck/audio/04252020.wav" => click.read;} //ambient recording april 25 2020
     
-
-
-	
-	
-	
-
 
 0 => click.pos;
 
@@ -283,13 +283,22 @@ while (now < future) {
         expSkipSamp(click,.2); 
         
     }
-    else {
+    else if (chooser == 12) 
+    {    
         (1+rateLFO1.last())*(1+rateLFO2.last()) => click.rate;
         1::samp => now;
         if (click.pos() == click.samples()) 0 => click.pos;
     }
+    else 
+    {
+        Std.fabs(click.last())*gainSet => vcGain.gain;
+        0 => dyn.gain;
+        1::samp => now;
+    }
         
 }
+
+
 
 fun void ringmod(float _gain, float _freq) {
     3 => gain.op;
