@@ -1,8 +1,11 @@
 .5 => float gainSet;
 
-SndBuf2 buf => ADSR env => NRev rev => Echo echo => dac;
+SndBuf2 buf => ADSR env => PitShift pitch => NRev rev => Echo echo => dac;
 
 gainSet => buf.gain;
+
+1 => pitch.mix;
+1 => pitch.shift;
 
 .7 => buf.rate; //.7
 
