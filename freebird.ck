@@ -1,8 +1,13 @@
 .5 => float gainSet;
 
-SndBuf2 buf => ADSR env => PitShift pitch => NRev rev => Echo echo => dac;
+30::second => dur length;
+
+SndBuf2 buf => ADSR env => PitShift pitch => NRev rev => Echo echo => Pan2 pan => dac;
 
 gainSet => buf.gain;
+
+.1 => rev.mix;
+0 => pan.pan;
 
 1 => pitch.mix;
 1 => pitch.shift;
@@ -31,10 +36,16 @@ echo => echo;
 
 0 => buf.pos;
 
-while (true) {
+now + length => time future;
+
+while (now < future) {
     1 => env.keyOn;
     a => now;
     1 => env.keyOff;
     r => now;
     Std.rand2(0,buf.samples()) => buf.pos;   
 }
+
+buf.samples() => buf.pos;
+
+10::second => now;
