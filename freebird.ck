@@ -1,4 +1,4 @@
-.5 => float gainSet;
+.1 => float gainSet;
 
 30::second => dur length;
 
@@ -18,14 +18,17 @@ gainSet => buf.gain;
 
 n*50::ms => dur beat;
 
-beat => dur a; //all 50 ms
-beat => dur d;
-beat => dur r;
+1 => float ratio; // 1 for even sound, small for hard attack
 
-beat - (now % beat) => now; 
+beat*ratio => dur a; //all 50 ms
+beat*1 => dur d;
+beat*(2-ratio) => dur r;
 
+4*beat - (now % (4*beat)) => now; 
+
+1 => float r_echo; // 2, 4, 8, 3, 6, or < 1 for cylon
 2::second => echo.max;
-(a+d)*2 => echo.delay; //2*(a+d)
+(a+d)*r_echo => echo.delay; //2*(a+d)
 .7 => echo.mix;
 .7 => echo.gain;
 echo => echo;
