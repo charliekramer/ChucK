@@ -1,14 +1,14 @@
 //timed (see below) 
 
-.5 => float gainSet;
+2*.5 => float gainSet;
 
-2*.5::minute => dur length;
+.5::minute => dur length;
 
 SndBuf s  => PitShift pitch => Echo echo => Gain gain => dac;
 
 
-.1 => s.rate;
-7 => pitch.shift;
+.16/(1.5*1.5) => s.rate;
+1.15*1.5*1.5 => pitch.shift;
 1 => pitch.mix;
 
 5::ms => echo.delay;
@@ -47,3 +47,8 @@ while (now < future) {
 1::samp => now;
 
 }
+0 => s.loop;
+
+loop.samples() => s.pos;
+
+10::second => now;
