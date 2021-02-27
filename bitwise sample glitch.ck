@@ -1,9 +1,15 @@
 .05 => float gainSet;
-.05 => float downGain; // trim gain on second patch
-.5 => float downGain2; // trim gain on fourth patch
-3 => float upGain; // boost on third patch
+60::second => dur length;
 
-3 => int chooser;
+.15 => float downGain; // trim gain on second patch
+.7 => float downGain2; // trim gain on fourth patch
+1. => float upGain; // boost on third patch
+
+4 => int chooser;
+
+if (chooser == 2) gainSet*downGain => gainSet;
+if (chooser == 3) gainSet*upGain => gainSet;
+if (chooser == 4) gainSet*downGain2 => gainSet;
 
 SndBuf buf => blackhole;
 SinOsc LFOm => blackhole;
@@ -12,10 +18,15 @@ SinOsc LFOd => blackhole;
 .5 => LFOm.freq;
 .25 => LFOd.freq;
 
-Impulse imp => Echo echo => NRev rev => Dyno dyn => Echo echo2 => Gain gain => dac;
+Impulse imp => PoleZero filt => Echo echo => NRev rev => Dyno dyn => Echo echo2 => Gain gain => dac;
 
-2::second => echo.max;
-1000::samp => echo.delay; // 1000 samp for cylon sounds
+.99 => filt.blockZero;
+
+200 => int echoMin;
+3500 => int echoMax;
+
+4::second => echo.max;
+echoMin::samp => echo.delay; // 1000 samp for cylon sounds
 .9 => echo.gain;
 .9 => echo.mix;
 echo => echo;
@@ -27,9 +38,6 @@ Std.rand2f(.25,1.5)::second => echo2.delay;
 echo2 => echo2;
 
 gainSet => gain.gain;
-
-30::second => dur length;
-
 
 "/Users/charleskramer/Desktop/chuck/audio/secrest_poem_2.wav" => buf.read;
 
@@ -47,7 +55,7 @@ spork~tweakEcho();
 while (now < future) {
     
     mBase*(50+24*LFOm.last()) => m;
-    dBase*(50+24*LFOm.last()) => d;
+    dBase*(50+24*LFOd.last()) => d;
     
     if (chooser == 1) Std.ftoi((m*buf.last()) % d)/m => imp.next;
     
@@ -77,7 +85,7 @@ fun void tweakEcho() {
     while (true) {
         if (Std.rand2f(0,1) > .9) {
             <<< "echo trigger" >>>;
-            Std.rand2f(200,3500)::samp => echo.delay;
+            Std.rand2f(echoMin,echoMax)::samp => echo.delay;
         }
      .25::second => now;   
     }
