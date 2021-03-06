@@ -14,7 +14,7 @@ SndBuf2 radio => Envelope envRadio => PitShift pitchRadio => master => dac;
 10*1 => float radioBase => radio.gain;
 
 .125 => radio.rate => rain.rate => drive.rate;
-.125::second*10 => dur beat;
+.125::second*.25 => dur beat;
 
 1 => radio.loop;
 1 => drive.loop;
@@ -41,6 +41,10 @@ while (now < future) {
     if (Std.rand2f(0,1) > pDrive) 1 => envDrive.keyOn;
     if (Std.rand2f(0,1) > pRain) 1 => envRain.keyOn;
     Std.rand2(1,12)*beat => now;
+    
+    1 => envRadio.keyOff;
+    1 => envRain.keyOff;
+    1 => envDrive.keyOff;
 
 }
 
