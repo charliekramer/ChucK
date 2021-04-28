@@ -22,14 +22,13 @@ while(now < future) {
 
 }
 
-2*beat => now;
-
-
+30::second => now;
 
 
 fun void piano_go() {
     SndBuf buf => Echo echo => NRev rev => Envelope env => Pan2 pan => dac;
     "/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => buf.read;
+    //"/Users/charleskramer/Desktop/chuck/audio/National_Anthem_performed_at_CPAC_2021.wav" => buf.read;
     gainSet => buf.gain;
     Std.rand2f(.5,4)*beat => env.duration;
     Std.rand2f(-1,1) => buf.rate;
