@@ -1,9 +1,12 @@
 
 .3 => float gainSet;
 
-5::minute => dur length;
+2::minute => dur length;
 
 5::second => dur beat;
+
+1 => int delta; // draw from percentage diff from zero distribution
+.01 => float diff; // if so distribution is uniform on 1 + - diff
 
 int n;
 
@@ -27,11 +30,14 @@ while(now < future) {
 
 fun void piano_go() {
     SndBuf buf => Echo echo => NRev rev => Envelope env => Pan2 pan => dac;
-    "/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => buf.read;
+    //"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => buf.read;
     //"/Users/charleskramer/Desktop/chuck/audio/National_Anthem_performed_at_CPAC_2021.wav" => buf.read;
+    "/Users/charleskramer/Desktop/chuck/audio/guitar_drone.wav" => buf.read;
     gainSet => buf.gain;
     Std.rand2f(.5,4)*beat => env.duration;
     Std.rand2f(-1,1) => buf.rate;
+    if (delta == 1) Math.pow(-1,Std.rand2(0,1))*Std.rand2f(1.-diff,1+diff) => buf.rate;
+    <<< "buf rate", buf.rate() >>>;
     Std.rand2(0,buf.samples()) => buf.pos;
     Std.rand2f(-1,1.) => pan.pan;
     Std.rand2f(0,1) => rev.mix;
