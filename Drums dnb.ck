@@ -1,12 +1,15 @@
-.2 => float gainSet;
+.01*.05 => float gainSet;
 
 SndBuf2 dnb[12];
+PitShift pitch;
+1. => pitch.mix;
+1 => pitch.shift;
 Gain gain;
 
 gainSet => gain.gain;
 
 160. => float loopSpeed;
-160. => float BPM;
+140. => float BPM;
 60./BPM => float beatSec;
 beatSec::second => dur beat;
 
@@ -14,13 +17,14 @@ beat - (now % beat) => now;
 
 BPM/loopSpeed => float bufRate; 
 
+
 "/Users/charleskramer/Desktop/chuck/audio/dnb" => string name;
 string filename;
 
 for (0 => int i; i < dnb.cap(); i++) {
     name + (i+1) + ".wav" => dnb[i].read;
     bufRate => dnb[i].rate;
-    dnb[i] => dac;
+    dnb[i] => pitch => gain => dac;
     dnb[i].samples() => dnb[i].pos;
     0 => dnb[i].loop;
     
