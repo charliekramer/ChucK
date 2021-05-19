@@ -49,6 +49,6 @@ while (now < future) {
 }
 0 => s.loop;
 
-loop.samples() => s.pos;
+s.samples() => s.pos;
 
 10::second => now;

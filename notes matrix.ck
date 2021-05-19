@@ -1,11 +1,11 @@
 
-0.2 => float gainSet;
+0.1 => float gainSet;
 
-67-12-12 => float midiBase;
+67-12-12-12 => float midiBase;
 
-.25::second*8 => dur beat;
+.25::second*32 => dur beat; //shorter for wurley
 
-60::second => dur length;
+120::second => dur length;
 
 [[0.,2.,4.,5.],
 
@@ -26,7 +26,7 @@ for (0 => int i; i < 6; i++) {
 }
 
 4 => int nOsc;
-Wurley osc[nOsc];
+Clarinet osc[nOsc]; // or wurley
 Echo echo[nOsc];
 NRev rev[nOsc] ;
 Pan2 pan[nOsc];
