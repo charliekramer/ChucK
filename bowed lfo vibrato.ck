@@ -1,10 +1,13 @@
 Bowed osc => Gain gain => NRev revL => Pan2 panL => dac;
 gain => Echo echo => NRev revR => Pan2 panR => dac;
 
-.3 => float gainSet;
-47-12 => float midiBase;
-.04 => float vibGain; // .40 => weird freakout
+.3*10 => float gainSet;
+47-12-.3 => float midiBase;
+.01 => float vibGain; // .40 => weird freakout
+400.2 => float vibFreq;
 90::second => dur length;
+
+gainSet => osc.gain;
 
 5::second => echo.max => echo.delay;
 .7 => echo.mix;
@@ -21,7 +24,7 @@ Std.mtof(midiBase) => osc.freq;
 .5 => osc.bowPressure;
 .5 => osc.bowPosition;
 
-400.2 => osc.vibratoFreq;
+vibFreq => osc.vibratoFreq;
 
 vibGain => osc.vibratoGain;
 
