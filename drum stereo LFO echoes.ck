@@ -1,19 +1,23 @@
-.2 => float gainSet;
+.1 => float gainSet;
 
-120 => float BPM;
+63 => float BPM;
 
 5::minute => dur length;
 
 (60./BPM)::second => dur beat;
 
-SndBuf2 buf => PitShift pitch => Dyno dyn => Gain gain;
+beat - (now % beat) => now;
+
+SndBuf2 buf => PitShift pitch => Dyno dyn => NRev rev => Gain gain;
+
+//.6 => rev.mix;
 
 gainSet => buf.gain;
 
 1 => buf.loop;
 
 1 => pitch.mix;
-1. => pitch.shift; // .1 good for FB solo, .33 good for EF
+1. => pitch.shift; 
 
 .1 => float delayLrate;
 .11 => float delayRrate;
