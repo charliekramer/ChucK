@@ -4,8 +4,8 @@
 class StringPatch {
 	
 	10 => int n;
-	220 => float baseFreq;
-	.1 => static float spr;
+	120 => float baseFreq;
+	.3 => static float spr;
 	1 => float masterGain;
 	
 	SawOsc sin[n];
@@ -50,7 +50,7 @@ class StringPatch {
 	
 }
 
-.01 => float masterGain;
+.002 => float masterGain;
 
 60./80. => float beatSec;
 beatSec::second => dur beat;
@@ -61,7 +61,7 @@ StringPatch s1;
 StringPatch s2;
 StringPatch s3;
 
-59-12 => float midiBase;// 
+60-12 => float midiBase;// 
 .005 => float spread => s1.spread;
 3 => s1.nOsc;
 Std.mtof(midiBase) => s1.freq;
@@ -80,13 +80,15 @@ Std.mtof(midiBase+7) => s3.freq;
  [9, 12, 16],
  [11, 14, 17],
  [12, 16, 19]]  @=> int notes[][];
+ 
+ 0 => int final; // last chord
 
 Gain g => ADSR env => HPF filter => NRev rev => dac;
 
 Std.mtof(midiBase) => filter.freq;
 10 => filter.Q;
 
-.5 => rev.mix;
+.7 => rev.mix;
 masterGain => s1.gain;
 masterGain => s2.gain;
 masterGain => s3.gain;
@@ -99,7 +101,9 @@ s3.connect(g);
 
 spork~spread_LFO(.5,.1);
 
-now + 8*64*beat => time future;
+//now + 8*64*beat => time future;
+
+now + 3::minute => time future;
 
 0 => int beatcount;
 
@@ -115,7 +119,7 @@ while (now < future) {
 
 // finish on tonic
 
-load_notes(0);
+load_notes(final);
 	1 => env.keyOn;
 	8*beat => now;
 	1 => env.keyOff;
