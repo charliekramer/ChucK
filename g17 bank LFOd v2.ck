@@ -5,7 +5,7 @@ gainSet / n => gainSet;
 30::second => dur sporkLength;
 60::second => dur sporkOutro;
 30 => float midiBase;
-.01 => float freqDelta;
+.015 => float freqDelta;
 
 1::second*4 => dur beat;
 
@@ -22,7 +22,7 @@ sporkLength + sporkOutro => now;
 
 
 fun void phaser(float freq, dur length, int i) {
-    SinOsc phasor => Gen17 gen => Envelope env => Echo echo => PoleZero filt =>  NRev rev => Pan2 pan => dac;
+    SinOsc phasor => Gen17 gen => PoleZero filt => Envelope env => Echo echo =>  NRev rev => Pan2 pan => dac;
     SinOsc LFO[4];
     
     2*beat => echo.max;
@@ -45,7 +45,8 @@ fun void phaser(float freq, dur length, int i) {
         }
        
         
-    now + length => time future;    
+    now + length => time future; 
+    time loop;   
     
     while (now < future) {
         
@@ -53,9 +54,22 @@ fun void phaser(float freq, dur length, int i) {
         (1+LFO[2].last()*.45),(.5+LFO[3].last()*.25)
         ] => gen.coefs;
         1 => env.keyOn;
-        beat => now;
+        now + beat => loop;
+        while (now < loop) {
+            [(2+LFO[0].last()),(1.5+LFO[1].last()),
+            (1+LFO[2].last()*.45),(.5+LFO[3].last()*.25)
+            ] => gen.coefs;
+            .1::second => now;
+            }
         1 => env.keyOff;
-        1*beat => now;
+        now + beat => loop;
+        while (now < loop) {
+            [(2+LFO[0].last()),(1.5+LFO[1].last()),
+            (1+LFO[2].last()*.45),(.5+LFO[3].last()*.25)
+            ] => gen.coefs;
+            .1::second => now;
+        }
+        
     }
     
     sporkOutro => now;
