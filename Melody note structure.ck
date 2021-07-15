@@ -6,8 +6,8 @@ beat - (now % beat) => now;
 
 3::minute => dur length;
 
-Rhodey osc1 => Echo echo1 =>  Pan2 pan1 => dac;
-Rhodey osc2 => Echo echo2 =>  Pan2 pan2 => dac;
+Wurley osc1 => Echo echo1 =>  Pan2 pan1 => dac;
+Wurley osc2 => Echo echo2 =>  Pan2 pan2 => dac;
 
 echo1 => NRev rev1 => ADSR env1 => pan1 => dac;
 echo2 => NRev rev2 => ADSR env2 => pan2 => dac;
