@@ -1,10 +1,13 @@
-.1 => float gainSet;
+.3 => float gainSet;
 
-.25 => float panSet;
+.75 => float panSet;
 
 .2 => float revSet;
 
 44-12 => float midiBase;
+
+60::second => dur length;
+30::second => dur outro;
 
 //[0,2,3,2,3,5,0,2,3,3,5,7] @=> int notes[];
 //[0,3,10,0,3,8,0,3,7,0,3,5] @=> int notes[];
@@ -37,10 +40,14 @@ panSet => pan.pan;
 
 0 => int i;
 
-while (true) {
+now + length => time future;
+
+while (now < future) {
     
     Std.mtof(midiBase+notes[i%notes.cap()]) => osc.freq;
     1 => osc.noteOn;
     beat=>now;
     i++;
 }
+
+outro => now;
