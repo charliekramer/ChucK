@@ -25,14 +25,15 @@ while(now < future) {
 
 }
 
-30::second => now;
+40::second => now;
 
 
 fun void piano_go() {
     SndBuf buf => Echo echo => NRev rev => Envelope env => Pan2 pan => dac;
     //"/Users/charleskramer/Desktop/chuck/audio/disquiet_piano.wav" => buf.read;
     //"/Users/charleskramer/Desktop/chuck/audio/National_Anthem_performed_at_CPAC_2021.wav" => buf.read;
-    "/Users/charleskramer/Desktop/chuck/audio/guitar_drone.wav" => buf.read;
+    //"/Users/charleskramer/Desktop/chuck/audio/guitar_drone.wav" => buf.read;
+    "/Users/charleskramer/Desktop/chuck/audio/01_Red_Dress_vocal_splitted_by_lalalai.wav" => buf.read;
     gainSet => buf.gain;
     Std.rand2f(.5,4)*beat => env.duration;
     Std.rand2f(-1,1) => buf.rate;
