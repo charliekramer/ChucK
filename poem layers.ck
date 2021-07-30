@@ -1,5 +1,5 @@
-16 => int n; //up to 16
-.7/(1.*n) => float gainSet;
+12 => int n; //up to 16
+2*.7/(1.*n) => float gainSet;
 
 SndBuf2 poem[n];
 PitShift pitch[n];
@@ -16,7 +16,8 @@ for (0 => int i; i < n; i++) {
     //if (i%2 == 0) "/Users/charleskramer/Desktop/chuck/audio/secrest_poem_1.wav" => poem[i].read;
     //else "/Users/charleskramer/Desktop/chuck/audio/secrest_poem_2.wav" => poem[i].read;
     //"/Users/charleskramer/Desktop/chuck/audio/steve_MoFo.wav"=> poem[i].read; 
-   "/Users/charleskramer/Desktop/chuck/audio/2hearts_v3_heavy.wav" => poem[i].read;
+   //"/Users/charleskramer/Desktop/chuck/audio/2hearts_v3_heavy.wav" => poem[i].read;
+   "/Users/charleskramer/Desktop/chuck/audio/01_Red_Dress_vocal_splitted_by_lalalai.wav" => poem[i].read;
     Math.pow(rateM,i) => poem[i].rate;
     0 => poem[i].pos;
     0 => poem[i].loop;
@@ -30,4 +31,4 @@ for (0 => int i; i < n; i++) {
     
     }
     
-7::minute => now;
+3.5::minute => now;
