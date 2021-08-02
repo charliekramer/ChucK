@@ -1,10 +1,13 @@
 .1*1 => float gainSet;
 7 => int n;
-.3 => float rateMin;
-3. => float rateMax;
-120. => float BPM;
+.1*2 => float rateMin;
+.5*2 => float rateMax;
+.9 => float revMix;
+.9 => float echoGain;
+.9 => float echoMix;
+12000./4 => float BPM;
 (60./BPM)::second*.25 => dur beat;
-3::second => dur length;
+20::second => dur length;
 3 => float beatDiv; // for echo
 
 beat - (now % beat) => now;
@@ -31,9 +34,10 @@ for (0 => int i; i < n; i++) {
     gainSet => snare[i].gain;
     4*beat => echo[i].max;
     beatDiv*beat => echo[i].delay;
-    .5 => echo[i].gain;
-    .5 => echo[i].mix;
+    echoGain => echo[i].gain;
+    echoMix => echo[i].mix;
     echo[i] => echo[i];
+    revMix => rev[i].mix;
 }
 
 now + length => time future;
