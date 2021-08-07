@@ -3,12 +3,22 @@
 // hmm https://opendata.stackexchange.com/questions/7042/ascii-character-frequency-analysis
 // 
 
-.5*4 => float gainSet;
+.5*5 => float gainSet;
 .25::second => dur beat;
 
 beat - (now % beat) => now;
 
-BandedWG osc => Pan2 pan1 => dac;
+Moog osc => Pan2 pan1 => dac;
+.5 => osc.filterQ;
+0.5 => osc.filterSweepRate;
+osc.controlChange(4,1);
+
+SinOsc QLFO => blackhole;
+
+1./(60.*2.) => QLFO.freq; 
+
+spork~LFOQ();
+
 osc => Echo echo => Pan2 pan2 => dac;
 
 .5 => pan1.pan;
@@ -18,7 +28,7 @@ gainSet => osc.gain;
 
 59 => int midiBase;
 //[-12,-7,-5, 0,2,5,7,9,11,14] @=> int notes[];
-[0,2,4,5,7,9,11,12 ] @=> int notes[];
+[0,7,4,5,9,11,2,12 ] @=> int notes[];
 
 1.5*beat => echo.max => echo.delay;
 1 => echo.mix;
@@ -62,21 +72,25 @@ while (fio.eof() == false) {
         
 }
 
-1::second => now;
+10::second => now;
 
-fun void playNote(int j) {
- Std.mtof(midiBase+notes[j%notes.cap()]) => osc.freq;
+fun void playNote(int note) {
+ Std.mtof(midiBase+notes[note%notes.cap()]) => osc.freq;
  1 => osc.noteOn;
- beat => now;   
+ beat => now;  
+ 1 => osc.noteOff; 
+ beat => now;
     
 }
 
 fun int tableLookup(string in) {
     
     int returnI;
-    int table[13];
+    int table[14];
     
     Std.rand2(0,12) => returnI;
+    
+     -24 => returnI;
     
       0  => table["E"] => table["e"] => table["="] => table[";"];
       1  => table["T"] => table["t"] => table[">"];
@@ -100,3 +114,12 @@ fun int tableLookup(string in) {
       
     }
 
+fun void LFOQ() {
+ 
+ while (true) {
+     (QLFO.last()+1)*.5 => osc.filterQ;
+     1::samp => now;
+     
+ }   
+    
+}
