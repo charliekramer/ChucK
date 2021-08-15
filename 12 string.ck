@@ -4,14 +4,14 @@
 30::second => dur length;
 
 57-12-12 => float midiBase;
-4::second => dur beat;
-12 => int n;
-2 => int beatMod; // gargles for large n and beatMod
+.125*4::second => dur beat;
+6 => int n;
+[3,6,2] @=> int beatMod[]; // gargles for large n and beatMod
 .01 => float spread;
 
 beat - (now % beat) => now;
 
-[0.,5.,7.,12.,-7.,-5.,-12] @=> float notes[];
+[0.,0.,0.,0.,0.,2.,4.,5.,7.,7.,9.,11.,12.,12.,12.] @=> float notes[];
 
 0 => int j;
 
@@ -25,7 +25,7 @@ spork~goNote(midiBase+notes[Std.rand2(0,notes.cap()-1)],beat,n,spread);
 
 .25*beat => now;
 
-if (j % beatMod == 0) .25*beat => now;
+if (j % beatMod[Std.rand2(0,beatMod.cap()-1)] == 0) .25*beat => now;
 
 }
 
