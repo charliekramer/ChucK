@@ -1,15 +1,19 @@
 .2 => float gainSet;
-57 => float midiBase;
+57=> float midiBase;
+30::second => dur length;
+15::second => dur outro;
 
 .5::second => dur beat;
 
 beat - (now % beat) => now;
 
-while (true) {
+now + length => time future;
+while (now < future) {
     spork~playNote();
     2*beat => now;
 }
 5*beat => now;
+outro=> now;
 
 
 
