@@ -4,7 +4,7 @@
 .2 => float gainSet;
 
 1 => int random;
-120/8. => float BPM;
+55. => float BPM;
 4::minute => dur length;
 
 (60./BPM)::second => dur beat;
