@@ -1,5 +1,5 @@
 
-.2 => float gainSet;
+.4 => float gainSet;
 2::minute => dur length;
 
 SndBuf buf => Gain gain => Echo echo => dac.left;
@@ -7,10 +7,9 @@ SndBuf buf2 => Gain gain2 => Echo echo2 => dac.right;
 
 gainSet => buf.gain => buf2.gain;
 
-
 55 => float BPM;
 
-BPM/94. => float baseRate =>buf.rate => buf2.rate;
+BPM/94. => float baseRate =>buf.rate => buf2.rate; //94 is native speed
 
 
 60./BPM => float beatSec;
@@ -18,7 +17,7 @@ beatSec::second => dur beat;
 
 beat - (now % beat) => now;
 
-[.25*4,.5*2,1.] @=> float speeds[];
+[.25,.5,1.,2.] @=> float speeds[];
 
 1.5*beat => echo.max => echo2.max => echo.delay => echo2.delay;
 

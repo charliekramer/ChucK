@@ -1,7 +1,7 @@
 // mod to use deterministic chopping (beatChop) if random = 0;
 // add kick drum
 
-.2 => float gainSet;
+.4 => float gainSet;
 
 1 => int random;
 55. => float BPM;
