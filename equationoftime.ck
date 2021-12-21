@@ -2,18 +2,20 @@
 
 //https://www.intmath.com/blog/mathematics/the-equation-of-time-5039
 
-.005 => float gainSet;
-20+12+12+12 => float midiBase;
+.002 => float gainSet;
+20 => float midiBase;
 60::second => dur length;
 
-.25::second => dur beat;
+94. => float BPM;
+
+(60/BPM)::second*1 => dur beat;
 
 Impulse imp => Envelope env => Echo echo => NRev rev => Dyno dyn => dac.left;
 env => echo => Echo echo2 => NRev rev2 => Dyno dyn2 => dac.right;
 
 gainSet => imp.gain;
 
-1.5*beat => echo.max => echo.delay;
+.5*beat => echo.max => echo.delay;
 .7 => echo.mix => echo.gain;
 echo => echo;
 .2 => rev.mix => rev2.mix;
@@ -24,10 +26,10 @@ echo2 => echo2;
 
 gainSet => imp.gain;
 
-SinOsc sin[2];
+SqrOsc sin[2];
 
-//.5 => sin[0].width;
-//.7 => sin[1].width;
+//.51 => sin[0].width;
+//.44 => sin[1].width;
 
 Std.mtof(midiBase) => sin[0].freq;
 2*sin[0].freq() + 3.588  => sin[1].freq;

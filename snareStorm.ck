@@ -1,14 +1,14 @@
 .1*1 => float gainSet;
 7 => int n;
-.1*2 => float rateMin;
-.5*2 => float rateMax;
+.1*1 => float rateMin;
+.5*1 => float rateMax;
 .9 => float revMix;
 .9 => float echoGain;
 .9 => float echoMix;
-12000./4 => float BPM;
+120./4*2 => float BPM;
 (60./BPM)::second*.25 => dur beat;
 20::second => dur length;
-3 => float beatDiv; // for echo
+1.5 => float beatDiv; // for echo
 
 beat - (now % beat) => now;
 

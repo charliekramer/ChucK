@@ -2,12 +2,12 @@
 5 => int n;
 gainSet / n => gainSet;
 
-30::second => dur sporkLength;
-60::second => dur sporkOutro;
-30 => float midiBase;
+60::second => dur sporkLength;
+420::second => dur sporkOutro;
+30-12 => float midiBase;
 .015 => float freqDelta;
 
-1::second*4 => dur beat;
+1::second*16 => dur beat;
 
 beat - (now % beat) => now;
     
