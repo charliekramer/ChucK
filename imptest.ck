@@ -1,9 +1,9 @@
 // create impulses at slightlydifferent intervals tocreate phasing
 
-.2 => float gainSet;
+.1 => float gainSet;
 30::second => dur length;
 
-[100.,99.,101.,98.,102.] @=> float mslist[];
+[100.,99.,101.,98.,102.,20.,200.,37.] @=> float mslist[];
 
 for (0 => int i; i < mslist.cap(); i++) {
     spork~impfire(mslist[i]);
@@ -13,6 +13,7 @@ for (0 => int i; i < mslist.cap(); i++) {
 
 fun void impfire(float mss) {
     Impulse imp => ResonZ filt => Dyno dyn => dac;
+    gainSet => dyn.gain;
     1000 => imp.gain;
     220 => filt.freq;
     200 => filt.Q;
