@@ -23,7 +23,7 @@ beat - (now % beat) => now;
 MidiIn min;
 MidiMsg msg; 
 
-2 => int device;
+1 => int device;
 
 if( !min.open( device ) ) me.exit();
 
@@ -36,7 +36,7 @@ while (true) {
     {
         if (msg.data1 == 176) {
             if (msg.data2 == 1) { //knob 1; duration
-                (msg.data2 + .1)/127*baseBeat => beat;
+                (msg.data3 + .1)/127*baseBeat => beat;
                 <<< "baseBeat", baseBeat >>>;
             }
         }
