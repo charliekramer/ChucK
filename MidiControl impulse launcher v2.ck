@@ -1,14 +1,15 @@
 // now with generic Osc
 
-TubeBell osc0;
+Rhodey osc0;
 
-.3 => float gainSet;
+.3*10=> float gainSet;
 
+1 => int onOff; // turn on and off per beat
 1 => int device;
-.25::second => dur beat;
+2.25::second => dur beat;
 beat => dur sporkBeat;
-1::second => dur shredLength;
-15::second => dur shredOutro;
+15::second => dur shredLength;
+20::second => dur shredOutro;
 2 => float Q;
 .5 => float revMix;
 .5 => float echoMix;
@@ -130,9 +131,14 @@ fun void beats(StkInstrument osc0, float sporkBase, float noteTweak, float spork
         
         1 => osc0.noteOn;
         impBeat=>now;
+        if (onOff) {
+            1 => osc0.noteOff;
+            impBeat=>now;
+        }
         
     }
     
+    1 => osc0.noteOff;
     shredOutro => now;
 
     
@@ -168,9 +174,14 @@ fun void beatsRandom(StkInstrument osc0) {
             
             1 => osc0.noteOn;
             impBeat=>now;
+            if (onOff) {
+                1 => osc0.noteOff;
+                impBeat=>now;
+            }
             
         }
         
+        1 => osc0.noteOff;
         shredOutro => now;
         
         

@@ -1,9 +1,9 @@
-250 => float gainSet;
-44 => float midiBase;
+250 => float gainSet;// crank for resonant filter
+44-20 => float midiBase;
 1 => int device;
-.25::second => dur beat;
+.25::second => dur beat;//set at small frac for tones
 beat => dur sporkBeat;
-15::second => dur shredLength;
+5::second => dur shredLength;
 5::second => dur shredOutro;
 2 => float Q;
 .5 => float revMix;
