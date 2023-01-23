@@ -39,9 +39,9 @@ Rhodey osc => Gain tap => dac;
 gainSet => osc.gain;
 Std.mtof(midiBase) => osc.freq;
 
-tap => Envelope env1 => Echo echo1 => NRev rev1 => dac;
-tap => Envelope env2 => Echo echo2 => NRev rev2 => dac;
-tap => Envelope env3 => Echo echo3 => NRev rev3 => dac;
+tap => Envelope env1 => Echo echo1 => NRev rev1 => Pan2 pan1 => dac;
+tap => Envelope env2 => Echo echo2 => NRev rev2 => Pan2 pan2 => dac;
+tap => Envelope env3 => Echo echo3 => NRev rev3 => Pan2 pan3 => dac;
 
 echoScale*1.5*beat => echo1.max => echo1.delay;
 echoGain => echo1.gain;
@@ -59,6 +59,9 @@ echoMix  => echo3.mix;
 echo3 => echo3;
 
 revMix => rev1.mix => rev2.mix => rev3.mix;
+
+-.75 => pan1.pan;
+.75 => pan3.pan;
 
 now + length => time future;
 
